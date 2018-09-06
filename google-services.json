@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "1038833058229",
+    "firebase_url": "https://instagram-mobile-computing.firebaseio.com",
+    "project_id": "instagram-mobile-computing",
+    "storage_bucket": "instagram-mobile-computing.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1038833058229:android:9363eeba6e8bf40e",
+        "android_client_info": {
+          "package_name": "com.example.kulde.instagram"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1038833058229-gl2cqhii10eri5908c97epoeq9pg88kq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD14HoJs32Izz6l2elVAx03YhzmSyfAdm0"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
