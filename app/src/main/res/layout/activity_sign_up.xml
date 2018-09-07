@@ -24,7 +24,7 @@
         app:srcCompat="@drawable/nuhuu" />
 
     <EditText
-        android:id="@+id/editText2"
+        android:id="@+id/Etemailid"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -38,7 +38,7 @@
         app:layout_constraintVertical_bias="0.4" />
 
     <EditText
-        android:id="@+id/editText3"
+        android:id="@+id/Etusername"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -51,7 +51,7 @@
         app:layout_constraintVertical_bias="0.541" />
 
     <EditText
-        android:id="@+id/editText4"
+        android:id="@+id/Etpassword"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -65,7 +65,7 @@
         app:layout_constraintVertical_bias="0.688" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/btsignup"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="SingUp"
