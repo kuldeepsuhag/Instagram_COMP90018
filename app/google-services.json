@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "1038833058229-qmh1n2oj20f39t4oualuej5ss5m6mhn2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.kulde.instagram",
+            "certificate_hash": "0664075fa3667c144fac9c099704320380bded72"
+          }
+        },
+        {
           "client_id": "1038833058229-gl2cqhii10eri5908c97epoeq9pg88kq.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -29,8 +37,13 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1038833058229-gl2cqhii10eri5908c97epoeq9pg88kq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         },
         "ads_service": {
           "status": 2
