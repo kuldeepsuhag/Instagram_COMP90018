@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Instagram</string>
+    <string name="app_name">P2Gram</string>
 
     <string name="title_activity_camera">CameraActivity</string>
     <string name="dummy_button">Dummy Button</string>
