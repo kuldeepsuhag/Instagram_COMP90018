@@ -27,12 +27,13 @@
         <activity android:name=".camera.CameraActivity"
             android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".share.ShareActivity" >
+        <activity android:name=".share.ShareActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
     </application>
 
 </manifest>
