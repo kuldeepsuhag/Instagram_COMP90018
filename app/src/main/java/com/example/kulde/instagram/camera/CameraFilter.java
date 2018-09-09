@@ -1,7 +1,9 @@
 package com.example.kulde.instagram.camera;
 
 import android.annotation.TargetApi;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
@@ -18,6 +20,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.SeekBar;
+import android.widget.Toast;
 
 import com.example.kulde.instagram.R;
 
@@ -66,17 +70,27 @@ public class CameraFilter extends Fragment {
         ImageButton origin = view.findViewById(R.id.origin);
         ImageButton gray = view.findViewById(R.id.black);
         ImageButton invert = view.findViewById(R.id.neon);
+        ImageButton contrast_brightness = view.findViewById(R.id.contrast);
         try {
             final Bitmap originalBitmap = setImageView(imageEdit);
+            Bitmap newBitmap = originalBitmap;
 
-            filterListener(imageEdit, gray, BitmapFilter.GRAY_STYLE, originalBitmap);
-            filterListener(imageEdit, invert, BitmapFilter.INVERT_STYLE, originalBitmap);
-            filterListener(imageEdit, oldStyle, BitmapFilter.OLD_STYLE, originalBitmap);
+            newBitmap = filterListener(imageEdit, gray, BitmapFilter.GRAY_STYLE, originalBitmap);
+            newBitmap = filterListener(imageEdit, invert, BitmapFilter.INVERT_STYLE, originalBitmap);
+            newBitmap = filterListener(imageEdit, oldStyle, BitmapFilter.OLD_STYLE, originalBitmap);
 
             origin.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     imageEdit.setImageBitmap(originalBitmap);
+                }
+            });
+
+            final Bitmap finalNewBitmap = newBitmap;
+            contrast_brightness.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Toast.makeText(getActivity(), "Set contrast and Bightness" , Toast.LENGTH_SHORT).show();
                 }
             });
 
@@ -99,14 +113,18 @@ public class CameraFilter extends Fragment {
 
     }
 
-    public void filterListener(final ImageView image, final ImageButton button, final int styleNo, final Bitmap originBitmap){
+    public Bitmap filterListener(final ImageView image, final ImageButton button, final int styleNo, final Bitmap originBitmap){
+        final Bitmap[] newBitmap = new Bitmap[1];
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Bitmap newBitmap = BitmapFilter.changeStyle(originBitmap, styleNo);
-                image.setImageBitmap(newBitmap);
+
+                newBitmap[0] = BitmapFilter.changeStyle(originBitmap, styleNo);
+                image.setImageBitmap(newBitmap[0]);
+
             }
         });
+        return newBitmap[0];
     }
 
     @Override
@@ -154,6 +172,10 @@ public class CameraFilter extends Fragment {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
+
+
+
+
 
     private Bitmap setImageView(ImageView imageEdit) throws IOException {
         String recieve = getArguments().getString("Image");
