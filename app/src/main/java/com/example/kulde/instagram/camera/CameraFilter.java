@@ -4,7 +4,10 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
+import android.media.ExifInterface;
 import android.net.Uri;
+
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
@@ -19,6 +22,8 @@ import android.widget.ImageView;
 import com.example.kulde.instagram.R;
 
 import org.w3c.dom.Text;
+
+import java.io.IOException;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -60,9 +65,11 @@ public class CameraFilter extends Fragment {
         view.findViewById(R.id.origin);
         view.findViewById(R.id.black);
         view.findViewById(R.id.neon);
-        String recieve = getArguments().getString("Image");
-        Bitmap bitmap = BitmapFactory.decodeFile(recieve);
-        imageEdit.setImageBitmap(bitmap);
+        try {
+            setImageView(imageEdit);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         backToTake.setOnClickListener(new View.OnClickListener() {
             @TargetApi(Build.VERSION_CODES.LOLLIPOP)
@@ -121,5 +128,25 @@ public class CameraFilter extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+    private void setImageView(ImageView imageEdit) throws IOException {
+        String recieve = getArguments().getString("Image");
+        ExifInterface exif = new ExifInterface(recieve);
+        int orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, 1);
+        Matrix matrix = new Matrix();
+        if (orientation == 6) {
+            matrix.postRotate(90);
+        }
+        else if (orientation == 3) {
+            matrix.postRotate(180);
+        }
+        else if (orientation == 8) {
+            matrix.postRotate(270);
+        }
+
+        Bitmap sourceBitmap = BitmapFactory.decodeFile(recieve);
+        Bitmap rotatedBitmap = Bitmap.createBitmap(sourceBitmap, 0, 0, sourceBitmap.getWidth(), sourceBitmap.getHeight(), matrix, true);
+        imageEdit.setImageBitmap(rotatedBitmap);
     }
 }
