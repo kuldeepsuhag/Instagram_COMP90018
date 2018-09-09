@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.ViewPager;
@@ -14,7 +15,9 @@ import android.view.MenuItem;
 
 //import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 
+import com.example.kulde.instagram.Profile;
 import com.example.kulde.instagram.R;
+import com.example.kulde.instagram.Utils.Navigation;
 import com.example.kulde.instagram.Utils.Permissions;
 import com.example.kulde.instagram.Utils.SectionsPagerAdapter;
 
@@ -46,6 +49,13 @@ public class ShareActivity extends AppCompatActivity{
             verifyPermissions(Permissions.PERMISSIONS);
         }
 
+    }
+    public void navigation(){
+        BottomNavigationView bottomNavigationView = (BottomNavigationView)findViewById(R.id.bottomNavViewwBar);
+        Navigation.enablenavigation(mContext, bottomNavigationView);
+        Menu menu = bottomNavigationView.getMenu();
+        MenuItem menuItem = menu.getItem(ACTIVITY_NUM);
+        menuItem.setChecked(true);
     }
 
     /**
