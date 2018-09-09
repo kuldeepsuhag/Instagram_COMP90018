@@ -7,12 +7,23 @@
     tools:context=".camera.CameraFragment">
 
 
-
     <TextureView
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:id="@+id/preview"
         android:layout_alignParentTop="true"/>
+
+    <ImageButton
+        android:id="@+id/back"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
+        android:background="?android:selectableItemBackground"
+        android:scaleType="fitCenter"
+        app:srcCompat="@drawable/back" />
 
     <ImageButton
         android:id="@+id/shotbtmotion"

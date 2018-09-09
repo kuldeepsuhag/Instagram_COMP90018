@@ -6,6 +6,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.ImageFormat;
 import android.graphics.SurfaceTexture;
@@ -29,6 +30,7 @@ import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.Size;
 import android.util.SparseIntArray;
@@ -41,6 +43,7 @@ import android.view.Window;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.example.kulde.instagram.MainPage;
 import com.example.kulde.instagram.R;
 
 import java.io.File;
@@ -55,6 +58,7 @@ import java.util.List;
 
 import static android.support.v4.os.LocaleListCompat.create;
 
+@RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
 public class CameraFragment extends Fragment {
 
     private static final String TAG = "AndroidCameraApi";
@@ -62,6 +66,8 @@ public class CameraFragment extends Fragment {
     private TextureView textureView;
     private static final SparseIntArray ORIENTATIONS = new SparseIntArray();
     private ImageButton flash;
+
+
 
     static {
         ORIENTATIONS.append(Surface.ROTATION_0, 90);
@@ -101,6 +107,9 @@ public class CameraFragment extends Fragment {
         return inflater.inflate(R.layout.activity_camera_fragment, container, false);
     }
 
+
+
+
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -109,6 +118,9 @@ public class CameraFragment extends Fragment {
 
         textureView = view.findViewById(R.id.preview);
         flash = (ImageButton) view.findViewById(R.id.flash_off);
+
+
+
 
         Boolean hasFlash = getActivity().getApplicationContext().getPackageManager()
                 .hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH);
@@ -134,7 +146,10 @@ public class CameraFragment extends Fragment {
             }
         });
 
+
+
     }
+
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void flashLight(){
@@ -281,6 +296,7 @@ public class CameraFragment extends Fragment {
         mBackgroundHandler = new Handler(mBackgroundThread.getLooper());
     }
 
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR2)
     protected void stopBackgroundThread() {
         mBackgroundThread.quitSafely();
@@ -370,6 +386,7 @@ public class CameraFragment extends Fragment {
                         ByteBuffer buffer = image.getPlanes()[0].getBuffer();
                         byte[] bytes = new byte[buffer.capacity()];
                         buffer.get(bytes);
+
                         save(bytes);
                     } catch (FileNotFoundException e) {
                         e.printStackTrace();
@@ -386,6 +403,15 @@ public class CameraFragment extends Fragment {
                     OutputStream output = null;
                     try {
                         output = new FileOutputStream(file);
+                        Bundle args = new Bundle();
+                        args.putString("Image", file.toString());
+
+                        CameraFilter cameraFilter = CameraFilter.newInstance(args);
+                        cameraFilter.setArguments(args);
+
+                        getActivity().getSupportFragmentManager().beginTransaction()
+                                .replace(R.id.container, cameraFilter)
+                                .commit();
                         output.write(bytes);
                     } finally {
                         if (null != output) {
@@ -414,6 +440,8 @@ public class CameraFragment extends Fragment {
                     }
                 }
 
+
+
                 @Override
                 public void onConfigureFailed(CameraCaptureSession session) {
                 }
@@ -423,10 +451,17 @@ public class CameraFragment extends Fragment {
         }
     }
 
+
+
+
+
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     protected void createCameraPreview() {
 
         try {
+
+
+
             SurfaceTexture texture = textureView.getSurfaceTexture();
             assert texture != null;
             texture.setDefaultBufferSize(imageDimension.getWidth(), imageDimension.getHeight());
@@ -492,6 +527,7 @@ public class CameraFragment extends Fragment {
         }
     }
 
+
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void closeCamera() {
         if (null != cameraDevice) {
@@ -529,6 +565,7 @@ public class CameraFragment extends Fragment {
         }
     }
 
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR2)
     @Override
     public void onPause() {
