@@ -1,107 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainPage">
-
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginBottom="0dp"
-        android:layout_marginEnd="0dp"
-        android:layout_marginLeft="0dp"
-        android:layout_marginRight="0dp"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="0dp"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <Button
-            android:id="@+id/camera"
+     
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <!-- top toolbar -->
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:id="@+id/relLayout1">
 
-            android:text="Camera"
-            tools:background="@color/common_google_signin_btn_text_dark_default" />
+            <include layout="@layout/layout_top_tabs"/>
 
-        <ScrollView
+        </RelativeLayout>
+        <!-- middle section (body)-->
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1">
+            android:id="@+id/relLayout2"
+            android:layout_below="@+id/relLayout1">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+            <include layout="@layout/layout_center_viewpager"/>
 
-                android:orientation="vertical" >
+        </RelativeLayout>
+        <!--Bottom Navigation-->
+        <include layout="@layout/bottom_navigation"/>
+    </RelativeLayout>
 
-                <ImageView
-                    android:id="@+id/imageView4"
-                    android:layout_width="match_parent"
-                    android:layout_height="483dp"
-                    android:scaleType="fitCenter"
-                    app:srcCompat="@drawable/nuhuu" />
-            </LinearLayout>
-        </ScrollView>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="7"
-
-            android:orientation="horizontal">
-
-
-            <ImageButton
-                android:id="@+id/home"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:scaleType="fitCenter"
-                app:srcCompat="@drawable/home"
-                tools:background="@color/common_google_signin_btn_text_dark_default" />
-
-            <ImageButton
-                android:id="@+id/search"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@color/common_google_signin_btn_text_dark_default"
-                android:scaleType="fitCenter"
-                app:srcCompat="@drawable/search" />
-
-            <ImageButton
-                android:id="@+id/add"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@color/common_google_signin_btn_text_dark_default"
-                android:scaleType="fitCenter"
-                app:srcCompat="@drawable/add" />
-
-            <ImageButton
-                android:id="@+id/liked"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@color/common_google_signin_btn_text_dark_default"
-                android:scaleType="fitCenter"
-                app:srcCompat="@drawable/like" />
-
-            <ImageButton
-                android:id="@+id/profile"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@color/common_google_signin_btn_text_dark_default"
-                android:scaleType="fitCenter"
-                app:srcCompat="@drawable/avatar" />
-        </LinearLayout>
-    </LinearLayout>
-
-</android.support.constraint.ConstraintLayout>
+</android.support.design.widget.CoordinatorLayout>
