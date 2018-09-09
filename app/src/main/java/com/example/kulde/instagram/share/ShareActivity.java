@@ -54,9 +54,9 @@ public class ShareActivity extends AppCompatActivity{
      * 1 = PhotoFragment
      * @return
      */
-    public int getCurrentTabNumber(){
-        return mViewPager.getCurrentItem();
-    }
+//    public int getCurrentTabNumber(){
+//        return mViewPager.getCurrentItem();
+//    }
 
     /**
      * setup viewpager for manager the tabs
@@ -77,10 +77,10 @@ public class ShareActivity extends AppCompatActivity{
 
     }
 
-    public int getTask(){
-        Log.d(TAG, "getTask: TASK: " + getIntent().getFlags());
-        return getIntent().getFlags();
-    }
+//    public int getTask(){
+//        Log.d(TAG, "getTask: TASK: " + getIntent().getFlags());
+//        return getIntent().getFlags();
+//    }
 
     /**
      * verifiy all the permissions passed to the array
