@@ -39,6 +39,7 @@ public class CameraFilter extends Fragment {
     private OnFragmentInteractionListener mListener;
     private static Bundle imageArg;
 
+
     public CameraFilter() {
         // Required empty public constructor
     }
@@ -59,14 +60,26 @@ public class CameraFilter extends Fragment {
 
     @Override
     public void onViewCreated(final View view, Bundle savedInstanceState) {
-        ImageView imageEdit = (ImageView) view.findViewById(R.id.picture_view);
+        final ImageView imageEdit = (ImageView) view.findViewById(R.id.picture_view);
         ImageButton backToTake = (ImageButton) view.findViewById(R.id.back);
-        view.findViewById(R.id.yellow);
-        view.findViewById(R.id.origin);
-        view.findViewById(R.id.black);
-        view.findViewById(R.id.neon);
+        ImageButton oldStyle = view.findViewById(R.id.yellow);
+        ImageButton origin = view.findViewById(R.id.origin);
+        ImageButton gray = view.findViewById(R.id.black);
+        ImageButton invert = view.findViewById(R.id.neon);
         try {
-            setImageView(imageEdit);
+            final Bitmap originalBitmap = setImageView(imageEdit);
+
+            filterListener(imageEdit, gray, BitmapFilter.GRAY_STYLE, originalBitmap);
+            filterListener(imageEdit, invert, BitmapFilter.INVERT_STYLE, originalBitmap);
+            filterListener(imageEdit, oldStyle, BitmapFilter.OLD_STYLE, originalBitmap);
+
+            origin.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    imageEdit.setImageBitmap(originalBitmap);
+                }
+            });
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -82,6 +95,18 @@ public class CameraFilter extends Fragment {
             }
         });
 
+
+
+    }
+
+    public void filterListener(final ImageView image, final ImageButton button, final int styleNo, final Bitmap originBitmap){
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Bitmap newBitmap = BitmapFilter.changeStyle(originBitmap, styleNo);
+                image.setImageBitmap(newBitmap);
+            }
+        });
     }
 
     @Override
@@ -130,7 +155,7 @@ public class CameraFilter extends Fragment {
         void onFragmentInteraction(Uri uri);
     }
 
-    private void setImageView(ImageView imageEdit) throws IOException {
+    private Bitmap setImageView(ImageView imageEdit) throws IOException {
         String recieve = getArguments().getString("Image");
         ExifInterface exif = new ExifInterface(recieve);
         int orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, 1);
@@ -148,5 +173,6 @@ public class CameraFilter extends Fragment {
         Bitmap sourceBitmap = BitmapFactory.decodeFile(recieve);
         Bitmap rotatedBitmap = Bitmap.createBitmap(sourceBitmap, 0, 0, sourceBitmap.getWidth(), sourceBitmap.getHeight(), matrix, true);
         imageEdit.setImageBitmap(rotatedBitmap);
+        return rotatedBitmap;
     }
 }
