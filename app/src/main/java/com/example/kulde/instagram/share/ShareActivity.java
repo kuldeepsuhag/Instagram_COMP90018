@@ -3,7 +3,6 @@ package com.example.kulde.instagram.share;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.os.health.PackageHealthStats;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityCompat;
@@ -16,9 +15,8 @@ import android.view.MenuItem;
 //import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 
 import com.example.kulde.instagram.R;
-//import com.example.kulde.instagram.Utils.BottomNavigationViewHelper;
-//import com.example.kulde.instagram.Utils.Permissions;
-//import com.example.kulde.instagram.Utils.SectionsPagerAdapter;
+import com.example.kulde.instagram.Utils.Permissions;
+import com.example.kulde.instagram.Utils.SectionsPagerAdapter;
 
 /**
  * Created by User on 5/28/2017.
@@ -42,11 +40,11 @@ public class ShareActivity extends AppCompatActivity{
         setContentView(R.layout.activity_share);
         Log.d(TAG, "onCreate: started.");
 
-//        if(checkPermissionsArray(Permissions.PERMISSIONS)){
-//            setupViewPager();
-//        }else{
-//            verifyPermissions(Permissions.PERMISSIONS);
-//        }
+        if(checkPermissionsArray(Permissions.PERMISSIONS)){
+            setupViewPager();
+        }else{
+            verifyPermissions(Permissions.PERMISSIONS);
+        }
 
     }
 
@@ -63,21 +61,21 @@ public class ShareActivity extends AppCompatActivity{
     /**
      * setup viewpager for manager the tabs
      */
-//    private void setupViewPager(){
-//        SectionsPagerAdapter adapter =  new SectionsPagerAdapter(getSupportFragmentManager());
-//        adapter.addFragment(new GalleryFragment());
-//        adapter.addFragment(new PhotoFragment());
-//
-//        mViewPager = (ViewPager) findViewById(R.id.viewpager_container);
-//        mViewPager.setAdapter(adapter);
-//
-//        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabsBottom);
-//        tabLayout.setupWithViewPager(mViewPager);
-//
-//        tabLayout.getTabAt(0).setText(getString(R.string.gallery));
-//        tabLayout.getTabAt(1).setText(getString(R.string.photo));
-//
-//    }
+    private void setupViewPager(){
+        SectionsPagerAdapter adapter =  new SectionsPagerAdapter(getSupportFragmentManager());
+        adapter.addFragment(new GalleryFragment());
+        adapter.addFragment(new PhotoFragment());
+
+        mViewPager = (ViewPager) findViewById(R.id.viewpager_container);
+        mViewPager.setAdapter(adapter);
+
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabsBottom);
+        tabLayout.setupWithViewPager(mViewPager);
+
+        tabLayout.getTabAt(0).setText("Gallery");
+        tabLayout.getTabAt(1).setText("Photo");
+
+    }
 
     public int getTask(){
         Log.d(TAG, "getTask: TASK: " + getIntent().getFlags());
