@@ -11,10 +11,10 @@
     <ImageView
         android:id="@+id/picture_view"
         android:layout_width="match_parent"
-        android:layout_height="492dp"
+        android:layout_height="match_parent"
         android:layout_alignParentBottom="true"
         android:layout_alignParentTop="true"
-        android:layout_marginBottom="100dp"
+        android:layout_marginBottom="0dp"
         android:scaleType="centerCrop">
 
     </ImageView>
@@ -41,6 +41,19 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/contrast"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentStart="true"
+
+                android:layout_weight="1"
+                android:background="?android:selectableItemBackground"
+                android:scaleType="fitCenter"
+                android:src="@drawable/contrast"
+                android:layout_alignParentLeft="true" />
 
             <ImageButton
                 android:id="@+id/neon"
