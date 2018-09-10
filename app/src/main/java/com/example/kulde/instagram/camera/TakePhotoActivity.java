@@ -46,6 +46,7 @@ import static io.fotoapparat.selector.AspectRatioSelectorsKt.standardRatio;
 import static io.fotoapparat.selector.FlashSelectorsKt.autoFlash;
 import static io.fotoapparat.selector.FlashSelectorsKt.autoRedEye;
 import static io.fotoapparat.selector.FlashSelectorsKt.off;
+import static io.fotoapparat.selector.FlashSelectorsKt.on;
 import static io.fotoapparat.selector.FlashSelectorsKt.torch;
 import static io.fotoapparat.selector.LensPositionSelectorsKt.back;
 import static io.fotoapparat.selector.PreviewFpsRangeSelectorsKt.highestFps;
@@ -182,7 +183,7 @@ public class TakePhotoActivity extends AppCompatActivity {
                 fotoapparat.updateConfiguration(
                         UpdateConfiguration.builder()
                                 .flash(
-                                        flash_on ? torch() : off()
+                                        flash_on ? on() : off()
                                 )
                                 .build()
                 );
@@ -219,11 +220,12 @@ public class TakePhotoActivity extends AppCompatActivity {
     private void takePicture() throws ExecutionException, InterruptedException {
         PhotoResult photoResult = fotoapparat.takePicture();
 
-
+        /*
         photoResult.saveToFile(new File(
                 this.getExternalFilesDir("photos"),
                 "photo.jpg"
         ));
+        */
 
 
         Toast.makeText(TakePhotoActivity.this, "Photo Captured", Toast.LENGTH_SHORT).show();
@@ -248,32 +250,7 @@ public class TakePhotoActivity extends AppCompatActivity {
 
 
 
-        /*
-        photoResult
-                .toBitmap(scaled(0.7f))
-                .whenDone(new WhenDoneListener<BitmapPhoto>() {
-                    @Override
-                    public void whenDone(@Nullable BitmapPhoto bitmapPhoto) {
-                        if (bitmapPhoto == null) {
-                            Log.e(LOGGING_TAG, "Couldn't capture photo.");
-                            return;
-                        }
 
-
-                        //passToFilter(bitmapPhoto);
-
-
-
-                        //ImageView imageView = findViewById(R.id.result);
-
-                        //imageView.setImageBitmap(bitmapPhoto.bitmap);
-                        //imageView.setRotation(-bitmapPhoto.rotationDegrees);
-
-                        passToFilter(getExternalFilesDir("photos/photo.jpg"));
-
-                    }
-                });
-                */
 
     }
 

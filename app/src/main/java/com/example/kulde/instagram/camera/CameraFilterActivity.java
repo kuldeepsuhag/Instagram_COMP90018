@@ -75,23 +75,26 @@ public class CameraFilterActivity extends Fragment {
             capture  = originalBitmap;
 
             changeConstrast_and_brightness();
+
+            filterListener(imageEdit, gray, BitmapFilter.GRAY_STYLE, originalBitmap);
+            filterListener(imageEdit, invert, BitmapFilter.INVERT_STYLE, originalBitmap);
+            filterListener(imageEdit, oldStyle, BitmapFilter.OLD_STYLE, originalBitmap);
+
+            origin.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    imageEdit.setImageBitmap(originalBitmap);
+                    contrast.setProgress(5);
+                    brightness.setProgress(255);
+                }
+            });
+
         } catch (IOException e) {
             e.printStackTrace();
         }
 
 
-        filterListener(imageEdit, gray, BitmapFilter.GRAY_STYLE, originalBitmap);
-        filterListener(imageEdit, invert, BitmapFilter.INVERT_STYLE, originalBitmap);
-        filterListener(imageEdit, oldStyle, BitmapFilter.OLD_STYLE, originalBitmap);
 
-        origin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                imageEdit.setImageBitmap(originalBitmap);
-                contrast.setProgress(5);
-                brightness.setProgress(255);
-            }
-        });
 
 
     }
@@ -144,8 +147,8 @@ public class CameraFilterActivity extends Fragment {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser)
             {
-                Bitmap tune = changeBitmapContrastBrightness(capture, (float)(progress-1),(float)(brightness.getProgress()-255));
-                imageEdit.setImageBitmap(tune);
+                capture = changeBitmapContrastBrightness(capture, 5,(float)(brightness.getProgress()-255));
+                imageEdit.setImageBitmap(capture);
             }
 
             @Override
@@ -168,8 +171,8 @@ public class CameraFilterActivity extends Fragment {
                 } else {
                     progress = 1 + (progress / 10) * 9;
                 }
-                Bitmap tune = changeBitmapContrastBrightness(capture, (float)(contrast.getProgress()-1), (float)(progress-255));
-                imageEdit.setImageBitmap(tune);
+                capture = changeBitmapContrastBrightness(capture, (float)(contrast.getProgress()-1), 0);
+                imageEdit.setImageBitmap(capture);
             }
 
             @Override
