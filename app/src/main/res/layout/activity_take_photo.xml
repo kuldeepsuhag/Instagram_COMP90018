@@ -14,6 +14,12 @@
 
     </io.fotoapparat.view.CameraView>
 
+    <com.example.kulde.instagram.camera.filters.GridLines
+        android:id="@+id/grid_lines"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/transparent"></com.example.kulde.instagram.camera.filters.GridLines>
+
     <ImageButton
         android:id="@+id/back_main"
         android:layout_width="50dp"
@@ -56,6 +62,23 @@
         android:background="?android:selectableItemBackground"
         android:scaleType="fitCenter"
         android:src="@drawable/flash_off" />
+
+    <ImageButton
+        android:id="@+id/gallary"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="26dp"
+        android:layout_marginRight="63dp"
+        android:layout_marginEnd="63dp"
+        android:layout_alignParentBottom="true"
+
+
+        android:scaleType="fitCenter"
+        android:background="?android:selectableItemBackground"
+        app:srcCompat="@drawable/gallery"
+        android:layout_alignParentRight="true">
+
+    </ImageButton>
 
 
 </RelativeLayout>

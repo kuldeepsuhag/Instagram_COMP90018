@@ -17,6 +17,7 @@ import android.widget.Toast;
 import com.example.kulde.instagram.MainPage;
 import com.example.kulde.instagram.R;
 import com.example.kulde.instagram.Utils.PermissionsDelegate;
+import com.example.kulde.instagram.camera.filters.GridLines;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -65,6 +66,7 @@ public class TakePhotoActivity extends AppCompatActivity {
     private ImageButton capture;
     private ImageButton torchSwitch;
     private boolean flash_on = false;
+    private GridLines gridLines;
 
     private CameraConfiguration cameraConfiguration = CameraConfiguration
             .builder()
@@ -87,6 +89,7 @@ public class TakePhotoActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+
         setContentView(R.layout.activity_take_photo);
         backToMain();  // back to mainPage
 
@@ -95,6 +98,9 @@ public class TakePhotoActivity extends AppCompatActivity {
         hasCameraPermission = permissionsDelegate.hasCameraPermission();
         if (hasCameraPermission) {
             cameraView.setVisibility(View.VISIBLE);
+            gridLines = findViewById(R.id.grid_lines);
+            gridLines.setNumColumns(3);
+            gridLines.setNumRows(3);
         } else {
             permissionsDelegate.requestCameraPermission();
         }
