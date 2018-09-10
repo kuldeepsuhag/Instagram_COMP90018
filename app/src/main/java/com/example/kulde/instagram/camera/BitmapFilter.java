@@ -12,6 +12,9 @@ import com.example.kulde.instagram.camera.filters.GrayFilter;
 import com.example.kulde.instagram.camera.filters.InvertFilter;
 
 import com.example.kulde.instagram.camera.filters.OldFilter;
+import com.zomato.photofilters.SampleFilters;
+import com.zomato.photofilters.imageprocessors.Filter;
+import com.zomato.photofilters.imageprocessors.subfilters.BrightnessSubfilter;
 
 
 public class BitmapFilter {
@@ -24,6 +27,11 @@ public class BitmapFilter {
     public static final int INVERT_STYLE = 2; // invert the colors
 
     public static final int OLD_STYLE = 3; // old photo
+
+    static
+    {
+        System.loadLibrary("NativeImageProcessor");
+    }
 
 
 
@@ -39,7 +47,13 @@ public class BitmapFilter {
         }
 
         else if (styleNo == INVERT_STYLE) {
-            return InvertFilter.chageToInvert(bitmap);
+
+            Filter fooFilter = SampleFilters.getBlueMessFilter();
+
+            bitmap=bitmap.copy(Bitmap.Config.ARGB_8888, true);
+            Bitmap ouputImage = fooFilter.processFilter(bitmap);
+            return ouputImage;
+           // return InvertFilter.chageToInvert(bitmap);
         }
 
         else if (styleNo == OLD_STYLE) {

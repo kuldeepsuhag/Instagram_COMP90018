@@ -31,6 +31,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-core:11.6.0'
     implementation 'com.google.firebase:firebase-auth:11.6.0'
     implementation 'io.fotoapparat:fotoapparat:2.4.0'
+    implementation 'com.github.zomato:androidphotofilters:1.0.1'
 
 
 
