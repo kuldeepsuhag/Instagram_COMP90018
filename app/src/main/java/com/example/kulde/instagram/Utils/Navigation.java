@@ -11,7 +11,7 @@ import com.example.kulde.instagram.Profile;
 import com.example.kulde.instagram.R;
 import com.example.kulde.instagram.Search;
 import com.example.kulde.instagram.Userfeed;
-import com.example.kulde.instagram.camera.CameraFragment;
+import com.example.kulde.instagram.camera.TakePhotoActivity;
 
 public class Navigation {
     private static final String TAG = "Navigation";
@@ -25,7 +25,7 @@ public class Navigation {
                         context.startActivity(intent1);
                         break;
                     case R.id.ic_add:
-                        Intent intent2 = new Intent(context, CameraFragment.class);
+                        Intent intent2 = new Intent(context, TakePhotoActivity.class);
                         context.startActivity(intent2);
                         break;
                     case R.id.ic_profile:

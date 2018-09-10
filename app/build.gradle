@@ -30,6 +30,8 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     implementation 'com.google.firebase:firebase-core:11.6.0'
     implementation 'com.google.firebase:firebase-auth:11.6.0'
+    implementation 'io.fotoapparat:fotoapparat:2.4.0'
+
 
 
 
