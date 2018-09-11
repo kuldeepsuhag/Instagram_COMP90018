@@ -1,5 +1,7 @@
 package com.example.kulde.instagram.share;
 
+import android.content.Context;
+import android.graphics.Bitmap;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -17,6 +19,12 @@ import android.widget.Spinner;
 import com.example.kulde.instagram.R;
 import com.example.kulde.instagram.Utils.FilePaths;
 import com.example.kulde.instagram.Utils.FileSearch;
+import com.example.kulde.instagram.Utils.GridImageAdapter;
+
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
 import java.util.ArrayList;
 
@@ -91,6 +99,7 @@ public class GalleryFragment extends Fragment {
                 Log.d(TAG, "onItemClick: selected: " + directories.get(position));
 
                 //setup our image grid for the directory chosen
+                setupGridView(directories.get(position));
             }
 
             @Override
@@ -100,4 +109,66 @@ public class GalleryFragment extends Fragment {
         });
     }
 
+    private void setupGridView(String selectedDirectory){
+        Log.d(TAG, "setupGridView: directory chosen: " + selectedDirectory);
+        final ArrayList<String> imgURLs = FileSearch.getFilePaths(selectedDirectory);
+
+        //set the grid column width
+        int gridWidth = getResources().getDisplayMetrics().widthPixels;
+        int imageWidth = gridWidth/NUM_GRID_COLUMNS;
+        gridView.setColumnWidth(imageWidth);
+
+        //use the grid adapter to adapter the images to gridview
+        GridImageAdapter adapter = new GridImageAdapter(getActivity(), R.layout.layout_grid_imageview, mAppend, imgURLs);
+        gridView.setAdapter(adapter);
+
+        //set the first image to be displayed when the activity fragment view is inflated
+        try{
+            setImage(imgURLs.get(0), galleryImage, mAppend);
+            mSelectedImage = imgURLs.get(0);
+        }catch (ArrayIndexOutOfBoundsException e){
+            Log.e(TAG, "setupGridView: ArrayIndexOutOfBoundsException: " +e.getMessage() );
+        }
+
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Log.d(TAG, "onItemClick: selected an image: " + imgURLs.get(position));
+
+                setImage(imgURLs.get(position), galleryImage, mAppend);
+                mSelectedImage = imgURLs.get(position);
+            }
+        });
+
+    }
+
+
+    private void setImage(String imgURL, ImageView image, String dir) {
+        Log.d(TAG, "setImage: setting image");
+
+        ImageLoader imageLoader = ImageLoader.getInstance();
+
+        imageLoader.displayImage(dir + imgURL, image);
+//          , new ImageLoadingListener() {
+//            @Override
+//            public void onLoadingStarted(String imageUri, View view) {
+//                mProgressBar.setVisibility(View.VISIBLE);
+//            }
+//
+//            @Override
+//            public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
+//                mProgressBar.setVisibility(View.INVISIBLE);
+//            }
+//
+//            @Override
+//            public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+//                mProgressBar.setVisibility(View.INVISIBLE);
+//            }
+//
+//            @Override
+//            public void onLoadingCancelled(String imageUri, View view) {
+//                mProgressBar.setVisibility(View.INVISIBLE);
+//            }
+//        });
+    }
 }

@@ -20,6 +20,8 @@ import com.example.kulde.instagram.R;
 import com.example.kulde.instagram.Utils.Navigation;
 import com.example.kulde.instagram.Utils.Permissions;
 import com.example.kulde.instagram.Utils.SectionsPagerAdapter;
+import com.example.kulde.instagram.Utils.UniversalImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 /**
  * Created by User on 5/28/2017.
@@ -44,6 +46,7 @@ public class ShareActivity extends AppCompatActivity{
         Log.d(TAG, "onCreate: started.");
 
         if(checkPermissionsArray(Permissions.PERMISSIONS)){
+            initImageLoader();
             setupViewPager();
         }else{
             verifyPermissions(Permissions.PERMISSIONS);
@@ -56,6 +59,11 @@ public class ShareActivity extends AppCompatActivity{
         Menu menu = bottomNavigationView.getMenu();
         MenuItem menuItem = menu.getItem(ACTIVITY_NUM);
         menuItem.setChecked(true);
+    }
+
+    private void initImageLoader(){
+        UniversalImageLoader universalImageLoader = new UniversalImageLoader(mContext);
+        ImageLoader.getInstance().init(universalImageLoader.getConfig());
     }
 
     /**
