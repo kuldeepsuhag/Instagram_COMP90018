@@ -18,6 +18,8 @@ import com.example.kulde.instagram.MainPage;
 import com.example.kulde.instagram.R;
 import com.example.kulde.instagram.Utils.PermissionsDelegate;
 import com.example.kulde.instagram.camera.filters.GridLines;
+import com.example.kulde.instagram.share.GalleryFragment;
+import com.example.kulde.instagram.share.ShareActivity;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -65,6 +67,7 @@ public class TakePhotoActivity extends AppCompatActivity {
     private Fotoapparat fotoapparat;
     private ImageButton capture;
     private ImageButton torchSwitch;
+    private ImageButton gallery;
     private boolean flash_on = false;
     private GridLines gridLines;
 
@@ -95,6 +98,7 @@ public class TakePhotoActivity extends AppCompatActivity {
 
         cameraView = findViewById(R.id.camera_view);
         capture = findViewById(R.id.capture);
+        gallery = findViewById(R.id.gallary);
         hasCameraPermission = permissionsDelegate.hasCameraPermission();
         if (hasCameraPermission) {
             cameraView.setVisibility(View.VISIBLE);
@@ -108,6 +112,7 @@ public class TakePhotoActivity extends AppCompatActivity {
         fotoapparat = createFotoapparat();
 
         takePictureOnClick();
+        galleryOnClick();
         toggleTorchOnSwitch();   // control flash light
 
     }
@@ -209,6 +214,16 @@ public class TakePhotoActivity extends AppCompatActivity {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
+            }
+        });
+    }
+
+    private void galleryOnClick() {
+        gallery.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(TakePhotoActivity.this, ShareActivity.class);
+                startActivity(intent);
             }
         });
     }

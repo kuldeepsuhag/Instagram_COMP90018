@@ -1,6 +1,7 @@
 package com.example.kulde.instagram.share;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -15,6 +16,7 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.example.kulde.instagram.R;
 import com.example.kulde.instagram.Utils.FilePaths;
@@ -67,6 +69,21 @@ public class GalleryFragment extends Fragment {
                 getActivity().finish();
             }
         });
+
+        TextView nextShare = (TextView) view.findViewById(R.id.tvNext);
+        nextShare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d(TAG, "onClick: Move to NextActivity.");
+                Intent intent = new Intent(getActivity(), NextActivity.class);
+                intent.putExtra("selected_image", mSelectedImage);
+                startActivity(intent);
+            }
+        });
+
+
+
+
         init();
         return view;
     }

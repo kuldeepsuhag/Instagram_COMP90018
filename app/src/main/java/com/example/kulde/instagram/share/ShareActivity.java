@@ -23,10 +23,6 @@ import com.example.kulde.instagram.Utils.SectionsPagerAdapter;
 import com.example.kulde.instagram.Utils.UniversalImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
-/**
- * Created by User on 5/28/2017.
- */
-
 public class ShareActivity extends AppCompatActivity{
     private static final String TAG = "ShareActivity";
 
