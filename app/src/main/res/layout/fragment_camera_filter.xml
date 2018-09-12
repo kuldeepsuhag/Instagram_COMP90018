@@ -326,6 +326,31 @@
         android:orientation="vertical">
 
 
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Contrast" />
+
+        <SeekBar
+            android:id="@+id/contrast"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/focus_diameter"
+            android:layout_marginRight="@dimen/focus_diameter" />
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Brightness" />
+
+        <SeekBar
+            android:id="@+id/brightness"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/focus_diameter"
+            android:layout_marginRight="@dimen/focus_diameter" />
     </LinearLayout>
 
 
