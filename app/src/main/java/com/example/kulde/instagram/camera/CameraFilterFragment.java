@@ -4,21 +4,26 @@ import android.graphics.Bitmap;
 
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.util.Base64;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.SeekBar;
 
+import com.example.kulde.instagram.MainPage;
 import com.example.kulde.instagram.R;
-import com.zomato.photofilters.imageprocessors.Filter;
-import com.zomato.photofilters.imageprocessors.subfilters.BrightnessSubfilter;
-import com.zomato.photofilters.imageprocessors.subfilters.ContrastSubfilter;
 
 
+
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 
@@ -31,6 +36,11 @@ public class CameraFilterFragment extends Fragment {
 
     private Bitmap capture;
     private Bitmap originalBitmap;
+
+    private LinearLayout editPanel;
+
+    private Button edit;
+    private Button filter;
     private SeekBar brightness;
     private SeekBar contrast;
     private Bitmap bright;
@@ -61,17 +71,23 @@ public class CameraFilterFragment extends Fragment {
         ImageButton lime = view.findViewById(R.id.lime_stur);
         ImageButton night = view.findViewById(R.id.nigth_wh);
         ImageButton awe = view.findViewById(R.id.awe);
-        //ImageButton contrast_brightness = view.findViewById(R.id.contrast);
-        brightness = view.findViewById(R.id.brightness);
-        contrast = view.findViewById(R.id.contrast);
+
+        editPanel = view.findViewById(R.id.edit_panel);
+        editPanel.setVisibility(View.INVISIBLE);
+
+        edit = view.findViewById(R.id.edit_navi);
+        filter = view.findViewById(R.id.filter_navi);
+
+
 
         reCapture_Listener();
 
         try {
             originalBitmap = setImageView(imageEdit);
+            navigation(filter, edit);
             capture  = originalBitmap;
 
-            changeConstrast_and_brightness();
+            //changeConstrast_and_brightness();
 
             filterListener(imageEdit, gray, BitmapFilter.GRAY_STYLE, originalBitmap);
             filterListener(imageEdit, invert, BitmapFilter.BLUE_MESS, originalBitmap);
@@ -86,8 +102,8 @@ public class CameraFilterFragment extends Fragment {
                 @Override
                 public void onClick(View view) {
 
-                    brightness.setProgress(30);
-                    contrast.setProgress(1);
+                   // brightness.setProgress(30);
+                   // contrast.setProgress(1);
                     imageEdit.setImageBitmap(originalBitmap);
                 }
             });
@@ -99,6 +115,23 @@ public class CameraFilterFragment extends Fragment {
 
 
 
+
+    }
+
+    public void navigation(Button filter, Button edit){
+
+        filter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                editPanel.setVisibility(View.INVISIBLE);
+            }
+        });
+        edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                editPanel.setVisibility(View.VISIBLE);
+            }
+        });
 
     }
 
@@ -118,7 +151,6 @@ public class CameraFilterFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                brightness.setProgress(30);
                 capture = BitmapFilter.changeStyle(originBitmap, styleNo);
                 image.setImageBitmap(capture);
 
@@ -139,83 +171,6 @@ public class CameraFilterFragment extends Fragment {
         imageEdit.setImageBitmap(decodedBitmap);
         imageEdit.setRotation(-rotationDegrees);
         return decodedBitmap;
-    }
-
-    private void changeConstrast_and_brightness(){
-
-
-        contrast.setMax(30);
-        contrast.setProgress((1));
-        contrast.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener()
-        {
-            Filter myFilter = new Filter();
-
-            //capture=capture.copy(Bitmap.Config.ARGB_8888, true);
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser)
-
-            {
-                Bitmap input=capture.copy(Bitmap.Config.ARGB_8888, true);
-                if (progress == 0) {
-                    progress = 1;
-                }
-                myFilter.addSubFilter(new ContrastSubfilter(progress));
-                Bitmap outputImage = myFilter.processFilter(input);
-                //imageEdit.setColorFilter(ColorFilterGenerator.adjustContrast(progress));
-                /*
-                if (progress <= 5) {
-                    progress = 1 - progress / 5;
-                } else {
-                    progress = 1 + (progress / 10) * 9;
-                }
-                contra = changeBitmapContrastBrightness(capture, (float)progress,0);
-                */
-                imageEdit.setImageBitmap(outputImage);
-
-            }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar)
-            {
-            }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar)
-            {
-            }
-        });
-
-        brightness.setMax(60);
-        brightness.setProgress(30);
-
-        brightness.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener()
-        {
-            Filter myFilter = new Filter();
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser)
-            {
-                myFilter.addSubFilter(new BrightnessSubfilter(30));
-                progress = progress - 30;
-                Bitmap input=capture.copy(Bitmap.Config.ARGB_8888, true);
-                Bitmap ouputImage = myFilter.processFilter(input);
-
-
-                //capture = changeBitmapContrastBrightness(capture, 5.f, (float)progress-255);
-                imageEdit.setImageBitmap(ouputImage);
-            }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar)
-            {
-            }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar)
-            {
-
-            }
-        });
-
     }
 
 

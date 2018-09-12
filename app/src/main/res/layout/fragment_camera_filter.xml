@@ -24,10 +24,12 @@
         android:id="@+id/picture_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_above="@id/filter_scroll"
+
+        android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:scaleType="centerCrop"
-        android:layout_alignParentLeft="true">
+        android:scaleType="fitCenter">
 
     </ImageView>
 
@@ -43,13 +45,28 @@
         android:scaleType="fitCenter"
         app:srcCompat="@drawable/back" />
 
+    <Button
+        android:id="@+id/next"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="16dp"
+        android:background="?android:selectableItemBackground"
+        android:scaleType="fitCenter"
+        android:text="next" />
+
     <HorizontalScrollView
+        android:id="@+id/filter_scroll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_alignParentBottom="true"
+        android:layout_above="@id/filter_bottom_navigation"
+        android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true">
+        android:layout_marginBottom="0dp"
+        android:background="@android:color/background_light"
+        android:visibility="visible">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -293,38 +310,57 @@
             </LinearLayout>
 
 
-
         </LinearLayout>
     </HorizontalScrollView>
 
-    <ImageButton
-        android:id="@+id/next"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginRight="16dp"
-        android:layout_marginTop="16dp"
-        android:scaleType="fitCenter"
-        android:background="?android:selectableItemBackground"
-        android:src="@drawable/next" />
+    <LinearLayout
+        android:id="@+id/edit_panel"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/filter_bottom_navigation"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@id/picture_view"
+        android:layout_marginBottom="0dp"
+        android:background="@android:color/background_light"
+        android:orientation="vertical">
 
-    <SeekBar
-        android:id="@+id/contrast"
-        style="@style/Widget.AppCompat.SeekBar"
+
+    </LinearLayout>
+
+
+
+
+    <LinearLayout
+        android:id="@+id/filter_bottom_navigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@android:color/background_light"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="94dp" />
+        android:layout_marginBottom="0dp">
 
-    <SeekBar
-        android:id="@+id/brightness"
-        style="@android:style/Widget.DeviceDefault.Light.SeekBar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="123dp" />
+        <Button
+            android:id="@+id/filter_navi"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:layout_weight="1"
+            android:background="@android:color/background_light"
+            android:text="Filter"
+            android:textSize="12sp"
+            android:textStyle="bold|italic" />
+
+        <Button
+            android:id="@+id/edit_navi"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:layout_weight="1"
+            android:background="@android:color/background_light"
+            android:text="Edit"
+            android:textSize="12sp"
+            android:textStyle="bold|italic" />
+
+    </LinearLayout>
+
+
 
 </RelativeLayout>
