@@ -20,7 +20,7 @@ import android.widget.SeekBar;
 
 import com.example.kulde.instagram.MainPage;
 import com.example.kulde.instagram.R;
-
+import com.example.kulde.instagram.camera.filters.BnCFilter;
 
 
 import java.io.ByteArrayOutputStream;
@@ -43,8 +43,7 @@ public class CameraFilterFragment extends Fragment {
     private Button filter;
     private SeekBar brightness;
     private SeekBar contrast;
-    private Bitmap bright;
-    private Bitmap contra;
+
 
     static
     {
@@ -78,6 +77,11 @@ public class CameraFilterFragment extends Fragment {
         edit = view.findViewById(R.id.edit_navi);
         filter = view.findViewById(R.id.filter_navi);
 
+        brightness = view.findViewById(R.id.brightness);
+        contrast = view.findViewById(R.id.contrast);
+
+
+
 
 
         reCapture_Listener();
@@ -96,6 +100,8 @@ public class CameraFilterFragment extends Fragment {
             filterListener(imageEdit, awe, BitmapFilter.AWE_STRUCK, originalBitmap);
             filterListener(imageEdit, night, BitmapFilter.NIGHT_WHIS, originalBitmap);
 
+            new BnCFilter(brightness, imageEdit, BnCFilter.BRIGHTNESS);
+            new BnCFilter(contrast, imageEdit, BnCFilter.CONTRAST);
 
 
             origin.setOnClickListener(new View.OnClickListener() {
@@ -130,6 +136,7 @@ public class CameraFilterFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 editPanel.setVisibility(View.VISIBLE);
+
             }
         });
 
