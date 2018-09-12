@@ -9,12 +9,9 @@ import android.graphics.Paint;
 
 import com.example.kulde.instagram.camera.filters.GrayFilter;
 
-import com.example.kulde.instagram.camera.filters.InvertFilter;
-
 import com.example.kulde.instagram.camera.filters.OldFilter;
 import com.zomato.photofilters.SampleFilters;
 import com.zomato.photofilters.imageprocessors.Filter;
-import com.zomato.photofilters.imageprocessors.subfilters.BrightnessSubfilter;
 
 
 public class BitmapFilter {
@@ -24,9 +21,15 @@ public class BitmapFilter {
      */
     public static final int GRAY_STYLE = 1; // gray scale
 
-    public static final int INVERT_STYLE = 2; // invert the colors
+    public static final int BLUE_MESS = 2; // invert the colors
 
     public static final int OLD_STYLE = 3; // old photo
+
+    public static final int AWE_STRUCK = 4;
+
+    public static final int LIME_STUTTER = 5;
+
+    public static final int NIGHT_WHIS = 6;
 
     static
     {
@@ -46,7 +49,7 @@ public class BitmapFilter {
             return GrayFilter.changeToGray(bitmap);
         }
 
-        else if (styleNo == INVERT_STYLE) {
+        else if (styleNo == BLUE_MESS) {
 
             Filter fooFilter = SampleFilters.getBlueMessFilter();
 
@@ -58,6 +61,29 @@ public class BitmapFilter {
 
         else if (styleNo == OLD_STYLE) {
             return OldFilter.changeToOld(bitmap);
+        }
+
+        else if (styleNo == AWE_STRUCK) {
+            Filter fooFilter = SampleFilters.getAweStruckVibeFilter();
+
+            bitmap=bitmap.copy(Bitmap.Config.ARGB_8888, true);
+            Bitmap ouputImage = fooFilter.processFilter(bitmap);
+            return ouputImage;
+        }
+
+        else if (styleNo == LIME_STUTTER) {
+            Filter fooFilter = SampleFilters.getLimeStutterFilter();
+            bitmap=bitmap.copy(Bitmap.Config.ARGB_8888, true);
+            Bitmap ouputImage = fooFilter.processFilter(bitmap);
+            return ouputImage;
+
+        }
+
+        else if (styleNo == NIGHT_WHIS) {
+            Filter fooFilter = SampleFilters.getNightWhisperFilter();
+            bitmap=bitmap.copy(Bitmap.Config.ARGB_8888, true);
+            Bitmap ouputImage = fooFilter.processFilter(bitmap);
+            return ouputImage;
         }
 
         return bitmap;

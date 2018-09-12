@@ -1,31 +1,17 @@
 package com.example.kulde.instagram.camera;
 
-import android.annotation.TargetApi;
-import android.content.Intent;
 import android.graphics.Bitmap;
 
 import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.ColorMatrix;
-import android.graphics.ColorMatrixColorFilter;
-import android.graphics.Paint;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffColorFilter;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.SeekBar;
-import android.widget.Toast;
 
 import com.example.kulde.instagram.R;
 import com.zomato.photofilters.imageprocessors.Filter;
@@ -33,19 +19,16 @@ import com.zomato.photofilters.imageprocessors.subfilters.BrightnessSubfilter;
 import com.zomato.photofilters.imageprocessors.subfilters.ContrastSubfilter;
 
 
-import java.io.File;
 import java.io.IOException;
 
-import static com.example.kulde.instagram.camera.BitmapFilter.changeBitmapContrastBrightness;
 
-
-public class CameraFilterActivity extends Fragment {
+public class CameraFilterFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
 
     private static final String LOGGING_TAG = "photo filter";
     private ImageView imageEdit;
     private ImageButton backToTake;
-    private ImageButton oldStyle;
+
     private Bitmap capture;
     private Bitmap originalBitmap;
     private SeekBar brightness;
@@ -62,7 +45,7 @@ public class CameraFilterActivity extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.activity_camera_filter, container, false);
+        return inflater.inflate(R.layout.fragment_camera_filter, container, false);
     }
 
 
@@ -71,10 +54,13 @@ public class CameraFilterActivity extends Fragment {
 
         imageEdit = view.findViewById(R.id.picture_view);
         backToTake = view.findViewById(R.id.back);
-        oldStyle = view.findViewById(R.id.yellow);
+        ImageButton oldStyle = view.findViewById(R.id.yellow);
         ImageButton origin = view.findViewById(R.id.origin);
         ImageButton gray = view.findViewById(R.id.black);
         ImageButton invert = view.findViewById(R.id.neon);
+        ImageButton lime = view.findViewById(R.id.lime_stur);
+        ImageButton night = view.findViewById(R.id.nigth_wh);
+        ImageButton awe = view.findViewById(R.id.awe);
         //ImageButton contrast_brightness = view.findViewById(R.id.contrast);
         brightness = view.findViewById(R.id.brightness);
         contrast = view.findViewById(R.id.contrast);
@@ -88,8 +74,13 @@ public class CameraFilterActivity extends Fragment {
             changeConstrast_and_brightness();
 
             filterListener(imageEdit, gray, BitmapFilter.GRAY_STYLE, originalBitmap);
-            filterListener(imageEdit, invert, BitmapFilter.INVERT_STYLE, originalBitmap);
+            filterListener(imageEdit, invert, BitmapFilter.BLUE_MESS, originalBitmap);
             filterListener(imageEdit, oldStyle, BitmapFilter.OLD_STYLE, originalBitmap);
+            filterListener(imageEdit, lime, BitmapFilter.LIME_STUTTER, originalBitmap);
+            filterListener(imageEdit, awe, BitmapFilter.AWE_STRUCK, originalBitmap);
+            filterListener(imageEdit, night, BitmapFilter.NIGHT_WHIS, originalBitmap);
+
+
 
             origin.setOnClickListener(new View.OnClickListener() {
                 @Override

@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".camera.CameraFilterFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <ImageView
+        android:id="@+id/background"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginBottom="0dp"
+        android:background="@android:color/background_light"
+        android:scaleType="centerCrop">
+
+    </ImageView>
+
+    <ImageView
+        android:id="@+id/picture_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:scaleType="centerCrop"
+        android:layout_alignParentLeft="true">
+
+    </ImageView>
+
+    <ImageButton
+        android:id="@+id/back"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
+        android:background="?android:selectableItemBackground"
+        android:scaleType="fitCenter"
+        app:srcCompat="@drawable/back" />
+
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:orientation="vertical">
+
+                <ImageButton
+                    android:id="@+id/origin"
+                    android:layout_width="80dp"
+                    android:layout_height="60dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:background="?android:selectableItemBackground"
+                    android:scaleType="centerCrop"
+                    app:srcCompat="@drawable/origin" />
+
+                <TextView
+
+                    android:layout_width="80dp"
+                    android:layout_height="20dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_below="@+id/filter_image"
+                    android:layout_centerHorizontal="false"
+                    android:gravity="center"
+                    android:text="Origin"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Button"
+                    android:textIsSelectable="false"
+                    android:textSize="8sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:orientation="vertical">
+
+                <ImageButton
+                    android:id="@+id/neon"
+                    android:layout_width="80dp"
+                    android:layout_height="60dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:background="?android:selectableItemBackground"
+                    android:scaleType="centerCrop"
+                    app:srcCompat="@drawable/bluemess" />
+
+                <TextView
+                    android:layout_width="80dp"
+                    android:layout_height="20dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_below="@+id/filter_image"
+                    android:layout_centerHorizontal="false"
+                    android:gravity="center"
+                    android:text="Blue Mess"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Button"
+                    android:textIsSelectable="false"
+                    android:textSize="8sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:orientation="vertical">
+
+                <ImageButton
+                    android:id="@+id/yellow"
+                    android:layout_width="80dp"
+                    android:layout_height="60dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:background="?android:selectableItemBackground"
+                    android:scaleType="centerCrop"
+                    app:srcCompat="@drawable/old" />
+
+                <TextView
+
+                    android:layout_width="80dp"
+                    android:layout_height="20dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_below="@+id/filter_image"
+                    android:layout_centerHorizontal="false"
+                    android:gravity="center"
+                    android:text="Old Times"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Button"
+                    android:textIsSelectable="false"
+                    android:textSize="8sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:orientation="vertical">
+
+                <ImageButton
+                    android:id="@+id/black"
+                    android:layout_width="80dp"
+                    android:layout_height="60dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:background="?android:selectableItemBackground"
+                    android:scaleType="centerCrop"
+                    app:srcCompat="@drawable/black_n_white" />
+
+                <TextView
+
+                    android:layout_width="80dp"
+                    android:layout_height="20dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_below="@+id/filter_image"
+                    android:layout_centerHorizontal="false"
+                    android:gravity="center"
+                    android:text="Black n White"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Button"
+                    android:textIsSelectable="false"
+                    android:textSize="8sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:orientation="vertical">
+
+                <ImageButton
+                    android:id="@+id/awe"
+                    android:layout_width="80dp"
+                    android:layout_height="60dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:background="?android:selectableItemBackground"
+                    android:scaleType="centerCrop"
+                    app:srcCompat="@drawable/awe" />
+
+                <TextView
+                    android:layout_width="80dp"
+                    android:layout_height="20dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_below="@+id/filter_image"
+                    android:layout_centerHorizontal="false"
+                    android:gravity="center"
+                    android:text="Awe"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Button"
+                    android:textIsSelectable="false"
+                    android:textSize="8sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:orientation="vertical">
+
+                <ImageButton
+                    android:id="@+id/nigth_wh"
+                    android:layout_width="80dp"
+                    android:layout_height="60dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:background="?android:selectableItemBackground"
+                    android:scaleType="centerCrop"
+                    app:srcCompat="@drawable/night_whis" />
+
+                <TextView
+
+                    android:layout_width="80dp"
+                    android:layout_height="20dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_below="@+id/filter_image"
+                    android:layout_centerHorizontal="false"
+                    android:gravity="center"
+                    android:text="Night Whisper"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Button"
+                    android:textIsSelectable="false"
+                    android:textSize="8sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:orientation="vertical">
+
+                <ImageButton
+                    android:id="@+id/lime_stur"
+                    android:layout_width="80dp"
+                    android:layout_height="60dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:background="?android:selectableItemBackground"
+                    android:scaleType="centerCrop"
+                    app:srcCompat="@drawable/lime_stur" />
+
+                <TextView
+
+                    android:layout_width="80dp"
+                    android:layout_height="20dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_below="@+id/filter_image"
+                    android:layout_centerHorizontal="false"
+                    android:gravity="center"
+                    android:text="Lime Stutter"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Button"
+                    android:textIsSelectable="false"
+                    android:textSize="8sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+
+
+        </LinearLayout>
+    </HorizontalScrollView>
+
+    <ImageButton
+        android:id="@+id/next"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="16dp"
+        android:scaleType="fitCenter"
+        android:background="?android:selectableItemBackground"
+        android:src="@drawable/next" />
+
+    <SeekBar
+        android:id="@+id/contrast"
+        style="@style/Widget.AppCompat.SeekBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="94dp" />
+
+    <SeekBar
+        android:id="@+id/brightness"
+        style="@android:style/Widget.DeviceDefault.Light.SeekBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="123dp" />
+
+</RelativeLayout>

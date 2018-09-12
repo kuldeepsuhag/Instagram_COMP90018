@@ -6,25 +6,21 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.annotation.NonNull;
 import android.os.Bundle;
-import android.support.v7.widget.SwitchCompat;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.kulde.instagram.MainPage;
 import com.example.kulde.instagram.R;
 import com.example.kulde.instagram.Utils.PermissionsDelegate;
 import com.example.kulde.instagram.camera.filters.GridLines;
-import com.example.kulde.instagram.share.GalleryFragment;
 import com.example.kulde.instagram.share.ShareActivity;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.util.concurrent.ExecutionException;
 
 import io.fotoapparat.Fotoapparat;
@@ -44,7 +40,6 @@ import static io.fotoapparat.log.LoggersKt.fileLogger;
 
 import static io.fotoapparat.log.LoggersKt.logcat;
 import static io.fotoapparat.log.LoggersKt.loggers;
-import static io.fotoapparat.result.transformer.ResolutionTransformersKt.scaled;
 import static io.fotoapparat.selector.AspectRatioSelectorsKt.standardRatio;
 import static io.fotoapparat.selector.FlashSelectorsKt.autoFlash;
 import static io.fotoapparat.selector.FlashSelectorsKt.autoRedEye;
@@ -277,7 +272,7 @@ public class TakePhotoActivity extends AppCompatActivity {
 
     private void passToFilter(Bitmap bmp, int rotate) {
 
-        CameraFilterActivity nextFrag= new CameraFilterActivity();
+        CameraFilterFragment nextFrag= new CameraFilterFragment();
 
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         bmp.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
