@@ -101,6 +101,7 @@ public class TakePhotoActivity extends AppCompatActivity {
             gridLines = findViewById(R.id.grid_lines);
             gridLines.setNumColumns(3);
             gridLines.setNumRows(3);
+
         } else {
             permissionsDelegate.requestCameraPermission();
         }

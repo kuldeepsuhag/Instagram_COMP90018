@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Base64;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
@@ -32,6 +33,9 @@ public class FilterActivity extends AppCompatActivity {
 
         // initial re-take photo module
         reCapture_Listener();
+
+        // initial bottom bar
+        navigation();
 
 
     }
@@ -101,5 +105,32 @@ public class FilterActivity extends AppCompatActivity {
         imageEdit.setImageBitmap(decodedBitmap);
         imageEdit.setRotation(-rotationDegrees);
         return decodedBitmap;
+    }
+
+    private void navigation(){
+        Button filter = findViewById(R.id.filter_navi);
+        Button contrast = findViewById(R.id.edit_navi);
+
+        filter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                findViewById(R.id.edit_panel).setVisibility(View.INVISIBLE);
+                findViewById(R.id.edit_panel).setFocusable(false);
+                findViewById(R.id.filter_panel).setFocusable(true);
+            }
+        });
+
+        contrast.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                findViewById(R.id.edit_panel).setVisibility(View.VISIBLE);
+                findViewById(R.id.edit_panel).setFocusable(true);
+                findViewById(R.id.filter_panel).setFocusable(false);
+
+            }
+        });
+
     }
 }
