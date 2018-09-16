@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.example.kulde.instagram.MainPage;
 import com.example.kulde.instagram.R;
+import com.example.kulde.instagram.Utils.CommResources;
 import com.example.kulde.instagram.Utils.PermissionsDelegate;
 import com.example.kulde.instagram.camera.filters.GridLines;
 import com.example.kulde.instagram.share.ShareActivity;
@@ -104,11 +105,13 @@ public class TakePhotoActivity extends AppCompatActivity {
             permissionsDelegate.requestCameraPermission();
         }
 
-        fotoapparat = createFotoapparat();
+        if (hasCameraPermission) {
+            fotoapparat = createFotoapparat();
 
-        takePictureOnClick();
-        galleryOnClick();
-        toggleTorchOnSwitch();   // control flash light
+            takePictureOnClick();
+            galleryOnClick();
+            toggleTorchOnSwitch();   // control flash light
+        }
 
     }
 
@@ -272,8 +275,9 @@ public class TakePhotoActivity extends AppCompatActivity {
 
     private void passToPreview(Bitmap bmp, int rotate) {
 
-        PhotoPreviewFragment nextFrag= new PhotoPreviewFragment();
 
+        PhotoPreviewFragment nextFrag= new PhotoPreviewFragment();
+        /*
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         bmp.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
         byte[] byteArray = byteArrayOutputStream .toByteArray();
@@ -284,7 +288,12 @@ public class TakePhotoActivity extends AppCompatActivity {
         b.putInt("rotate",rotate);
 
         // your fragment code
+
         nextFrag.setArguments(b);
+        */
+
+        CommResources.photoFinishBitmap = bmp;
+        CommResources.rotationdegree = rotate;
 
 
         this.getSupportFragmentManager().beginTransaction()

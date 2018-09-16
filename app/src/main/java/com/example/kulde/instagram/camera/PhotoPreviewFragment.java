@@ -139,15 +139,17 @@ public class PhotoPreviewFragment extends Fragment {
 
     private Bitmap setImageView(ImageView imageEdit) throws IOException {
 
-
+        /*
         String encodedBitmap = getArguments().getString("image");
         int rotationDegrees = getArguments().getInt("rotate");
         byte[] decodedString = Base64.decode(encodedBitmap, Base64.DEFAULT);
         Bitmap decodedBitmap = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-        imageEdit.setImageBitmap(decodedBitmap);
-        imageEdit.setRotation(-rotationDegrees);
-        CommResources.rotationdegree = rotationDegrees;
-        bmp = decodedBitmap;
-        return decodedBitmap;
+        */
+        bmp = CommResources.photoFinishBitmap;
+        imageEdit.setImageBitmap(CommResources.photoFinishBitmap);
+        imageEdit.setRotation(-CommResources.rotationdegree);
+        //CommResources.rotationdegree = rotationDegrees;
+        //bmp = decodedBitmap;
+        return bmp;
     }
 }

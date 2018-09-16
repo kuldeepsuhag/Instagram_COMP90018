@@ -45,6 +45,7 @@ public class FilterActivity extends AppCompatActivity {
                 // brightness.setProgress(30);
                 // contrast.setProgress(1);
                 imageEdit.setImageBitmap(bitmapEdit);
+                CommResources.edit_template = bitmapEdit;
             }
         });
     }
