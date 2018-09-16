@@ -259,7 +259,7 @@ public class TakePhotoActivity extends AppCompatActivity {
                         //ImageView imageView = findViewById(R.id.result);
                         //imageView.setImageBitmap(bitmapPhoto.bitmap);
                         //imageView.setRotation(-bitmapPhoto.rotationDegrees);
-                        passToFilter(bitmapPhoto.bitmap, bitmapPhoto.rotationDegrees);
+                        passToPreview(bitmapPhoto.bitmap, bitmapPhoto.rotationDegrees);
 
                     }
                 });
@@ -270,9 +270,9 @@ public class TakePhotoActivity extends AppCompatActivity {
 
     }
 
-    private void passToFilter(Bitmap bmp, int rotate) {
+    private void passToPreview(Bitmap bmp, int rotate) {
 
-        CameraFilterFragment nextFrag= new CameraFilterFragment();
+        PhotoPreviewFragment nextFrag= new PhotoPreviewFragment();
 
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         bmp.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);

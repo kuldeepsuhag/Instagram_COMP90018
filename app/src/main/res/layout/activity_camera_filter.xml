@@ -4,21 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".camera.CameraFilterFragment">
+    android:background="@android:color/background_light"
+    tools:context=".camera.CameraFilterActivity">
 
-    <!-- TODO: Update blank fragment layout -->
 
-    <ImageView
-        android:id="@+id/background"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginBottom="0dp"
-        android:background="@android:color/background_light"
-        android:scaleType="centerCrop">
-
-    </ImageView>
 
     <ImageView
         android:id="@+id/picture_view"
@@ -41,9 +30,8 @@
         android:layout_alignParentTop="true"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="16dp"
-        android:background="?android:selectableItemBackground"
-        android:scaleType="fitCenter"
-        app:srcCompat="@drawable/back" />
+        android:background="@drawable/back"
+        android:scaleType="fitCenter" />
 
     <Button
         android:id="@+id/next"
@@ -313,56 +301,14 @@
         </LinearLayout>
     </HorizontalScrollView>
 
-    <LinearLayout
-        android:id="@+id/edit_panel"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@id/filter_bottom_navigation"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@id/picture_view"
-        android:layout_marginBottom="0dp"
-        android:background="@android:color/background_light"
-        android:orientation="vertical">
-
-
-        <TextView
-            android:id="@+id/textView2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Contrast" />
-
-        <SeekBar
-            android:id="@+id/contrast"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/focus_diameter"
-            android:layout_marginRight="@dimen/focus_diameter" />
-
-        <TextView
-            android:id="@+id/textView1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Brightness" />
-
-        <SeekBar
-            android:id="@+id/brightness"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/focus_diameter"
-            android:layout_marginRight="@dimen/focus_diameter" />
-    </LinearLayout>
-
-
-
 
     <LinearLayout
         android:id="@+id/filter_bottom_navigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@android:color/background_light"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="0dp">
+        android:layout_marginBottom="0dp"
+        android:background="@android:color/background_light">
 
         <Button
             android:id="@+id/filter_navi"
@@ -385,7 +331,6 @@
             android:textStyle="bold|italic" />
 
     </LinearLayout>
-
 
 
 </RelativeLayout>
