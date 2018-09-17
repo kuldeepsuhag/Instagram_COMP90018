@@ -10,9 +10,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.SeekBar;
 
 import com.example.kulde.instagram.R;
 import com.example.kulde.instagram.Utils.CommResources;
+import com.example.kulde.instagram.camera.filters.BnCFilter;
 
 public class FilterActivity extends AppCompatActivity {
 
@@ -36,6 +38,8 @@ public class FilterActivity extends AppCompatActivity {
 
         // initial bottom bar
         navigation();
+
+
 
 
     }
@@ -74,6 +78,14 @@ public class FilterActivity extends AppCompatActivity {
 
     }
 
+    private void setSeekBarListener() {
+        SeekBar contrast = findViewById(R.id.contrast_seekbar);
+        SeekBar brightness = findViewById(R.id.bright_seekbar);
+
+        new BnCFilter(contrast, imageEdit, BnCFilter.CONTRAST);
+        new BnCFilter(brightness, imageEdit, BnCFilter.BRIGHTNESS);
+    }
+
     private void filterListener(final ImageView image, final ImageButton button, final int styleNo, final Bitmap originBitmap){
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -104,6 +116,7 @@ public class FilterActivity extends AppCompatActivity {
         int rotationDegrees = CommResources.rotationdegree;
         imageEdit.setImageBitmap(decodedBitmap);
         imageEdit.setRotation(-rotationDegrees);
+        CommResources.edit_template = decodedBitmap;
         return decodedBitmap;
     }
 
@@ -128,6 +141,8 @@ public class FilterActivity extends AppCompatActivity {
                 findViewById(R.id.edit_panel).setVisibility(View.VISIBLE);
                 findViewById(R.id.edit_panel).setFocusable(true);
                 findViewById(R.id.filter_panel).setFocusable(false);
+                //initial tune function
+                setSeekBarListener();
 
             }
         });
