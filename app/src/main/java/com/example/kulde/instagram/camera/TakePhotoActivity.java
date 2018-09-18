@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.example.kulde.instagram.Home.MainPage;
 import com.example.kulde.instagram.R;
+import com.example.kulde.instagram.Utils.CommResources;
 import com.example.kulde.instagram.Utils.PermissionsDelegate;
 import com.example.kulde.instagram.camera.filters.GridLines;
 import com.example.kulde.instagram.share.ShareActivity;
@@ -100,15 +101,18 @@ public class TakePhotoActivity extends AppCompatActivity {
             gridLines = findViewById(R.id.grid_lines);
             gridLines.setNumColumns(3);
             gridLines.setNumRows(3);
+
         } else {
             permissionsDelegate.requestCameraPermission();
         }
 
-        fotoapparat = createFotoapparat();
+        if (hasCameraPermission) {
+            fotoapparat = createFotoapparat();
 
-        takePictureOnClick();
-        galleryOnClick();
-        toggleTorchOnSwitch();   // control flash light
+            takePictureOnClick();
+            galleryOnClick();
+            toggleTorchOnSwitch();   // control flash light
+        }
 
     }
 
@@ -259,7 +263,7 @@ public class TakePhotoActivity extends AppCompatActivity {
                         //ImageView imageView = findViewById(R.id.result);
                         //imageView.setImageBitmap(bitmapPhoto.bitmap);
                         //imageView.setRotation(-bitmapPhoto.rotationDegrees);
-                        passToFilter(bitmapPhoto.bitmap, bitmapPhoto.rotationDegrees);
+                        passToPreview(bitmapPhoto.bitmap, bitmapPhoto.rotationDegrees);
 
                     }
                 });
@@ -270,10 +274,11 @@ public class TakePhotoActivity extends AppCompatActivity {
 
     }
 
-    private void passToFilter(Bitmap bmp, int rotate) {
+    private void passToPreview(Bitmap bmp, int rotate) {
 
-        CameraFilterFragment nextFrag= new CameraFilterFragment();
 
+        PhotoPreviewFragment nextFrag= new PhotoPreviewFragment();
+        /*
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         bmp.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
         byte[] byteArray = byteArrayOutputStream .toByteArray();
@@ -284,7 +289,12 @@ public class TakePhotoActivity extends AppCompatActivity {
         b.putInt("rotate",rotate);
 
         // your fragment code
+
         nextFrag.setArguments(b);
+        */
+
+        CommResources.photoFinishBitmap = bmp;
+        CommResources.rotationdegree = rotate;
 
 
         this.getSupportFragmentManager().beginTransaction()

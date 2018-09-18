@@ -1,9 +1,15 @@
 package com.example.kulde.instagram.camera.filters;
 
-import android.graphics.ColorMatrix;
-import android.graphics.ColorMatrixColorFilter;
+import android.graphics.Bitmap;
+
 import android.widget.ImageView;
 import android.widget.SeekBar;
+
+import com.example.kulde.instagram.Utils.CommResources;
+import com.zomato.photofilters.imageprocessors.Filter;
+import com.zomato.photofilters.imageprocessors.subfilters.BrightnessSubfilter;
+import com.zomato.photofilters.imageprocessors.subfilters.ContrastSubfilter;
+
 
 public class BnCFilter {
 
@@ -14,19 +20,28 @@ public class BnCFilter {
     private ImageView vi;
     private int mode;
 
+    private int brightnessFinal = 0;
+    private float contrastFinal = 1.0f;
+
     public BnCFilter(SeekBar seekbar, ImageView vi, int mode) {
         this.seekbar = seekbar;
         this.vi = vi;
         this.mode = mode;
         if (mode == BRIGHTNESS) {
-            seekbar.setMax(100);
+            seekbar.setMax(200);
+            seekbar.setProgress(100);
         }
         else {
-            seekbar.setMax(8);
+            seekbar.setMax(20);
+            seekbar.setProgress(0);
         }
-        seekbar.setProgress(1);
         setSeekbarListener();
     }
+    static
+    {
+        System.loadLibrary("NativeImageProcessor");
+    }
+
 
     private void setSeekbarListener() {
 
@@ -34,26 +49,27 @@ public class BnCFilter {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 //set the progress value
-                if (mode == BRIGHTNESS)
+                if (mode == BRIGHTNESS) {
+                    //int progress = seekBar.getProgress();
+                    int fb = progress-100;
+                    //vi.setColorFilter(brightIt(seekBar.getProgress()));
+                    vi.setImageBitmap(brightIt(fb,CommResources.edit_template));
+                }
+                if (mode == CONTRAST) {
+                    //int progress = seekBar.getProgress();
+                    //c = progress;
+                    progress += 10;
+                    float c = .10f * progress;
+                    //vi.setColorFilter(contrastIt(seekBar.getProgress()));
+                    vi.setImageBitmap(contrastIt(c, CommResources.edit_template));
+                }
 
-                    vi.setColorFilter(brightIt(progress));
 
-                if (mode == CONTRAST)
-                    vi.setColorFilter(contrastIt(progress));
             }
 
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
-                if (mode == BRIGHTNESS) {
-                    int progress = seekBar.getProgress();
-                    fb = progress;
-                    vi.setColorFilter(brightIt(seekBar.getProgress()));
-                }
-                if (mode == CONTRAST) {
-                    int progress = seekBar.getProgress();
-                    c = progress;
-                    vi.setColorFilter(contrastIt(seekBar.getProgress()));
-                }
+
 
             }
 
@@ -61,47 +77,36 @@ public class BnCFilter {
             public void onStopTrackingTouch(SeekBar seekBar) {
                 if (mode == BRIGHTNESS) {
                     int progress = seekBar.getProgress();
-                    fb = progress;
-                    vi.setColorFilter(brightIt(seekBar.getProgress()));
+                    int fb = progress-100;
+                    //vi.setColorFilter(brightIt(seekBar.getProgress()));
+                    vi.setImageBitmap(brightIt(fb,CommResources.edit_template));
                 }
                 if (mode == CONTRAST) {
                     int progress = seekBar.getProgress();
-                    c = progress;
-                    vi.setColorFilter(contrastIt(seekBar.getProgress()));
+                    //c = progress;
+                    progress += 10;
+                    float c = .10f * progress;
+                    //vi.setColorFilter(contrastIt(seekBar.getProgress()));
+                    vi.setImageBitmap(contrastIt(c, CommResources.edit_template));
                 }
             }
         });
 
     }
 
-    private ColorMatrixColorFilter brightIt(int fb) {
-        ColorMatrix cmB = new ColorMatrix();
-        cmB.set(new float[]{
-                c, 0, 0, 0, fb,
-                0, c, 0, 0, fb,
-                0, 0, c, 0, fb,
-                0, 0, 0, 1, 0});
+    private Bitmap brightIt(final int brightness, Bitmap finalImage) {
+        brightnessFinal = brightness;
+        Filter myFilter = new Filter();
+        myFilter.addSubFilter(new BrightnessSubfilter(brightness));
+        return myFilter.processFilter(finalImage.copy(Bitmap.Config.ARGB_8888, true));
 
-        ColorMatrix colorMatrix = new ColorMatrix();
-        colorMatrix.set(cmB);
-
-        ColorMatrixColorFilter f = new ColorMatrixColorFilter(colorMatrix);
-
-        return f;
     }
 
-    private ColorMatrixColorFilter contrastIt(int c) {
-        ColorMatrix cmB = new ColorMatrix();
-        cmB.set(new float[]{
-                c, 0, 0, 0, fb,
-                0, c, 0, 0, fb,
-                0, 0, c, 0, fb,
-                0, 0, 0, 1, 0});
-
-        ColorMatrix colorMatrix = new ColorMatrix();
-        colorMatrix.set(cmB);
-        ColorMatrixColorFilter f = new ColorMatrixColorFilter(colorMatrix);
-        return f;
+    private Bitmap contrastIt(final float contrast, Bitmap finalImage) {
+        contrastFinal = contrast;
+        Filter myFilter = new Filter();
+        myFilter.addSubFilter(new ContrastSubfilter(contrast));
+        return myFilter.processFilter(finalImage.copy(Bitmap.Config.ARGB_8888, true));
     }
 
 
