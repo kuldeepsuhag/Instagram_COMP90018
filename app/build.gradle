@@ -38,6 +38,7 @@ dependencies {
     implementation 'io.fotoapparat:fotoapparat:2.4.0'
     implementation 'com.github.zomato:androidphotofilters:1.0.1'
     implementation 'de.hdodenhof:circleimageview:2.2.0'
+    implementation 'com.theartofdev.edmodo:android-image-cropper:2.5.+'
 
 
 

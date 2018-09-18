@@ -30,6 +30,19 @@
         android:background="@drawable/camera"
         android:scaleType="fitCenter" />
 
+    <ImageButton
+        android:id="@+id/crop"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/back"
+        android:layout_marginRight="82dp"
+        android:layout_marginTop="16dp"
+        android:background="?android:selectableItemBackground"
+        android:scaleType="fitCenter"
+        app:srcCompat="@drawable/crop" />
+
     <Button
         android:id="@+id/next"
         android:layout_width="50dp"
@@ -370,5 +383,7 @@
             android:textStyle="bold|italic" />
 
     </LinearLayout>
+
+
 
 </RelativeLayout>

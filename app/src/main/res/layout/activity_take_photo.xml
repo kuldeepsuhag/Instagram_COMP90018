@@ -10,7 +10,8 @@
     <io.fotoapparat.view.CameraView
         android:id="@+id/camera_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_above="@+id/capture_bottom">
 
     </io.fotoapparat.view.CameraView>
 
@@ -19,6 +20,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@android:color/transparent"
+        android:layout_above="@+id/capture_bottom"
         android:focusable="false">
 
     </com.example.kulde.instagram.camera.filters.GridLines>
@@ -39,9 +41,19 @@
         android:id="@id/result"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_above="@id/capture_bottom"
         />
 
-    <ImageButton
+    <RelativeLayout
+        android:id="@+id/capture_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:background="#ffffff">
+
+        <ImageButton
             android:id="@+id/capture"
             android:layout_width="60dp"
             android:layout_height="60dp"
@@ -52,36 +64,38 @@
             android:scaleType="fitCenter"
             app:srcCompat="@drawable/shotbt" />
 
-    <ImageButton
-        android:id="@+id/flash"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="26dp"
-        android:layout_marginLeft="63dp"
-        android:layout_marginStart="63dp"
-        android:background="?android:selectableItemBackground"
-        android:scaleType="fitCenter"
-        android:src="@drawable/flash_off" />
+        <ImageButton
+            android:id="@+id/flash"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginBottom="26dp"
+            android:layout_marginLeft="63dp"
+            android:layout_marginStart="63dp"
+            android:background="?android:selectableItemBackground"
+            android:scaleType="fitCenter"
+            android:src="@drawable/flash_off" />
 
-    <ImageButton
-        android:id="@+id/gallary"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginBottom="26dp"
-        android:layout_marginRight="63dp"
-        android:layout_marginEnd="63dp"
-        android:layout_alignParentBottom="true"
+        <ImageButton
+            android:id="@+id/gallary"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignBottom="@+id/capture"
 
 
-        android:scaleType="fitCenter"
-        android:background="?android:selectableItemBackground"
-        app:srcCompat="@drawable/gallery"
-        android:layout_alignParentRight="true">
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="61dp"
+            android:background="?android:selectableItemBackground"
+            android:scaleType="fitCenter"
+            app:srcCompat="@drawable/gallery">
 
-    </ImageButton>
+        </ImageButton>
+
+    </RelativeLayout>
+
+
 
 
 </RelativeLayout>

@@ -2,10 +2,9 @@ package com.example.kulde.instagram.camera;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Base64;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -39,6 +38,11 @@ public class FilterActivity extends AppCompatActivity {
         // initial bottom bar
         navigation();
 
+        // initial tune module
+        setSeekBarListener();
+
+        toCropListener();
+
 
 
 
@@ -54,6 +58,8 @@ public class FilterActivity extends AppCompatActivity {
                 // contrast.setProgress(1);
                 imageEdit.setImageBitmap(bitmapEdit);
                 CommResources.edit_template = bitmapEdit;
+                //reset tune function
+                setSeekBarListener();
             }
         });
     }
@@ -76,6 +82,8 @@ public class FilterActivity extends AppCompatActivity {
 
         refresh(origin);
 
+
+
     }
 
     private void setSeekBarListener() {
@@ -92,6 +100,9 @@ public class FilterActivity extends AppCompatActivity {
             public void onClick(View view) {
                 CommResources.edit_template = BitmapFilter.changeStyle(originBitmap, styleNo);
                 image.setImageBitmap(CommResources.edit_template);
+                //reset tune function
+                setSeekBarListener();
+
             }
         });
 
@@ -112,11 +123,18 @@ public class FilterActivity extends AppCompatActivity {
 
 
     private Bitmap setImageEdit(){
+
         Bitmap decodedBitmap = CommResources.photoFinishBitmap;
         int rotationDegrees = CommResources.rotationdegree;
-        imageEdit.setImageBitmap(decodedBitmap);
+        if (CommResources.cache == null) {
+            imageEdit.setImageBitmap(decodedBitmap);
+            CommResources.edit_template = decodedBitmap;
+        } else {
+            imageEdit.setImageBitmap(CommResources.cache);
+            CommResources.edit_template = CommResources.cache;
+        }
         imageEdit.setRotation(-rotationDegrees);
-        CommResources.edit_template = decodedBitmap;
+
         return decodedBitmap;
     }
 
@@ -141,11 +159,20 @@ public class FilterActivity extends AppCompatActivity {
                 findViewById(R.id.edit_panel).setVisibility(View.VISIBLE);
                 findViewById(R.id.edit_panel).setFocusable(true);
                 findViewById(R.id.filter_panel).setFocusable(false);
-                //initial tune function
-                setSeekBarListener();
+
 
             }
         });
 
+    }
+    private void toCropListener(){
+        findViewById(R.id.crop).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                CommResources.edit_template=((BitmapDrawable)imageEdit.getDrawable()).getBitmap();
+                Intent intent = new Intent(FilterActivity.this, CropActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 }
