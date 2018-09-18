@@ -12,7 +12,7 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
-import com.example.kulde.instagram.MainPage;
+import com.example.kulde.instagram.Home.MainPage;
 import com.example.kulde.instagram.R;
 import com.example.kulde.instagram.Utils.PermissionsDelegate;
 import com.example.kulde.instagram.camera.filters.GridLines;

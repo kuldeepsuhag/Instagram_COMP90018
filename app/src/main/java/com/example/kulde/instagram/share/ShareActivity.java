@@ -15,7 +15,6 @@ import android.view.MenuItem;
 
 //import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 
-import com.example.kulde.instagram.Profile;
 import com.example.kulde.instagram.R;
 import com.example.kulde.instagram.Utils.Navigation;
 import com.example.kulde.instagram.Utils.Permissions;

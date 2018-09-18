@@ -6,11 +6,11 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.view.MenuItem;
 
-import com.example.kulde.instagram.MainPage;
-import com.example.kulde.instagram.Profile;
+import com.example.kulde.instagram.Home.MainPage;
+import com.example.kulde.instagram.Profile.Profile;
 import com.example.kulde.instagram.R;
-import com.example.kulde.instagram.Search;
-import com.example.kulde.instagram.Userfeed;
+import com.example.kulde.instagram.Search.Search;
+import com.example.kulde.instagram.UserFeed.Userfeed;
 import com.example.kulde.instagram.camera.TakePhotoActivity;
 
 public class Navigation {

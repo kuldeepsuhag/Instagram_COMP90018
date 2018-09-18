@@ -6,41 +6,39 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.kulde.instagram.Home.MainPage;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-
-import org.w3c.dom.Text;
+import com.google.firebase.auth.FirebaseUser;
 
 
 public class LogIn extends AppCompatActivity implements View.OnClickListener {
     private Button signin;
     private EditText email;
     private EditText password;
-    //private String email;
-    //private String password;
     private TextView signup;
-    private FirebaseAuth firebaseAuth;
+//    private FirebaseAuth firebaseAuth;
     private ProgressDialog progressDialog;
+
+    private static final String TAG = "Login Activity";
+
+    private FirebaseAuth mAuth;
+    private FirebaseAuth.AuthStateListener mAuthListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log_in);
-        firebaseAuth = FirebaseAuth.getInstance();
 
-        if (firebaseAuth.getCurrentUser() != null) {
-            finish();
-            startActivity(new Intent(this, MainPage.class));
-
-        }
         progressDialog = new ProgressDialog(this);
         email = findViewById(R.id.emailid);
         password = findViewById(R.id.passwordet);
@@ -48,7 +46,52 @@ public class LogIn extends AppCompatActivity implements View.OnClickListener {
         signin = findViewById(R.id.btsignin);
         signup.setOnClickListener(this);
         signin.setOnClickListener(this);
+
+        setupFirebaseAuth();
+
+        if (mAuth.getCurrentUser() != null) {
+            Intent intent = new Intent(LogIn.this, MainPage.class);
+            startActivity(intent);
+            finish();
+        }
+
     }
+
+    //firebase thing starts here
+
+    private void setupFirebaseAuth(){
+        Log.d(TAG, "setupFirebaseAuth");
+        mAuth = FirebaseAuth.getInstance();
+        mAuthListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+
+                if(user != null){
+                    //somebody signed in
+                    Log.d(TAG, "onAuthStateChanged:signed_in" + user.getUid());
+                } else{
+                    //nobodys here
+                    Log.d(TAG, "onAuthStateChanged:signed_out");
+                }
+            }
+        };
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        mAuth.addAuthStateListener(mAuthListener);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if(mAuthListener != null){
+            mAuth.removeAuthStateListener(mAuthListener);
+        }
+    }
+    //firebase thing end here
 
     //TextView signuptext = (TextView)this.findViewById(R.id.signuptext);
     public void onClick(View v) {
@@ -74,14 +117,14 @@ public class LogIn extends AppCompatActivity implements View.OnClickListener {
         }
         progressDialog.setMessage("Login.....");
         progressDialog.show();
-        firebaseAuth.signInWithEmailAndPassword(Email,Password)
+        mAuth.signInWithEmailAndPassword(Email,Password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         progressDialog.dismiss();
                         if (task.isSuccessful()) {
-                            //Toast.makeText(this,"LOGIN SUCCESSFUL",Toast.LENGTH_SHORT).show();
-                            finish();
+                            Toast.makeText(LogIn.this,"LOGIN SUCCESSFUL",Toast.LENGTH_SHORT).show();
+//                            finish();
                             startActivity(new Intent(getApplicationContext(), MainPage.class));
                         }
                         else{
