@@ -26,26 +26,40 @@ public class FilterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_filter);
 
         imageEdit = findViewById(R.id.picture_view);
-        // initial image edit studio desktop
-        bitmapEdit = setImageEdit();
 
-        // initial filter stylish module
-        setFilterListener();
 
-        // initial re-take photo module
-        reCapture_Listener();
+
+        // service in anpther thread
+        initialService();
 
         // initial bottom bar
         navigation();
 
-        // initial tune module
-        setSeekBarListener();
+    }
+    private void initialService() {
+        Thread t = new Thread(new Runnable() {
+            public void run() {
+                /*
+                 * Do something
+                 */
+                // initial image edit studio desktop
+                bitmapEdit = setImageEdit();
 
-        toCropListener();
+                // initial filter stylish module
+                setFilterListener();
+
+                // initial re-take photo module
+                reCapture_Listener();
 
 
+                // initial tune module
+                setSeekBarListener();
 
+                toCropListener();
+            }
+        });
 
+        t.start();
     }
 
     private void refresh(ImageButton origin){
@@ -98,8 +112,10 @@ public class FilterActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                CommResources.edit_template = BitmapFilter.changeStyle(originBitmap, styleNo);
-                image.setImageBitmap(CommResources.edit_template);
+                BitmapFilter task = new BitmapFilter(CommResources.edit_template, image, styleNo);
+                task.execute();
+                //CommResources.edit_template = BitmapFilter.changeStyle(originBitmap, styleNo);
+                //image.setImageBitmap(CommResources.edit_template);
                 //reset tune function
                 setSeekBarListener();
 

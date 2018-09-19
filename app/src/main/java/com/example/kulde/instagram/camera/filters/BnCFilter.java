@@ -52,6 +52,7 @@ public class BnCFilter {
                 if (mode == BRIGHTNESS) {
                     //int progress = seekBar.getProgress();
                     int fb = progress-100;
+                    //setBrightness(fb);
                     //vi.setColorFilter(brightIt(seekBar.getProgress()));
                     vi.setImageBitmap(brightIt(fb,CommResources.edit_template));
                 }
@@ -60,6 +61,7 @@ public class BnCFilter {
                     //c = progress;
                     progress += 10;
                     float c = .10f * progress;
+                    //setContrast(c);
                     //vi.setColorFilter(contrastIt(seekBar.getProgress()));
                     vi.setImageBitmap(contrastIt(c, CommResources.edit_template));
                 }
@@ -79,7 +81,8 @@ public class BnCFilter {
                     int progress = seekBar.getProgress();
                     int fb = progress-100;
                     //vi.setColorFilter(brightIt(seekBar.getProgress()));
-                    vi.setImageBitmap(brightIt(fb,CommResources.edit_template));
+                    //vi.setImageBitmap(brightIt(fb,CommResources.edit_template));
+                    //setBrightness(fb);
                 }
                 if (mode == CONTRAST) {
                     int progress = seekBar.getProgress();
@@ -87,11 +90,38 @@ public class BnCFilter {
                     progress += 10;
                     float c = .10f * progress;
                     //vi.setColorFilter(contrastIt(seekBar.getProgress()));
-                    vi.setImageBitmap(contrastIt(c, CommResources.edit_template));
+                    //vi.setImageBitmap(contrastIt(c, CommResources.edit_template));
+                    //setContrast(c);
                 }
             }
         });
 
+    }
+
+    private void setContrast(final float constrast) {
+        Thread t = new Thread(new Runnable() {
+            public void run() {
+                /*
+                 * Do something
+                 */
+                vi.setImageBitmap(contrastIt(constrast, CommResources.edit_template));
+            }
+        });
+
+        t.start();
+    }
+
+    private void setBrightness(final int bright) {
+        Thread t = new Thread(new Runnable() {
+            public void run() {
+                /*
+                 * Do something
+                 */
+                vi.setImageBitmap(brightIt(bright,CommResources.edit_template));
+            }
+        });
+
+        t.start();
     }
 
     private Bitmap brightIt(final int brightness, Bitmap finalImage) {
@@ -108,8 +138,5 @@ public class BnCFilter {
         myFilter.addSubFilter(new ContrastSubfilter(contrast));
         return myFilter.processFilter(finalImage.copy(Bitmap.Config.ARGB_8888, true));
     }
-
-
-
 
 }
