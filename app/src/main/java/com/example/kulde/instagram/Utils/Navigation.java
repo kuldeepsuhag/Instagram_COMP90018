@@ -24,7 +24,6 @@ public class Navigation {
                         Intent intent1 = new Intent(context, MainPage.class);
                         context.startActivity(intent1);
                         break;
-
                     case R.id.ic_search:
                         Intent intent4 = new Intent(context, Search.class);
                         context.startActivity(intent4);
