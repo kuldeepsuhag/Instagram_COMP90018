@@ -102,6 +102,7 @@ public class GridLines extends View {
         }
     }
 
+    /*
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
@@ -114,4 +115,5 @@ public class GridLines extends View {
 
         return true;
     }
+    */
 }

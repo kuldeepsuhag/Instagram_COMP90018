@@ -2,6 +2,7 @@ package com.example.kulde.instagram.camera.filters;
 
 import android.graphics.Bitmap;
 
+import android.os.AsyncTask;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 
@@ -50,20 +51,14 @@ public class BnCFilter {
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 //set the progress value
                 if (mode == BRIGHTNESS) {
-                    //int progress = seekBar.getProgress();
-                    int fb = progress-100;
-                    //setBrightness(fb);
-                    //vi.setColorFilter(brightIt(seekBar.getProgress()));
-                    vi.setImageBitmap(brightIt(fb,CommResources.edit_template));
+
+                    BnCFilterAsync task = new BnCFilterAsync(vi,seekBar,BRIGHTNESS);
+                    task.execute();
                 }
                 if (mode == CONTRAST) {
-                    //int progress = seekBar.getProgress();
-                    //c = progress;
-                    progress += 10;
-                    float c = .10f * progress;
-                    //setContrast(c);
-                    //vi.setColorFilter(contrastIt(seekBar.getProgress()));
-                    vi.setImageBitmap(contrastIt(c, CommResources.edit_template));
+
+                    BnCFilterAsync task = new BnCFilterAsync(vi,seekBar,CONTRAST);
+                    task.execute();
                 }
 
 
@@ -78,17 +73,17 @@ public class BnCFilter {
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
                 if (mode == BRIGHTNESS) {
-                    int progress = seekBar.getProgress();
-                    int fb = progress-100;
+                   // int progress = seekBar.getProgress();
+                    //int fb = progress-100;
                     //vi.setColorFilter(brightIt(seekBar.getProgress()));
                     //vi.setImageBitmap(brightIt(fb,CommResources.edit_template));
                     //setBrightness(fb);
                 }
                 if (mode == CONTRAST) {
-                    int progress = seekBar.getProgress();
+                    //int progress = seekBar.getProgress();
                     //c = progress;
-                    progress += 10;
-                    float c = .10f * progress;
+                   // progress += 10;
+                   // float c = .10f * progress;
                     //vi.setColorFilter(contrastIt(seekBar.getProgress()));
                     //vi.setImageBitmap(contrastIt(c, CommResources.edit_template));
                     //setContrast(c);
@@ -97,13 +92,13 @@ public class BnCFilter {
         });
 
     }
-
+    /*
     private void setContrast(final float constrast) {
         Thread t = new Thread(new Runnable() {
             public void run() {
                 /*
                  * Do something
-                 */
+                 *//*
                 vi.setImageBitmap(contrastIt(constrast, CommResources.edit_template));
             }
         });
@@ -116,7 +111,7 @@ public class BnCFilter {
             public void run() {
                 /*
                  * Do something
-                 */
+                 *//*
                 vi.setImageBitmap(brightIt(bright,CommResources.edit_template));
             }
         });
@@ -138,5 +133,6 @@ public class BnCFilter {
         myFilter.addSubFilter(new ContrastSubfilter(contrast));
         return myFilter.processFilter(finalImage.copy(Bitmap.Config.ARGB_8888, true));
     }
+    */
 
 }

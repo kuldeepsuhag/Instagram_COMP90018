@@ -112,7 +112,7 @@ public class FilterActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                BitmapFilter task = new BitmapFilter(CommResources.edit_template, image, styleNo);
+                BitmapFilter task = new BitmapFilter(bitmapEdit, image, styleNo);
                 task.execute();
                 //CommResources.edit_template = BitmapFilter.changeStyle(originBitmap, styleNo);
                 //image.setImageBitmap(CommResources.edit_template);
