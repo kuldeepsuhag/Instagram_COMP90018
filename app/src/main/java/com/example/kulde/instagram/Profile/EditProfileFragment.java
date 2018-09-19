@@ -23,16 +23,21 @@ public class EditProfileFragment extends android.support.v4.app.Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_editprofile,container,false);
         mProfilePhoto=(ImageView)view.findViewById(R.id.profile_photo);
-        initimageloader();
+
         setProfileImage();
+        ImageView backarrow = (ImageView)view.findViewById(R.id.backIcon);
+        backarrow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(TAG, "onClick: Navigating back to Profile Activity");
+                getActivity().finish();
+            }
+        });
         return view;
 
     }
 
-    private void initimageloader(){
-        UniversalImageLoader universalImageLoader = new UniversalImageLoader(getActivity());
-        ImageLoader.getInstance().init(universalImageLoader.getConfig());
-    }
+
 
     private void setProfileImage(){
         Log.d(TAG, "setProfileImage: Setting Profile Image");

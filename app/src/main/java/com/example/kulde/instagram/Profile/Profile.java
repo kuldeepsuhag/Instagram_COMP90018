@@ -10,11 +10,16 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 
 import com.example.kulde.instagram.R;
+import com.example.kulde.instagram.Utils.GridImageAdapter;
 import com.example.kulde.instagram.Utils.Navigation;
+import com.example.kulde.instagram.Utils.UniversalImageLoader;
+
+import java.util.ArrayList;
 
 //import static com.example.kulde.instagram.R.menu.profile_menu;
 
@@ -23,17 +28,57 @@ public class Profile extends AppCompatActivity{
     private static final int ACTIVITY_NUM = 4;
     private Context mContext = Profile.this;
     private ProgressBar mProgressbar;
+    private ImageView profilephoto;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
         Log.d(TAG, "onCreate: Activity Profile Starting......");
-        mProgressbar=(ProgressBar)findViewById(R.id.progressBar);
-        mProgressbar.setVisibility(View.GONE);
+
         navigation();
         setupToolbar();
+        setupActivityWidgets();
+        setProfileImage();
+        tempGridSetup();
+    }
+    private void setProfileImage(){
+        Log.d(TAG, "setProfileImage: Setting Profile Photo");
+        String imgURL = "https://wallpaperbrowse.com/media/images/3848765-wallpaper-images-download.jpg";
+        UniversalImageLoader.setImage(imgURL, profilephoto,mProgressbar, "");
     }
 
+    private void tempGridSetup(){
+        ArrayList<String> imgUrls = new ArrayList<>();
+
+        imgUrls.add("https://wallpaperbrowse.com/media/images/3848765-wallpaper-images-download.jpg");
+        imgUrls.add("https://wallpaperbrowse.com/media/images/3848765-wallpaper-images-download.jpg");
+        imgUrls.add("https://wallpaperbrowse.com/media/images/3848765-wallpaper-images-download.jpg");
+        imgUrls.add("https://wallpaperbrowse.com/media/images/3848765-wallpaper-images-download.jpg");
+        imgUrls.add("https://wallpaperbrowse.com/media/images/3848765-wallpaper-images-download.jpg");
+        imgUrls.add("https://wallpaperbrowse.com/media/images/3848765-wallpaper-images-download.jpg");
+        imgUrls.add("https://wallpaperbrowse.com/media/images/3848765-wallpaper-images-download.jpg");
+        imgUrls.add("https://wallpaperbrowse.com/media/images/3848765-wallpaper-images-download.jpg");
+        imgUrls.add("https://wallpaperbrowse.com/media/images/3848765-wallpaper-images-download.jpg");
+        imgUrls.add("https://wallpaperbrowse.com/media/images/3848765-wallpaper-images-download.jpg");
+        imgUrls.add("https://wallpaperbrowse.com/media/images/3848765-wallpaper-images-download.jpg");
+
+        setupImageGrid(imgUrls);
+    }
+    private void setupImageGrid(ArrayList<String> imgUrls){
+        GridView gridView = (GridView)findViewById(R.id.gridView);
+        int grid_width = getResources().getDisplayMetrics().widthPixels;
+        int imageWidth = grid_width/3;
+        gridView.setColumnWidth(imageWidth);
+        GridImageAdapter adapter = new GridImageAdapter(mContext, R.layout.layout_grid_imageview,"",imgUrls);
+        gridView.setAdapter(adapter);
+    }
+
+    private void setupActivityWidgets(){
+        mProgressbar=(ProgressBar)findViewById(R.id.progressBar);
+        mProgressbar.setVisibility(View.GONE);
+        profilephoto = (ImageView)findViewById(R.id.profile_image);
+
+    }
     private void setupToolbar(){
         Toolbar toolbar = (Toolbar)findViewById(R.id.profileToolBar);
         setSupportActionBar(toolbar);

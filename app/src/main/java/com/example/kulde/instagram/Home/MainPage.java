@@ -16,8 +16,10 @@ import com.example.kulde.instagram.LogIn;
 import com.example.kulde.instagram.R;
 import com.example.kulde.instagram.Utils.Navigation;
 import com.example.kulde.instagram.Utils.SectionPagerAdapter;
+import com.example.kulde.instagram.Utils.UniversalImageLoader;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 //import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 
@@ -37,8 +39,10 @@ public class MainPage extends AppCompatActivity {
         setContentView(R.layout.activity_main_page);
         Log.d(TAG, "onCreate: Starting......");
         setupFirebaseAuth();
+        initimageloader();
         navigation();
         setupViewpager();
+
     }
 
     //firebase thing starts here
@@ -69,6 +73,10 @@ public class MainPage extends AppCompatActivity {
         };
     }
 
+    private void initimageloader(){
+        UniversalImageLoader universalImageLoader = new UniversalImageLoader(mainContext);
+        ImageLoader.getInstance().init(universalImageLoader.getConfig());
+    }
     @Override
     protected void onStart() {
         super.onStart();
