@@ -11,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 
 import com.example.kulde.instagram.R;
 import com.example.kulde.instagram.Utils.Navigation;
@@ -19,13 +20,16 @@ import com.example.kulde.instagram.Utils.Navigation;
 
 public class Profile extends AppCompatActivity{
     private static final String TAG = "Profile Activity";
-    private static final int ACTIVITY_NUM = 2;
+    private static final int ACTIVITY_NUM = 4;
     private Context mContext = Profile.this;
+    private ProgressBar mProgressbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
         Log.d(TAG, "onCreate: Activity Profile Starting......");
+        mProgressbar=(ProgressBar)findViewById(R.id.progressBar);
+        mProgressbar.setVisibility(View.GONE);
         navigation();
         setupToolbar();
     }

@@ -12,7 +12,7 @@ import com.example.kulde.instagram.Utils.Navigation;
 
 public class Search extends AppCompatActivity{
     private static final String TAG = "Main Activity";
-    private static final int ACTIVITY_NUM = 3;
+    private static final int ACTIVITY_NUM = 2;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

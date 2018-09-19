@@ -14,7 +14,7 @@ import com.example.kulde.instagram.R;
 import com.example.kulde.instagram.Utils.UniversalImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
-public class EditProfileFragment extends Fragment {
+public class EditProfileFragment extends android.support.v4.app.Fragment {
     private static final String TAG = "EditProfileFragment";
     private ImageView mProfilePhoto;
 
@@ -36,7 +36,7 @@ public class EditProfileFragment extends Fragment {
 
     private void setProfileImage(){
         Log.d(TAG, "setProfileImage: Setting Profile Image");
-        String imgURL = "https://www.facebook.com/photo.php?fbid=1847134018925773&set=a.1387256711580175&type=3&theater";
+        String imgURL = "https://wallpaperbrowse.com/media/images/3848765-wallpaper-images-download.jpg";
         UniversalImageLoader.setImage(imgURL, mProfilePhoto, null,"");
     }
 }

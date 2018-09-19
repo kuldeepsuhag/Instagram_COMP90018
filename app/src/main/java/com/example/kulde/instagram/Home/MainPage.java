@@ -11,11 +11,11 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 
 import com.example.kulde.instagram.LogIn;
 import com.example.kulde.instagram.R;
 import com.example.kulde.instagram.Utils.Navigation;
+import com.example.kulde.instagram.Utils.SectionPagerAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 

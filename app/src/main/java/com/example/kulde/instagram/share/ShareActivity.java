@@ -18,7 +18,7 @@ import android.view.MenuItem;
 import com.example.kulde.instagram.R;
 import com.example.kulde.instagram.Utils.Navigation;
 import com.example.kulde.instagram.Utils.Permissions;
-import com.example.kulde.instagram.Utils.SectionsPagerAdapter;
+import com.example.kulde.instagram.Utils.SectionPagerAdapter;
 import com.example.kulde.instagram.Utils.UniversalImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -75,7 +75,7 @@ public class ShareActivity extends AppCompatActivity{
      * setup viewpager for manager the tabs
      */
     private void setupViewPager(){
-        SectionsPagerAdapter adapter =  new SectionsPagerAdapter(getSupportFragmentManager());
+        SectionPagerAdapter adapter =  new SectionPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(new GalleryFragment());
         adapter.addFragment(new PhotoFragment());
 

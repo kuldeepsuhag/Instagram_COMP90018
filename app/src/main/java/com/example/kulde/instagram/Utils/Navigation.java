@@ -24,21 +24,22 @@ public class Navigation {
                         Intent intent1 = new Intent(context, MainPage.class);
                         context.startActivity(intent1);
                         break;
-                    case R.id.ic_add:
-                        Intent intent2 = new Intent(context, TakePhotoActivity.class);
-                        context.startActivity(intent2);
-                        break;
-                    case R.id.ic_profile:
-                        Intent intent3 = new Intent(context, Profile.class);
-                        context.startActivity(intent3);
-                        break;
+
                     case R.id.ic_search:
                         Intent intent4 = new Intent(context, Search.class);
                         context.startActivity(intent4);
                         break;
+                    case R.id.ic_add:
+                        Intent intent2 = new Intent(context, TakePhotoActivity.class);
+                        context.startActivity(intent2);
+                        break;
                     case R.id.ic_like:
                         Intent intent5 = new Intent(context,Userfeed.class);
                         context.startActivity(intent5);
+                        break;
+                    case R.id.ic_profile:
+                        Intent intent3 = new Intent(context, Profile.class);
+                        context.startActivity(intent3);
                         break;
                 }
             }
