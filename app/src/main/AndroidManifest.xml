@@ -20,22 +20,30 @@
         android:roundIcon="@drawable/nuhuu"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainPage" />
-        <activity android:name=".SignUp" />
-        <activity android:name=".share.ShareActivity" />
-        <activity android:name=".share.NextActivity" />
-        <activity android:name=".LogIn" />
-        <activity
-            android:name=".camera.TakePhotoActivity"
-            android:screenOrientation="portrait">
+        <activity android:name=".Home.MainPage" >
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".camera.FilterActivity" />
-        <activity android:name=".camera.CropActivity"></activity>
+        <activity android:name=".Profile.AccountSettings"/>
+
+        <activity android:name=".SignUp" />
+        <activity android:name=".share.ShareActivity"></activity>
+        <activity android:name=".share.NextActivity" />
+        <activity android:name=".LogIn">
+
+        </activity>
+        <activity android:name=".Profile.Profile">
+        </activity>
+        <activity
+            android:name=".camera.TakePhotoActivity"
+            android:screenOrientation="portrait">
+
+        </activity>
+        <activity android:name=".camera.FilterActivity"></activity>
     </application>
 
 </manifest>

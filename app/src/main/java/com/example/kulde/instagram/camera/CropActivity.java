@@ -1,11 +1,9 @@
 package com.example.kulde.instagram.camera;
 
 import android.content.Intent;
-import android.graphics.drawable.BitmapDrawable;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.ImageView;
 
 import com.example.kulde.instagram.R;
 import com.example.kulde.instagram.Utils.CommResources;
