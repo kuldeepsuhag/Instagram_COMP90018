@@ -1,4 +1,4 @@
-package com.example.kulde.instagram;
+package com.example.kulde.instagram.Profile;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -6,6 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+
+import com.example.kulde.instagram.R;
 
 import java.util.ArrayList;
 

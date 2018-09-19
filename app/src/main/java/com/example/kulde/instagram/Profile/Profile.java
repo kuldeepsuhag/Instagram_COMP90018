@@ -1,5 +1,7 @@
 package com.example.kulde.instagram.Profile;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -7,6 +9,8 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
 
 import com.example.kulde.instagram.R;
 import com.example.kulde.instagram.Utils.Navigation;
@@ -16,12 +20,13 @@ import com.example.kulde.instagram.Utils.Navigation;
 public class Profile extends AppCompatActivity{
     private static final String TAG = "Profile Activity";
     private static final int ACTIVITY_NUM = 2;
+    private Context mContext = Profile.this;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
         Log.d(TAG, "onCreate: Activity Profile Starting......");
-        //navigation();
+        navigation();
         setupToolbar();
     }
 
@@ -37,6 +42,15 @@ public class Profile extends AppCompatActivity{
                         Log.d(TAG, "onMenuItemClick: Naviagting to Profile References");
                 }
                 return false;
+            }
+        });
+        ImageView profileMenu = (ImageView)findViewById(R.id.profileMenu);
+        profileMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(TAG, "onClick: Navigating to account Settings");
+                Intent intent = new Intent(mContext, AccountSettings.class);
+                startActivity(intent);
             }
         });
     }
