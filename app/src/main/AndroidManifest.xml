@@ -22,11 +22,7 @@
         android:theme="@style/AppTheme">
         <activity android:name=".Home.MainPage" >
 
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity android:name=".Profile.AccountSettings"/>
 
@@ -34,13 +30,20 @@
         <activity android:name=".share.ShareActivity"></activity>
         <activity android:name=".share.NextActivity" />
         <activity android:name=".LogIn">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
 
         </activity>
+        <activity android:name=".camera.CropActivity"/>
         <activity android:name=".Profile.Profile">
         </activity>
         <activity
             android:name=".camera.TakePhotoActivity"
             android:screenOrientation="portrait">
+
 
         </activity>
         <activity android:name=".camera.FilterActivity"></activity>

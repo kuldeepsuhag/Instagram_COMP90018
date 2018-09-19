@@ -1,6 +1,7 @@
 package com.example.kulde.instagram.camera;
 
 import android.content.Intent;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -26,10 +27,23 @@ public class CropActivity extends AppCompatActivity {
         cropImage.setImageBitmap(CommResources.edit_template);
         cropImage.setRotation(-CommResources.rotationdegree);
 
-        setApplyListener();
+        //setApplyListener();
+        initialService();
         //setUndoListener();
-
         setBacktoFilterListener();
+    }
+
+    private void initialService() {
+        Thread t = new Thread(new Runnable() {
+            public void run() {
+                /*
+                 * Do something
+                 */
+                setApplyListener();
+            }
+        });
+
+        t.start();
     }
 
     private void setApplyListener() {
@@ -44,14 +58,11 @@ public class CropActivity extends AppCompatActivity {
     }
 
 
-
-
-
     private void setBacktoFilterListener() {
         findViewById(R.id.back_filter).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //CommResources.cache=((BitmapDrawable)cropImage.getDrawable()).getBitmap();
+                CommResources.cache=CommResources.edit_template;
                 Intent intent = new Intent(CropActivity.this, FilterActivity.class);
                 startActivity(intent);
             }
@@ -66,6 +77,7 @@ public class CropActivity extends AppCompatActivity {
         });
         //cropImage.getCroppedImageAsync();
         CommResources.cache = cropImage.getCroppedImage();
+        CommResources.edit_template = CommResources.cache;
 
     }
 }

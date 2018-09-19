@@ -95,24 +95,24 @@ public class TakePhotoActivity extends AppCompatActivity {
         cameraView = findViewById(R.id.camera_view);
         capture = findViewById(R.id.capture);
         gallery = findViewById(R.id.gallary);
+
         hasCameraPermission = permissionsDelegate.hasCameraPermission();
         if (hasCameraPermission) {
             cameraView.setVisibility(View.VISIBLE);
-            gridLines = findViewById(R.id.grid_lines);
-            gridLines.setNumColumns(3);
-            gridLines.setNumRows(3);
+
 
         } else {
             permissionsDelegate.requestCameraPermission();
         }
 
-        if (hasCameraPermission) {
-            fotoapparat = createFotoapparat();
-
-            takePictureOnClick();
-            galleryOnClick();
-            toggleTorchOnSwitch();   // control flash light
-        }
+        fotoapparat = createFotoapparat();
+        gridLines = findViewById(R.id.grid_lines);
+        gridLines.setNumColumns(3);
+        gridLines.setNumRows(3);
+        cameraView.setVisibility(View.VISIBLE);
+        takePictureOnClick();
+        galleryOnClick();
+        toggleTorchOnSwitch();   // control flash light
 
     }
 

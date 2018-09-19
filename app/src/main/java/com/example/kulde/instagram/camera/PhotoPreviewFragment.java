@@ -79,13 +79,29 @@ public class PhotoPreviewFragment extends Fragment {
 
         try {
             setImageView(imagePreview);
-            setButtonListener(CONFIRM);
-            setButtonListener(EDIT);
-
+            initialService();
         } catch (IOException e) {
             e.printStackTrace();
         }
 
+
+    }
+
+    private void initialService() {
+        Thread t = new Thread(new Runnable() {
+            public void run() {
+                /*
+                 * Do something
+                 */
+
+
+                    setButtonListener(CONFIRM);
+                    setButtonListener(EDIT);
+
+            }
+        });
+
+        t.start();
     }
 
     private void setButtonListener(int mode){

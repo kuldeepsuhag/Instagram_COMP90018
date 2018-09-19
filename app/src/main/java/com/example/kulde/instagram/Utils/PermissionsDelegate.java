@@ -8,6 +8,7 @@ import android.support.v4.content.ContextCompat;
 import android.view.View;
 
 import com.example.kulde.instagram.R;
+import com.example.kulde.instagram.camera.filters.GridLines;
 
 public class PermissionsDelegate {
 
@@ -49,16 +50,22 @@ public class PermissionsDelegate {
             return false;
         }
 
-        /*
-        View noPermissionView = activity.findViewById(R.id.no_permission);
+
+        View noPermissionView = activity.findViewById(R.id.camera_view);
+
+
+
 
         if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
             noPermissionView.setVisibility(View.GONE);
+
             return true;
         }
-        */
+
+
 
         requestCameraPermission();
+        noPermissionView.setVisibility(View.VISIBLE);
         return false;
         /*
         noPermissionView.setVisibility(View.VISIBLE);

@@ -5,16 +5,21 @@ import android.graphics.Canvas;
 import android.graphics.ColorMatrix;
 import android.graphics.ColorMatrixColorFilter;
 import android.graphics.Paint;
+import android.os.AsyncTask;
+import android.widget.ImageView;
 
 
+import com.example.kulde.instagram.Utils.CommResources;
 import com.example.kulde.instagram.camera.filters.GrayFilter;
 
 import com.example.kulde.instagram.camera.filters.OldFilter;
 import com.zomato.photofilters.SampleFilters;
 import com.zomato.photofilters.imageprocessors.Filter;
 
+import java.lang.ref.WeakReference;
 
-public class BitmapFilter {
+
+public class BitmapFilter extends AsyncTask<Integer, Void, Bitmap> {
 
     /**
      * filter style id;
@@ -31,6 +36,10 @@ public class BitmapFilter {
 
     public static final int NIGHT_WHIS = 6;
 
+    private WeakReference<ImageView> imageViewReference;
+    private int styleNo;
+    private Bitmap bitmap;
+
     static
     {
         System.loadLibrary("NativeImageProcessor");
@@ -44,7 +53,15 @@ public class BitmapFilter {
      * @param bitmap
      * @param styleNo, filter sytle id
      */
-    public static Bitmap changeStyle(Bitmap bitmap, int styleNo, Object... options) {
+
+    public BitmapFilter(Bitmap bitmap, ImageView imageView, int styleNo) {
+        // Use a WeakReference to ensure the ImageView can be garbage collected
+        this.bitmap=bitmap;
+        this.styleNo=styleNo;
+        imageViewReference = new WeakReference<ImageView>(imageView);
+    }
+
+    public static Bitmap changeStyle(Bitmap bitmap, int styleNo) {
         if (styleNo == GRAY_STYLE) {
             return GrayFilter.changeToGray(bitmap);
         }
@@ -89,24 +106,22 @@ public class BitmapFilter {
         return bitmap;
     }
 
-    public static Bitmap changeBitmapContrastBrightness(Bitmap bitmap, float contrast, float brightness){
 
-        ColorMatrix cm = new ColorMatrix(new float[]
-                {
-                        contrast, 0, 0, 0, brightness,
-                        0, contrast, 0, 0, brightness,
-                        0, 0, contrast, 0, brightness,
-                        0, 0, 0, 1, 0
-                });
-
-        Bitmap ret = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), bitmap.getConfig());
-
-        Canvas canvas = new Canvas(ret);
-
-        Paint paint = new Paint();
-        paint.setColorFilter(new ColorMatrixColorFilter(cm));
-        canvas.drawBitmap(bitmap, 0, 0, paint);
-
-        return ret;
+    @Override
+    protected Bitmap doInBackground(Integer ... integers) {
+        bitmap = changeStyle(bitmap, styleNo);
+        CommResources.edit_template = bitmap;
+        return bitmap;
     }
+
+    @Override
+    protected void onPostExecute(Bitmap bitmap) {
+        if (imageViewReference != null && bitmap != null) {
+            final ImageView imageView = imageViewReference.get();
+            if (imageView != null) {
+                imageView.setImageBitmap(bitmap);
+            }
+        }
+    }
+
 }
