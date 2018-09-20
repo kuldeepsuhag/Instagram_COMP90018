@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.kulde.instagram.R;
+import com.example.kulde.instagram.Utils.CommResources;
 import com.example.kulde.instagram.Utils.FirebaseMethods;
 import com.example.kulde.instagram.Utils.UniversalImageLoader;
 import com.google.firebase.auth.FirebaseAuth;
@@ -81,12 +82,20 @@ public class NextActivity extends AppCompatActivity {
     }
 
     private void setImage(){
+        Bitmap bmp;
+        if(CommResources.photoFinishBitmap == null){
+            bmp = CommResources.edit_template;
+        }else{
+            bmp = CommResources.photoFinishBitmap;
+        }
         intent = getIntent();
         ImageView image = (ImageView) findViewById(R.id.imageShare);
+        image.setImageBitmap(bmp);
+        image.setRotation(-CommResources.rotationdegree);
 
-        imgUrl = intent.getStringExtra("selected_image");
-        Log.d(TAG, "setImage: got new image url: " + imgUrl);
-        UniversalImageLoader.setImage(imgUrl, image, null, mAppend);
+//        imgUrl = intent.getStringExtra("selected_image");
+//        Log.d(TAG, "setImage: got new image url: " + imgUrl);
+//        UniversalImageLoader.setImage(imgUrl, image, null, mAppend);
     }
 
     private void setupFirebaseAuth() {

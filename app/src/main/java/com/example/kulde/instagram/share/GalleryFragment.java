@@ -3,6 +3,7 @@ package com.example.kulde.instagram.share;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -19,10 +20,14 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.kulde.instagram.R;
+import com.example.kulde.instagram.Utils.CommResources;
 import com.example.kulde.instagram.Utils.FilePaths;
 import com.example.kulde.instagram.Utils.FileSearch;
 import com.example.kulde.instagram.Utils.GridImageAdapter;
 
+import com.example.kulde.instagram.camera.FilterActivity;
+import com.example.kulde.instagram.camera.PhotoPreviewFragment;
+import com.example.kulde.instagram.camera.TakePhotoActivity;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.FailReason;
@@ -142,6 +147,7 @@ public class GalleryFragment extends Fragment {
         //set the first image to be displayed when the activity fragment view is inflated
         try{
             setImage(imgURLs.get(0), galleryImage, mAppend);
+            setCommResourcesByURL(imgURLs.get(0));
             mSelectedImage = imgURLs.get(0);
         }catch (ArrayIndexOutOfBoundsException e){
             Log.e(TAG, "setupGridView: ArrayIndexOutOfBoundsException: " +e.getMessage() );
@@ -151,7 +157,7 @@ public class GalleryFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Log.d(TAG, "onItemClick: selected an image: " + imgURLs.get(position));
-
+                setCommResourcesByURL(imgURLs.get(position));
                 setImage(imgURLs.get(position), galleryImage, mAppend);
                 mSelectedImage = imgURLs.get(position);
             }
@@ -159,13 +165,39 @@ public class GalleryFragment extends Fragment {
 
     }
 
+    private void setCommResourcesByURL(String imgURL){
+        Bitmap myBitmap = BitmapFactory.decodeFile(imgURL);
+        CommResources.photoFinishBitmap = myBitmap;
+        CommResources.edit_template = myBitmap;
+    }
 
-    private void setImage(String imgURL, ImageView image, String dir) {
+    private void setImage(final String imgURL, ImageView image, String dir) {
         Log.d(TAG, "setImage: setting image");
 
         ImageLoader imageLoader = ImageLoader.getInstance();
 
         imageLoader.displayImage(dir + imgURL, image);
+
+        galleryImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d(TAG, "Edit the Image: jumping to the filterActivity");
+
+                if (imgURL == null) {
+                    Log.e(TAG, "url des not exist.");
+                    return;
+                }
+
+                PhotoPreviewFragment nextFrag = new PhotoPreviewFragment();
+                // link to edit activity
+                Intent intent = new Intent(getContext(), FilterActivity.class);
+
+                startActivity(intent);
+                getActivity().finish();
+            }
+        });
+
+
 //          , new ImageLoadingListener() {
 //            @Override
 //            public void onLoadingStarted(String imageUri, View view) {
@@ -188,4 +220,6 @@ public class GalleryFragment extends Fragment {
 //            }
 //        });
     }
+
+
 }
