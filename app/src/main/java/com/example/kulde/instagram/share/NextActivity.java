@@ -13,8 +13,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.kulde.instagram.Home.MainPage;
 import com.example.kulde.instagram.R;
 import com.example.kulde.instagram.Utils.CommResources;
+import com.example.kulde.instagram.Utils.FirebaseInteraction;
 import com.example.kulde.instagram.Utils.FirebaseMethods;
 import com.example.kulde.instagram.Utils.UniversalImageLoader;
 import com.google.firebase.auth.FirebaseAuth;
@@ -73,8 +75,12 @@ public class NextActivity extends AppCompatActivity {
                 String caption = mCaption.getText().toString();
 
                 // upload a photo
+                FirebaseInteraction uploadTask = new FirebaseInteraction(NextActivity.this, CommResources.edit_template,caption);
+                uploadTask.execute();
 
-
+                //go back to main
+                Intent intent = new Intent(NextActivity.this, MainPage.class);
+                startActivity(intent);
             }
         });
 
@@ -83,7 +89,7 @@ public class NextActivity extends AppCompatActivity {
 
     private void setImage(){
         Bitmap bmp;
-        if(CommResources.photoFinishBitmap == null){
+        if(CommResources.edit_template != null){
             bmp = CommResources.edit_template;
         }else{
             bmp = CommResources.photoFinishBitmap;

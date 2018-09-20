@@ -32,10 +32,11 @@ public class FirebaseInteraction extends AsyncTask{
     Bitmap bitmap;
     private double mPhotoUploadProgress = 0;
     Context mContext;
+    String caption;
 
 
 
-    public FirebaseInteraction(Context context, Bitmap bitmap) {
+    public FirebaseInteraction(Context context, Bitmap bitmap, String caption) {
 
         //
         this.bitmap=bitmap;
@@ -47,6 +48,7 @@ public class FirebaseInteraction extends AsyncTask{
             userID = mAuth.getCurrentUser().getUid();
         }
         mContext = context;
+        this.caption=caption;
 
     }
 
@@ -83,7 +85,7 @@ public class FirebaseInteraction extends AsyncTask{
                 Uri downloadUrl = taskSnapshot.getDownloadUrl();
 
                 // add photo to photo node and user photo node
-                //navigate to main feed so user can see the uploaded photo
+
 
 
             }
@@ -106,6 +108,10 @@ public class FirebaseInteraction extends AsyncTask{
         Matrix matrix = new Matrix();
         matrix.postRotate(angle);
         return Bitmap.createBitmap(source, 0, 0, source.getWidth(), source.getHeight(), matrix, true);
+    }
+
+    private void addPhototoDatabase(String caption, Bitmap bitmap){
+
     }
 
 

@@ -14,6 +14,7 @@ import android.widget.SeekBar;
 import com.example.kulde.instagram.R;
 import com.example.kulde.instagram.Utils.CommResources;
 import com.example.kulde.instagram.camera.filters.BnCFilter;
+import com.example.kulde.instagram.share.NextActivity;
 
 public class FilterActivity extends AppCompatActivity {
 
@@ -56,6 +57,8 @@ public class FilterActivity extends AppCompatActivity {
                 setSeekBarListener();
 
                 toCropListener();
+
+                toShareListener();
             }
         });
 
@@ -187,6 +190,17 @@ public class FilterActivity extends AppCompatActivity {
             public void onClick(View view) {
                 CommResources.edit_template=((BitmapDrawable)imageEdit.getDrawable()).getBitmap();
                 Intent intent = new Intent(FilterActivity.this, CropActivity.class);
+                startActivity(intent);
+            }
+        });
+    }
+
+    private void toShareListener() {
+        findViewById(R.id.next).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                CommResources.edit_template = ((BitmapDrawable)imageEdit.getDrawable()).getBitmap();
+                Intent intent = new Intent(FilterActivity.this, NextActivity.class);
                 startActivity(intent);
             }
         });

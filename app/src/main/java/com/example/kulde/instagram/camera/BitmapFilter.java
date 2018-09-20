@@ -110,7 +110,6 @@ public class BitmapFilter extends AsyncTask<Integer, Void, Bitmap> {
     @Override
     protected Bitmap doInBackground(Integer ... integers) {
         bitmap = changeStyle(bitmap, styleNo);
-        CommResources.edit_template = bitmap;
         return bitmap;
     }
 
@@ -119,6 +118,7 @@ public class BitmapFilter extends AsyncTask<Integer, Void, Bitmap> {
         if (imageViewReference != null && bitmap != null) {
             final ImageView imageView = imageViewReference.get();
             if (imageView != null) {
+                CommResources.edit_template = bitmap;
                 imageView.setImageBitmap(bitmap);
             }
         }

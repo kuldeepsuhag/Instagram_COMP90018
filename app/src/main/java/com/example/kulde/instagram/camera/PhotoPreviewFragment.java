@@ -17,6 +17,7 @@ import com.example.kulde.instagram.Home.MainPage;
 import com.example.kulde.instagram.R;
 import com.example.kulde.instagram.Utils.CommResources;
 import com.example.kulde.instagram.Utils.FirebaseInteraction;
+import com.example.kulde.instagram.share.NextActivity;
 import com.google.android.gms.tasks.Task;
 
 import java.io.ByteArrayOutputStream;
@@ -117,13 +118,12 @@ public class PhotoPreviewFragment extends Fragment {
                         passBitmap();
 
                         // upload photo to storage async
-                        FirebaseInteraction uploadTask = new FirebaseInteraction(getActivity(),CommResources.edit_template);
-                        uploadTask.execute();
+
 
                         //back to main feed
-                        Intent intent = new Intent(getContext(), MainPage.class);
+                        Intent intent = new Intent(getContext(), NextActivity.class);
                         startActivity(intent);
-                        //getActivity().finish();
+                        getActivity().finish();
 
                     }
                 });

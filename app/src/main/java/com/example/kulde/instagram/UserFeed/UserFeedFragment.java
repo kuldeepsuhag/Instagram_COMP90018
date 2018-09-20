@@ -72,17 +72,19 @@ public class UserFeedFragment extends Fragment {
 //    public StoriesRecyclerViewAdapter mStoriesAdapter;
 
 
+    /*
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_userfeed, container, false);
+      //  View view = inflater.inflate(R.layout.fragment_userfeed, container, false);
 //        mListView = (ElasticListView) view.findViewById(R.id.listView);
 
         initListViewRefresh();
 //        getFollowing();
 
-        return view;
+      //  return view;
     }
+    */
 
     private void initListViewRefresh(){
 //        mListView.setHorizontalFadingEdgeEnabled(true);
