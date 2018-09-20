@@ -28,17 +28,14 @@
 
         <activity android:name=".SignUp" />
         <activity android:name=".Search.Search"/>
-        <activity android:name=".share.ShareActivity">
+        <activity android:name=".share.ShareActivity"></activity>
+        <activity android:name=".share.NextActivity" />
+        <activity android:name=".LogIn">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
-        </activity>
-        <activity android:name=".share.NextActivity" />
-        <activity android:name=".LogIn">
-
 
 
         </activity>
