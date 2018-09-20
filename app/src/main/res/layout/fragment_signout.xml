@@ -26,7 +26,7 @@
             android:layout_below="@+id/textViewSignout"
             android:layout_marginTop="50dp"
             android:id="@+id/btnSignout"
-            android:background="@drawable/white_rounded_button"
+
             />
     </RelativeLayout>
 

@@ -12,7 +12,6 @@ import com.zomato.photofilters.imageprocessors.subfilters.ContrastSubfilter;
 
 import java.lang.ref.WeakReference;
 
-import static com.example.kulde.instagram.camera.filters.BnCFilter.BRIGHTNESS;
 
 public class BnCFilterAsync extends AsyncTask<Integer, Void, Bitmap> {
 

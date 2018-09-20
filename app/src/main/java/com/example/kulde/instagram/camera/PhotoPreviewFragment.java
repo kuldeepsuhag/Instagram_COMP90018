@@ -13,8 +13,11 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import com.example.kulde.instagram.Home.MainPage;
 import com.example.kulde.instagram.R;
 import com.example.kulde.instagram.Utils.CommResources;
+import com.example.kulde.instagram.Utils.FirebaseInteraction;
+import com.google.android.gms.tasks.Task;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -113,6 +116,15 @@ public class PhotoPreviewFragment extends Fragment {
                         // link to share activity
                         passBitmap();
 
+                        // upload photo to storage async
+                        FirebaseInteraction uploadTask = new FirebaseInteraction(getActivity(),CommResources.edit_template);
+                        uploadTask.execute();
+
+                        //back to main feed
+                        Intent intent = new Intent(getContext(), MainPage.class);
+                        startActivity(intent);
+                        //getActivity().finish();
+
                     }
                 });
                 break;
@@ -138,6 +150,7 @@ public class PhotoPreviewFragment extends Fragment {
     private void passBitmap(){
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         CommResources.photoFinishBitmap = ((BitmapDrawable)imagePreview.getDrawable()).getBitmap();
+        CommResources.edit_template = CommResources.photoFinishBitmap;
        // byte[] byteArray = byteArrayOutputStream .toByteArray();
         //String encodedBitmap = Base64.encodeToString(byteArray, Base64.DEFAULT);
         //return encodedBitmap;
