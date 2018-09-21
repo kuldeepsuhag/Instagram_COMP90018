@@ -10,13 +10,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-//import com.eschao.android.widget.elasticlistview.ElasticListView;
-//import com.eschao.android.widget.elasticlistview.LoadFooter;
-//import com.eschao.android.widget.elasticlistview.OnLoadListener;
-//import com.eschao.android.widget.elasticlistview.OnUpdateListener;
+import com.eschao.android.widget.elasticlistview.ElasticListView;
+import com.eschao.android.widget.elasticlistview.LoadFooter;
+import com.eschao.android.widget.elasticlistview.OnLoadListener;
+import com.eschao.android.widget.elasticlistview.OnUpdateListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -37,7 +38,7 @@ import java.util.Map;
 
 import com.example.kulde.instagram.R;
 
-public class UserFeedFragment extends Fragment {
+public class UserFeedFragment extends Fragment{
     private static final String TAG = "UserFeedFragment";
 
     public void onUpdate() {
@@ -60,7 +61,7 @@ public class UserFeedFragment extends Fragment {
 //    private ArrayList<Photo> mPaginatedPhotos;
     private ArrayList<String> mFollowing;
     private int recursionIterator = 0;
-    //    private ListView mListView;
+    private ListView mListView;
 //    private ElasticListView mListView;
 //    private MainFeedListAdapter adapter;
     private int resultsCount = 0;
@@ -72,19 +73,18 @@ public class UserFeedFragment extends Fragment {
 //    public StoriesRecyclerViewAdapter mStoriesAdapter;
 
 
-    /*
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-      //  View view = inflater.inflate(R.layout.fragment_userfeed, container, false);
+        View view = inflater.inflate(R.layout.fragment_userfeed, container, false);
+        mListView = (ListView) view.findViewById(R.id.listView);
 //        mListView = (ElasticListView) view.findViewById(R.id.listView);
 
-        initListViewRefresh();
+//        initListViewRefresh();
 //        getFollowing();
 
-      //  return view;
+        return view;
     }
-    */
 
     private void initListViewRefresh(){
 //        mListView.setHorizontalFadingEdgeEnabled(true);
@@ -95,6 +95,7 @@ public class UserFeedFragment extends Fragment {
 //                .setOnLoadListener(this);
 //        mListView.requestUpdate();
     }
+
 
 
 
