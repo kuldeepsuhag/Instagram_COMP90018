@@ -101,6 +101,7 @@ public class GalleryFragment extends Fragment {
             directories = FileSearch.getDirectoryPaths(filePaths.PICTURES);
         }
         directories.add(filePaths.CAMERA);
+        //directories.add(filePaths.APPFOLDER); // need to add at least one photo in app folder to avoid crash?
 
         ArrayList<String> directoryNames = new ArrayList<>();
         for (int i = 0; i < directories.size(); i++) {

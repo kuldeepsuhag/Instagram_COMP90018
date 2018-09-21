@@ -38,7 +38,7 @@ import java.util.Map;
 import com.example.kulde.instagram.R;
 
 public class UserFeedFragment extends Fragment {
-    private static final String TAG = "HomeFragment";
+    private static final String TAG = "UserFeedFragment";
 
     public void onUpdate() {
         Log.d(TAG, "ElasticListView: updating list view...");

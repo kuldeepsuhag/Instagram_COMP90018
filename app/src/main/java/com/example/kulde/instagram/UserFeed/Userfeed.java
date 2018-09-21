@@ -21,7 +21,7 @@ public class Userfeed extends AppCompatActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-       // setContentView(R.layout.activity_userfeed);
+        setContentView(R.layout.activity_userfeed);
         Log.d(TAG, "onCreate: Starting feed activity.");
         navigation();
         setupViewPager();
@@ -32,7 +32,7 @@ public class Userfeed extends AppCompatActivity{
      */
     public void navigation(){
         BottomNavigationView bottomNavigationView = (BottomNavigationView)findViewById(R.id.bottomNavViewwBar);
-        Navigation.enablenavigation(Userfeed.this, bottomNavigationView);
+        Navigation.enablenavigation(this, bottomNavigationView);
         Menu menu = bottomNavigationView.getMenu();
         MenuItem menuItem = menu.getItem(ACTIVITY_NUM);
         menuItem.setChecked(true);
