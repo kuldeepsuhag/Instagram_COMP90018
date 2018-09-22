@@ -10,4 +10,8 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="dbname_users">users</string>
+    <string name="dbname_user_photos">user_photos</string>
+    <string name="dbname_photos">photos</string>
+
 </resources>

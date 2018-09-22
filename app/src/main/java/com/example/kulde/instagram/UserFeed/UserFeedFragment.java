@@ -76,14 +76,15 @@ public class UserFeedFragment extends Fragment{
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_userfeed, container, false);
-        mListView = (ListView) view.findViewById(R.id.listView);
+        //View view = inflater.inflate(R.layout.fragment_userfeed, container, false);
+        //mListView = (ListView) view.findViewById(R.id.listView);
 //        mListView = (ElasticListView) view.findViewById(R.id.listView);
 
 //        initListViewRefresh();
 //        getFollowing();
 
-        return view;
+        //return view;
+        return null;
     }
 
     private void initListViewRefresh(){

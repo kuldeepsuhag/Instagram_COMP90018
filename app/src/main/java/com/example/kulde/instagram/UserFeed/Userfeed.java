@@ -21,7 +21,7 @@ public class Userfeed extends AppCompatActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_userfeed);
+        //setContentView(R.layout.activity_userfeed);
         Log.d(TAG, "onCreate: Starting feed activity.");
         navigation();
         setupViewPager();

@@ -10,24 +10,35 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.example.kulde.instagram.Model.Photo;
+import com.example.kulde.instagram.R;
 import com.example.kulde.instagram.camera.FilterActivity;
 import com.example.kulde.instagram.camera.TakePhotoActivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+import java.util.TimeZone;
 
 public class FirebaseInteraction extends AsyncTask{
+
+    private static final String TAG = "FirebaseInteraction";
     private String userID;
     FirebaseStorage storage;
     StorageReference storageRef;
-   // StorageReference imagesRef;
+    DatabaseReference myRef;
     FirebaseAuth mAuth;
+    FirebaseDatabase fbaseDB;
 
     Bitmap bitmap;
     private double mPhotoUploadProgress = 0;
@@ -43,6 +54,8 @@ public class FirebaseInteraction extends AsyncTask{
         //storage = FirebaseStorage.getInstance();
 
         //imagesRef = storageRef.child("images/name_of_your_image.jpg");
+        fbaseDB = FirebaseDatabase.getInstance();
+        myRef = fbaseDB.getReference();
         mAuth = FirebaseAuth.getInstance();
         if(mAuth.getCurrentUser() != null){
             userID = mAuth.getCurrentUser().getUid();
@@ -84,7 +97,11 @@ public class FirebaseInteraction extends AsyncTask{
                 // taskSnapshot.getMetadata() contains file metadata such as size, content-type, and download URL.
                 Uri downloadUrl = taskSnapshot.getDownloadUrl();
 
-                // add photo to photo node and user photo node
+
+                //add the new photo to 'photos' node and 'user_photos' node
+                addPhotoToDatabase(caption, downloadUrl.toString());
+
+                Toast.makeText(mContext, "photo upload success", Toast.LENGTH_SHORT).show();
 
 
 
@@ -110,7 +127,40 @@ public class FirebaseInteraction extends AsyncTask{
         return Bitmap.createBitmap(source, 0, 0, source.getWidth(), source.getHeight(), matrix, true);
     }
 
-    private void addPhototoDatabase(String caption, Bitmap bitmap){
+    private String getTimestamp(){
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.UK);
+        sdf.setTimeZone(TimeZone.getTimeZone("Australia/Victoria"));
+        return sdf.format(new Date());
+    }
+
+    private void addPhotoToDatabase(String caption, String url){
+
+        // add get tag method
+
+        //insert into databse
+        Log.d(TAG, url);
+
+        String newPhotoKey = myRef.child(mContext.getString(R.string.dbname_photos)).push().getKey();
+
+        Log.d(TAG, newPhotoKey);
+
+
+        Photo photo = new Photo(caption,
+                getTimestamp(),
+                url, newPhotoKey,
+                userID,
+                StringManipulation.getTags(caption));
+
+        Log.d(TAG, photo.toString());
+
+        myRef.child("user_photos")
+                .child(userID).child(newPhotoKey).setValue(photo);
+
+        myRef.child("photos").child(newPhotoKey).setValue(photo);
+
+        Log.d(TAG, myRef.child(mContext.getString(R.string.dbname_photos)).child(newPhotoKey).toString());
+
+
 
     }
 
