@@ -36,8 +36,8 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
-
+        </activity>
+        <activity android:name=".UserFeed.Userfeed">
         </activity>
         <activity android:name=".camera.CropActivity"/>
         <activity android:name=".Profile.Profile">
