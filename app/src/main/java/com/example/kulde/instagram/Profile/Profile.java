@@ -1,10 +1,13 @@
 package com.example.kulde.instagram.Profile;
 
+
 import android.content.Context;
 import android.content.Intent;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.DialogTitle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -34,53 +37,65 @@ public class Profile extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
         Log.d(TAG, "onCreate: Activity Profile Starting......");
+        init();
 
-        navigation();
-        setupToolbar();
-        setupActivityWidgets();
-        setProfileImage();
-        tempGridSetup();
-    }
-    private void setProfileImage(){
-        Log.d(TAG, "setProfileImage: Setting Profile Photo");
-        String imgURL = "https://wallpaperbrowse.com/media/images/3848765-wallpaper-images-download.jpg";
-        UniversalImageLoader.setImage(imgURL, profilephoto,mProgressbar, "");
+//        navigation();
+////        setupToolbar();
+////        setupActivityWidgets();
+////        setProfileImage();
+////        tempGridSetup();
     }
 
-    private void tempGridSetup(){
-        ArrayList<String> imgUrls = new ArrayList<>();
-
-        imgUrls.add("https://wallpaperbrowse.com/media/images/3848765-wallpaper-images-download.jpg");
-        imgUrls.add("https://wallpaperbrowse.com/media/images/3848765-wallpaper-images-download.jpg");
-        imgUrls.add("https://wallpaperbrowse.com/media/images/3848765-wallpaper-images-download.jpg");
-        imgUrls.add("https://wallpaperbrowse.com/media/images/3848765-wallpaper-images-download.jpg");
-        imgUrls.add("https://wallpaperbrowse.com/media/images/3848765-wallpaper-images-download.jpg");
-        imgUrls.add("https://wallpaperbrowse.com/media/images/3848765-wallpaper-images-download.jpg");
-        imgUrls.add("https://wallpaperbrowse.com/media/images/3848765-wallpaper-images-download.jpg");
-        imgUrls.add("https://wallpaperbrowse.com/media/images/3848765-wallpaper-images-download.jpg");
-        imgUrls.add("https://wallpaperbrowse.com/media/images/3848765-wallpaper-images-download.jpg");
-        imgUrls.add("https://wallpaperbrowse.com/media/images/3848765-wallpaper-images-download.jpg");
-        imgUrls.add("https://wallpaperbrowse.com/media/images/3848765-wallpaper-images-download.jpg");
-
-        setupImageGrid(imgUrls);
-    }
-    private void setupImageGrid(ArrayList<String> imgUrls){
-        GridView gridView = (GridView)findViewById(R.id.gridView);
-        int grid_width = getResources().getDisplayMetrics().widthPixels;
-        int imageWidth = grid_width/3;
-        gridView.setColumnWidth(imageWidth);
-        GridImageAdapter adapter = new GridImageAdapter(mContext, R.layout.layout_grid_imageview,"",imgUrls);
-        gridView.setAdapter(adapter);
-    }
-
-    private void setupActivityWidgets(){
-        mProgressbar=(ProgressBar)findViewById(R.id.progressBar);
-        mProgressbar.setVisibility(View.GONE);
-        profilephoto = (ImageView)findViewById(R.id.profile_image);
+    private void init(){
+        Log.d(TAG, "init() called " + getString(R.string.profile_fragment));
+        ProfileFragment frag = new ProfileFragment();
+        FragmentTransaction ftrans = Profile.this.getSupportFragmentManager().beginTransaction();
+        ftrans.replace(R.id.container, frag);
+        ftrans.addToBackStack(getString(R.string.profile_fragment));
+        ftrans.commit();
 
     }
+//    private void setProfileImage(){
+//        Log.d(TAG, "setProfileImage: Setting Profile Photo");
+//        String imgURL = "https://wallpaperbrowse.com/media/images/3848765-wallpaper-images-download.jpg";
+//        UniversalImageLoader.setImage(imgURL, profilephoto,mProgressbar, "");
+//    }
+//
+//    private void tempGridSetup(){
+//        ArrayList<String> imgUrls = new ArrayList<>();
+//
+//        imgUrls.add("https://wallpaperbrowse.com/media/images/3848765-wallpaper-images-download.jpg");
+//        imgUrls.add("https://wallpaperbrowse.com/media/images/3848765-wallpaper-images-download.jpg");
+//        imgUrls.add("https://wallpaperbrowse.com/media/images/3848765-wallpaper-images-download.jpg");
+//        imgUrls.add("https://wallpaperbrowse.com/media/images/3848765-wallpaper-images-download.jpg");
+//        imgUrls.add("https://wallpaperbrowse.com/media/images/3848765-wallpaper-images-download.jpg");
+//        imgUrls.add("https://wallpaperbrowse.com/media/images/3848765-wallpaper-images-download.jpg");
+//        imgUrls.add("https://wallpaperbrowse.com/media/images/3848765-wallpaper-images-download.jpg");
+//        imgUrls.add("https://wallpaperbrowse.com/media/images/3848765-wallpaper-images-download.jpg");
+//        imgUrls.add("https://wallpaperbrowse.com/media/images/3848765-wallpaper-images-download.jpg");
+//        imgUrls.add("https://wallpaperbrowse.com/media/images/3848765-wallpaper-images-download.jpg");
+//        imgUrls.add("https://wallpaperbrowse.com/media/images/3848765-wallpaper-images-download.jpg");
+//
+//        setupImageGrid(imgUrls);
+//    }
+//    private void setupImageGrid(ArrayList<String> imgUrls){
+//        GridView gridView = (GridView)findViewById(R.id.gridView);
+//        int grid_width = getResources().getDisplayMetrics().widthPixels;
+//        int imageWidth = grid_width/3;
+//        gridView.setColumnWidth(imageWidth);
+//        GridImageAdapter adapter = new GridImageAdapter(mContext, R.layout.layout_grid_imageview,"",imgUrls);
+//        gridView.setAdapter(adapter);
+//    }
+//
+//    private void setupActivityWidgets(){
+//        mProgressbar=(ProgressBar)findViewById(R.id.progressBar);
+//        mProgressbar.setVisibility(View.GONE);
+//        profilephoto = (ImageView)findViewById(R.id.profile_image);
+//
+//    }
     private void setupToolbar(){
         Toolbar toolbar = (Toolbar)findViewById(R.id.profileToolBar);
+
         setSupportActionBar(toolbar);
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
@@ -103,15 +118,15 @@ public class Profile extends AppCompatActivity{
             }
         });
     }
-
-    /**
-     * Function Bar Setup
-     */
-    public void navigation(){
-        BottomNavigationView bottomNavigationView = (BottomNavigationView)findViewById(R.id.bottomNavViewwBar);
-        Navigation.enablenavigation(Profile.this, bottomNavigationView);
-        Menu menu = bottomNavigationView.getMenu();
-        MenuItem menuItem = menu.getItem(ACTIVITY_NUM);
-        menuItem.setChecked(true);
-    }
+//
+//    /**
+//     * Function Bar Setup
+//     */
+//    public void navigation(){
+//        BottomNavigationView bottomNavigationView = (BottomNavigationView)findViewById(R.id.bottomNavViewwBar);
+//        Navigation.enablenavigation(Profile.this, bottomNavigationView);
+//        Menu menu = bottomNavigationView.getMenu();
+//        MenuItem menuItem = menu.getItem(ACTIVITY_NUM);
+//        menuItem.setChecked(true);
+//    }
 }

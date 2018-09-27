@@ -24,7 +24,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 //import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 
 public class MainPage extends AppCompatActivity {
-    private static final String TAG = "Main Activity";
+    private static final String TAG = "MainPage";
     private static final int ACTIVITY_NUM = 0;
 
     private Context mainContext = MainPage.this;

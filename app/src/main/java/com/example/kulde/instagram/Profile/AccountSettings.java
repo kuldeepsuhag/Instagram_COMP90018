@@ -3,9 +3,12 @@ package com.example.kulde.instagram.Profile;
 import android.media.Image;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -14,6 +17,7 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 
 import com.example.kulde.instagram.R;
+import com.example.kulde.instagram.Utils.Navigation;
 import com.example.kulde.instagram.Utils.SectionPagerAdapter;
 import com.example.kulde.instagram.Utils.SectionsStatePagerAdapter;
 
@@ -21,32 +25,37 @@ import java.util.ArrayList;
 
 public class AccountSettings extends AppCompatActivity {
 
-    private static final String TAG = "AccountSettings act";
+    private static final String TAG = "AccountSettings";
+    private static final int ACTIVITY_NUM = 4;
     private SectionsStatePagerAdapter pagerAdapter;
     private ViewPager viewPager;
     private RelativeLayout relativeLayout;
+    private BottomNavigationView bottomNavigationView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-            setContentView(R.layout.account_settings_main);
-            Log.d(TAG, "onCreate started");
+        setContentView(R.layout.account_settings_main);
+        Log.d(TAG, "onCreate started");
 
-            viewPager = (ViewPager)findViewById(R.id.viewpager_container);
-            relativeLayout = (RelativeLayout)findViewById(R.id.relLayoutAccSettMain1);
+        viewPager = (ViewPager)findViewById(R.id.viewpager_container);
+        relativeLayout = (RelativeLayout)findViewById(R.id.relLayoutAccSettMain1);
+
+        bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomNavViewwBar);
 
 
-            createList();
-            setupFragments();
+        createList();
+        setupFragments();
+        navigation();
 
-            ImageView back_arrow = (ImageView)findViewById(R.id.backIcon);
-            back_arrow.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Log.d(TAG, "onClick: Back to profile Activity");
-                    finish();
-                }
-            });
+        ImageView back_arrow = (ImageView)findViewById(R.id.backIcon);
+        back_arrow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(TAG, "onClick: Back to profile Activity");
+                finish();
+            }
+        });
     }
 
     private void createList(){
@@ -79,5 +88,13 @@ public class AccountSettings extends AppCompatActivity {
         Log.d(TAG, "setViewPager: Navigating to fragment number" + fragmentNumber);
         viewPager.setAdapter(pagerAdapter);
         viewPager.setCurrentItem(fragmentNumber);
+    }
+
+    public void navigation(){
+
+        Navigation.enablenavigation(AccountSettings.this, bottomNavigationView);
+        Menu menu = bottomNavigationView.getMenu();
+        MenuItem menuItem = menu.getItem(ACTIVITY_NUM);
+        menuItem.setChecked(true);
     }
 }

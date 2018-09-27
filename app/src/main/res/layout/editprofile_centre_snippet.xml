@@ -116,7 +116,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:layout_below="@+id/relLayout2"
+                android:layout_below="@+id/relLayout3"
                 android:background="@drawable/grey_border_bottom"
                 android:id="@+id/relLayout4"
                 android:layout_marginTop="15dp">
@@ -124,6 +124,7 @@
                 <ImageView
                     android:layout_width="35dp"
                     android:layout_height="35dp"
+                    android:src="@drawable/ic_desc"
                     android:layout_centerVertical="true"/>
 
                 <EditText

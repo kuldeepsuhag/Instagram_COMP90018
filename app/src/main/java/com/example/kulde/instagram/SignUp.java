@@ -1,7 +1,7 @@
 package com.example.kulde.instagram;
 
 import android.app.ProgressDialog;
-import android.content.Intent;
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -14,7 +14,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.kulde.instagram.Model.User;
-import com.example.kulde.instagram.Model.UserAccountSetting;
+import com.example.kulde.instagram.Model.UserAccountSettings;
+import com.example.kulde.instagram.Utils.FirebaseMethods;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -24,59 +25,123 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
-public class SignUp extends AppCompatActivity implements View.OnClickListener{
+public class SignUp extends AppCompatActivity {
+    private Context thisActivity;
+
     private TextView signintext;
     private EditText email, username, password;
-    private Button register;
+    private String emailText, usernameText, passwordText;
+    private Button bSignup;
     private ProgressDialog progressDialog;
-//    private FirebaseAuth firebaseAuth;
 
-    private static final String TAG = "Signup Activity";
+    private static final String TAG = "SignUp";
 
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
+    private FirebaseMethods fMethods;
 
     private FirebaseDatabase fbaseDB;
     private DatabaseReference dbRef;
+
+    private String append = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
+
+        thisActivity = SignUp.this;
        // System.out.print("Hello");
 //        firebaseAuth = FirebaseAuth.getInstance();
-        setupFirebaseAuth();
+
         progressDialog = new ProgressDialog(this);
         username = (EditText)findViewById(R.id.Etusername);
         email = (EditText)findViewById(R.id.Etemailid);
         password=(EditText)findViewById(R.id.Etpassword);
-        register=(Button)findViewById(R.id.btsignup);
+        bSignup =(Button)findViewById(R.id.btsignup);
         signintext = (TextView)findViewById(R.id.singintv);
-        signintext.setOnClickListener(this);
-        register.setOnClickListener(this);
-    }
-    public void onClick(View v) {
-        if (v == signintext) {
-            Intent intent = new Intent(SignUp.this, LogIn.class);
-            startActivity(intent);
-            finish();
-        }
-        if(v == register){
-            userRegister();
-        }
+
+        setupFirebaseAuth();
+        init();
+
+//        signintext.setOnClickListener(this);
+//        bSignup.setOnClickListener(this);
     }
 
-    private boolean checkUsernamExists(String username, DataSnapshot snap){
-        Log.d(TAG, "check username if " + username + " is exists");
-        User user = new User();
+    private void init(){
+        bSignup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
-        for(DataSnapshot ds: snap.child(mAuth.getCurrentUser().getUid()).getChildren()){
-            user.setUsername(ds.getValue(User.class).getUsername());
-            if(user.getUsername().equals(username)) return true;
-        }
-        return false;
+                emailText = email.getText().toString();
+                usernameText = username.getText().toString();
+                passwordText = password.getText().toString();
+
+                if(emailText.equals("") || usernameText.equals("") || passwordText.equals("")){
+                    Toast.makeText(thisActivity,"Please fill in your details",Toast.LENGTH_SHORT).show();
+                } else{
+                    fMethods = new FirebaseMethods(thisActivity);
+                    fMethods.registerNewEmail(emailText, passwordText, usernameText);
+
+                }
+
+            }
+        });
+    }
+
+
+//    public void onClick(View v) {
+//        if (v == signintext) {
+//            Intent intent = new Intent(SignUp.this, LogIn.class);
+//            startActivity(intent);
+//            finish();
+//        }
+//        if(v == bSignup){
+//            userRegister();
+//        }
+//    }
+
+
+
+    private void checkIfUsernameExists(final String username) {
+        Log.d(TAG, "checkIfUsernameExists: Checking if  " + username + " already exists.");
+
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+        Query query = reference
+                .child(getString(R.string.dbname_users))
+                .orderByChild(getString(R.string.field_username))
+                .equalTo(username);
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                for(DataSnapshot singleSnapshot: dataSnapshot.getChildren()){
+                    if (singleSnapshot.exists()){
+                        Log.d(TAG, "checkIfUsernameExists: FOUND A MATCH: " + singleSnapshot.getValue(User.class).getUsername());
+                        append = dbRef.push().getKey().substring(5,8);
+                        Log.d(TAG, "onDataChange: username already exists. Appending random string to name: " + append);
+                    }
+                }
+
+                String tempUsername = "";
+                tempUsername = username + append;
+
+                //add new user to the database
+                fMethods.addNewUser(emailText, tempUsername, "", "", "");
+
+                Toast.makeText(thisActivity, "Signup successful. Sending verification email.", Toast.LENGTH_SHORT).show();
+
+                mAuth.signOut();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 
     //firebase thing starts here
@@ -86,7 +151,6 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener{
         mAuth = FirebaseAuth.getInstance();
         fbaseDB = FirebaseDatabase.getInstance();
         dbRef = fbaseDB.getReference();
-
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
@@ -95,25 +159,19 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener{
                 if(user != null){
                     //somebody signed in
                     Log.d(TAG, "onAuthStateChanged:signed_in" + user.getUid());
-                    dbRef.addListenerForSingleValueEvent(
-                            new ValueEventListener() {
-                                @Override
-                                public void onDataChange(DataSnapshot dataSnapshot) {
-                                    if(checkUsernamExists(username.getText().toString(), dataSnapshot)){
-                                        Toast.makeText(SignUp.this,"Signup SUCCESSFUL",Toast.LENGTH_SHORT).show();
-                                    } else{
+                    dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                        String unique = "";
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            checkIfUsernameExists(usernameText);
+                        }
 
-                                        mAuth.signOut();
-                                    }
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
 
-                                }
-
-                                @Override
-                                public void onCancelled(DatabaseError databaseError) {
-
-                                }
-                            }
-                    );
+                        }
+                    });
+                    finish();
                 } else{
                     //nobodys here
                     Log.d(TAG, "onAuthStateChanged:signed_out");
@@ -137,37 +195,36 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener{
     }
     //firebase thing end here
 
-    private void userRegister(){
+    /*private void userRegister() {
         String Email = email.getText().toString().trim();
         String Username = username.getText().toString().trim();
         String Password = password.getText().toString().trim();
 
-        if(TextUtils.isEmpty(Email)){
-            Toast.makeText(this,"Please Enter Email ID",Toast.LENGTH_SHORT).show();
+        if (TextUtils.isEmpty(Email)) {
+            Toast.makeText(this, "Please Enter Email ID", Toast.LENGTH_SHORT).show();
             return;
         }
-        if(TextUtils.isEmpty(Username)){
-            Toast.makeText(this,"Please Enter  Username",Toast.LENGTH_SHORT).show();
+        if (TextUtils.isEmpty(Username)) {
+            Toast.makeText(this, "Please Enter  Username", Toast.LENGTH_SHORT).show();
             return;
         }
-        if(TextUtils.isEmpty(Password)){
-            Toast.makeText(this,"Please Enter Password",Toast.LENGTH_SHORT).show();
+        if (TextUtils.isEmpty(Password)) {
+            Toast.makeText(this, "Please Enter Password", Toast.LENGTH_SHORT).show();
             return;
         }
 
         progressDialog.setMessage("Registering User....");
         progressDialog.show();
 
-        mAuth.createUserWithEmailAndPassword(Email,Password)
+        mAuth.createUserWithEmailAndPassword(Email, Password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful())
-                        {
-                            Toast.makeText(SignUp.this,"Registered Successfully",Toast.LENGTH_SHORT).show();
+                        if (task.isSuccessful()) {
+                            Toast.makeText(SignUp.this, "Registered Successfully", Toast.LENGTH_SHORT).show();
 //                            startActivity(new Intent(getApplicationContext(),LogIn.class));
 //                            finish();
-                        } else{
+                        } else {
                             return;
                         }
                     }
@@ -189,6 +246,7 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener{
         dbRef.child("user_account_setting").child(mAuth.getCurrentUser().getUid()).setValue(settings);
 
 
-    }
+
+    }*/
 
 }
