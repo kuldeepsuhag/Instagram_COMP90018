@@ -13,7 +13,6 @@
             android:id="@+id/tvPosts"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="250"
             android:textColor="@color/black"
             android:textSize="18sp"
             app:layout_constraintTop_toTopOf="parent"
@@ -36,7 +35,6 @@
             android:id="@+id/tvFollowers"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="300"
             android:textColor="@color/black"
             android:textSize="18sp"
             app:layout_constraintTop_toTopOf="parent"
@@ -65,7 +63,6 @@
             android:id="@+id/tvFollowing"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="400"
             android:textColor="@color/black"
             android:textSize="18sp"
             android:layout_marginTop="2dp"
@@ -84,7 +81,7 @@
             android:layout_marginRight="-22dp"
             app:layout_constraintRight_toRightOf="parent"/>
 
-        <!--TextView
+        <TextView
             android:id="@+id/textEditProfile"
             android:layout_width="156dp"
             android:layout_height="18dp"
@@ -101,7 +98,7 @@
             android:layout_marginBottom="8dp"
             app:layout_constraintVertical_bias="0.0"
             android:textAlignment="center"
-            android:background="@color/white"/-->
+            android:background="@color/white"/>
     </android.support.constraint.ConstraintLayout>
 
 

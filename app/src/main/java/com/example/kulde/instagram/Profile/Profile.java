@@ -26,12 +26,13 @@ import java.util.ArrayList;
 
 //import static com.example.kulde.instagram.R.menu.profile_menu;
 
-public class Profile extends AppCompatActivity{
+public class Profile extends AppCompatActivity {
     private static final String TAG = "Profile Activity";
     private static final int ACTIVITY_NUM = 4;
     private Context mContext = Profile.this;
     private ProgressBar mProgressbar;
     private ImageView profilephoto;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,21 +41,22 @@ public class Profile extends AppCompatActivity{
         init();
 
 //        navigation();
-////        setupToolbar();
-////        setupActivityWidgets();
-////        setProfileImage();
-////        tempGridSetup();
+//        setupToolbar();
+//       setupActivityWidgets();
+//       setProfileImage();
+//       tempGridSetup();
     }
 
-    private void init(){
+    private void init() {
         Log.d(TAG, "init() called " + getString(R.string.profile_fragment));
         ProfileFragment frag = new ProfileFragment();
         FragmentTransaction ftrans = Profile.this.getSupportFragmentManager().beginTransaction();
         ftrans.replace(R.id.container, frag);
         ftrans.addToBackStack(getString(R.string.profile_fragment));
         ftrans.commit();
-
     }
+
+//    }
 //    private void setProfileImage(){
 //        Log.d(TAG, "setProfileImage: Setting Profile Photo");
 //        String imgURL = "https://wallpaperbrowse.com/media/images/3848765-wallpaper-images-download.jpg";
@@ -88,36 +90,35 @@ public class Profile extends AppCompatActivity{
 //    }
 //
 //    private void setupActivityWidgets(){
-//        mProgressbar=(ProgressBar)findViewById(R.id.progressBar);
-//        mProgressbar.setVisibility(View.GONE);
+// //       mProgressbar=(ProgressBar)findViewById(R.id.progressBar);
+////        mProgressbar.setVisibility(View.GONE);
 //        profilephoto = (ImageView)findViewById(R.id.profile_image);
 //
 //    }
-    private void setupToolbar(){
-        Toolbar toolbar = (Toolbar)findViewById(R.id.profileToolBar);
-
-        setSupportActionBar(toolbar);
-        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                Log.d(TAG, "onMenuItemClick: ");
-                switch(item.getItemId()) {
-                    case R.id.profileMenu:
-                        Log.d(TAG, "onMenuItemClick: Naviagting to Profile References");
-                }
-                return false;
-            }
-        });
-        ImageView profileMenu = (ImageView)findViewById(R.id.profileMenu);
-        profileMenu.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d(TAG, "onClick: Navigating to account Settings");
-                Intent intent = new Intent(mContext, AccountSettings.class);
-                startActivity(intent);
-            }
-        });
-    }
+//    private void setupToolbar(){
+//        Toolbar toolbar = (Toolbar)findViewById(R.id.profileToolBar);
+//        setSupportActionBar(toolbar);
+//        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+//            @Override
+//            public boolean onMenuItemClick(MenuItem item) {
+//                Log.d(TAG, "onMenuItemClick: ");
+//                switch(item.getItemId()) {
+//                    case R.id.profileMenu:
+//                        Log.d(TAG, "onMenuItemClick: Naviagting to Profile References");
+//                }
+//                return false;
+//            }
+//        });
+//        ImageView profileMenu = (ImageView)findViewById(R.id.profileMenu);
+//        profileMenu.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Log.d(TAG, "onClick: Navigating to account Settings");
+//                Intent intent = new Intent(mContext, AccountSettings.class);
+//                startActivity(intent);
+//            }
+//        });
+//    }
 //
 //    /**
 //     * Function Bar Setup
@@ -129,4 +130,5 @@ public class Profile extends AppCompatActivity{
 //        MenuItem menuItem = menu.getItem(ACTIVITY_NUM);
 //        menuItem.setChecked(true);
 //    }
+//}
 }

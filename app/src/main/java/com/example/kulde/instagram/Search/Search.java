@@ -59,7 +59,7 @@ public class Search extends AppCompatActivity{
      */
     public void navigation(){
         BottomNavigationView bottomNavigationView = (BottomNavigationView)findViewById(R.id.bottomNavViewwBar);
-        Navigation.enablenavigation(Search.this, bottomNavigationView);
+        Navigation.enablenavigation(Search.this,this, bottomNavigationView);
         Menu menu = bottomNavigationView.getMenu();
         MenuItem menuItem = menu.getItem(ACTIVITY_NUM);
         menuItem.setChecked(true);

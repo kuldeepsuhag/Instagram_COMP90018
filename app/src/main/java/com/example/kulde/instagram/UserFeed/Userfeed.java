@@ -1,5 +1,6 @@
 package com.example.kulde.instagram.UserFeed;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.TabLayout;
@@ -18,6 +19,7 @@ public class Userfeed extends AppCompatActivity{
 
     private static final String TAG = "Feed Activity";
     private static final int ACTIVITY_NUM = 3;
+    private Context mContext;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,7 +34,7 @@ public class Userfeed extends AppCompatActivity{
      */
     public void navigation(){
         BottomNavigationView bottomNavigationView = (BottomNavigationView)findViewById(R.id.bottomNavViewwBar);
-        Navigation.enablenavigation(this, bottomNavigationView);
+        Navigation.enablenavigation(mContext,this, bottomNavigationView);
         Menu menu = bottomNavigationView.getMenu();
         MenuItem menuItem = menu.getItem(ACTIVITY_NUM);
         menuItem.setChecked(true);

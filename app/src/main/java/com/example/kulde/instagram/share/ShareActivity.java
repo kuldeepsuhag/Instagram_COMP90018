@@ -50,7 +50,7 @@ public class ShareActivity extends AppCompatActivity{
     }
     public void navigation(){
         BottomNavigationView bottomNavigationView = (BottomNavigationView)findViewById(R.id.bottomNavViewwBar);
-        Navigation.enablenavigation(mContext, bottomNavigationView);
+        Navigation.enablenavigation(mContext,this, bottomNavigationView);
         Menu menu = bottomNavigationView.getMenu();
         MenuItem menuItem = menu.getItem(ACTIVITY_NUM);
         menuItem.setChecked(true);
@@ -89,10 +89,10 @@ public class ShareActivity extends AppCompatActivity{
 //        tabLayout.getTabAt(1).setText("Photo");
     }
 
-//    public int getTask(){
-//        Log.d(TAG, "getTask: TASK: " + getIntent().getFlags());
-//        return getIntent().getFlags();
-//    }
+   public int getTask(){
+        Log.d(TAG, "getTask: TASK: " + getIntent().getFlags());
+        return getIntent().getFlags();
+    }
 
     /**
      * verifiy all the permissions passed to the array

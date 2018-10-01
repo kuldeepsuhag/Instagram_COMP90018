@@ -7,6 +7,25 @@
     <string name="title_activity_image_viewer">ImageViewer</string>
     <string name="edit_profile">Edit Profile</string>
     <string name="sign_out">Sign Out</string>
+    <string name="dbname_users">users</string>
+    <string name="field_username">username</string>
+    <string name="confirm_password_popup">Confirm Password</string>
+    <string name="dbname_user_account_settings">user_account_settings</string>
+    <string name="field_display_name">display_name</string>
+    <string name="field_description">description</string>
+    <string name="field_phone_number">phone_number</string>
+    <string name="field_email">email</string>
+    <string name="profile_fragment">profile fragment</string>
+    <string name="dbname_photos">photos</string>
+    <string name="profile_photo">Profile Photo</string>
+    <string name="selected_image">selected_image</string>
+    <string name="dbname_user_photos">user_photos</string>
+
+    <string name="field_website">Website</string>
+    <string name="return_to_fragment">return_to_fragment</string>
+
+    <string name="calling_activity">calling_activity</string>
+    <string name="profileactivity">Profile Activity</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

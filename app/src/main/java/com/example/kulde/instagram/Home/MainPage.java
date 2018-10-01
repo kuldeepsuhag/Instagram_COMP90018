@@ -98,7 +98,7 @@ public class MainPage extends AppCompatActivity {
      */
     public void navigation(){
         BottomNavigationView bottomNavigationView = (BottomNavigationView)findViewById(R.id.bottomNavViewwBar);
-        Navigation.enablenavigation(MainPage.this, bottomNavigationView);
+        Navigation.enablenavigation(MainPage.this,this, bottomNavigationView);
         Menu menu = bottomNavigationView.getMenu();
         MenuItem menuItem = menu.getItem(ACTIVITY_NUM);
         menuItem.setChecked(true);

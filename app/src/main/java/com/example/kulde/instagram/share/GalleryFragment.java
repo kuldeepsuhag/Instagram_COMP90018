@@ -19,6 +19,7 @@ import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.example.kulde.instagram.Profile.AccountSettings;
 import com.example.kulde.instagram.R;
 import com.example.kulde.instagram.Utils.CommResources;
 import com.example.kulde.instagram.Utils.FilePaths;
@@ -80,9 +81,17 @@ public class GalleryFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Log.d(TAG, "onClick: Move to NextActivity.");
-                Intent intent = new Intent(getActivity(), NextActivity.class);
-                intent.putExtra("selected_image", mSelectedImage);
-                startActivity(intent);
+                if(isRootTask()){
+                    Intent intent = new Intent(getActivity(), NextActivity.class);
+                    intent.putExtra("selected_image", mSelectedImage);
+                    startActivity(intent);
+                }else{
+                    Intent intent = new Intent(getActivity(), AccountSettings.class);
+                    intent.putExtra("selected_image", mSelectedImage);
+                    intent.putExtra(getString(R.string.return_to_fragment), getString(R.string.edit_profile));
+                    startActivity(intent);
+                }
+
             }
         });
 
@@ -91,6 +100,15 @@ public class GalleryFragment extends Fragment {
 
         init();
         return view;
+    }
+
+    private boolean isRootTask(){
+        if(((ShareActivity)getActivity()).getTask() == 0){
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 
     private void init(){

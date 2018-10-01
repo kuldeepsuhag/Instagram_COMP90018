@@ -1,5 +1,7 @@
 package com.example.kulde.instagram.Profile;
 
+import android.content.Context;
+import android.content.Intent;
 import android.media.Image;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -17,6 +19,7 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 
 import com.example.kulde.instagram.R;
+import com.example.kulde.instagram.Utils.FirebaseMethods;
 import com.example.kulde.instagram.Utils.Navigation;
 import com.example.kulde.instagram.Utils.SectionPagerAdapter;
 import com.example.kulde.instagram.Utils.SectionsStatePagerAdapter;
@@ -31,6 +34,7 @@ public class AccountSettings extends AppCompatActivity {
     private ViewPager viewPager;
     private RelativeLayout relativeLayout;
     private BottomNavigationView bottomNavigationView;
+    private Context mContext;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -47,6 +51,7 @@ public class AccountSettings extends AppCompatActivity {
         createList();
         setupFragments();
         navigation();
+        getIncomingIntent();
 
         ImageView back_arrow = (ImageView)findViewById(R.id.backIcon);
         back_arrow.setOnClickListener(new View.OnClickListener() {
@@ -77,6 +82,24 @@ public class AccountSettings extends AppCompatActivity {
         });
     }
 
+    private void getIncomingIntent(){
+        Intent intent = getIntent();
+        if(intent.hasExtra(getString(R.string.calling_activity))){
+            Log.d(TAG, "getIncomingIntent: recieved incoming intent from " + getString(R.string.profileactivity));
+            setViewPager(pagerAdapter.getFragmentNumber(getString(R.string.edit_profile)));
+        }
+//        if(intent.hasExtra(getString(R.string.selected_image))){
+//            Log.d(TAG, "getIncomingIntent: New Incoming image URL");
+//            if(intent.getStringExtra(getString(R.string.return_to_fragment)).equals(getString(R.string.edit_profile))){
+//                //Setting up new profile image
+//                FirebaseMethods firebaseMethods = new FirebaseMethods(AccountSettings.this);
+//                firebaseMethods.uploadNewPhoto(getString(R.string.profile_photo),null,0,
+//                        intent.getStringExtra(getString(R.string.selected_image)));
+//            }
+
+//        }
+    }
+
     private void setupFragments(){
         pagerAdapter = new SectionsStatePagerAdapter(getSupportFragmentManager());
         pagerAdapter.addFragment(new EditProfileFragment(), getString(R.string.edit_profile)); // fragment 0
@@ -92,7 +115,7 @@ public class AccountSettings extends AppCompatActivity {
 
     public void navigation(){
 
-        Navigation.enablenavigation(AccountSettings.this, bottomNavigationView);
+        Navigation.enablenavigation(AccountSettings.this,this, bottomNavigationView);
         Menu menu = bottomNavigationView.getMenu();
         MenuItem menuItem = menu.getItem(ACTIVITY_NUM);
         menuItem.setChecked(true);

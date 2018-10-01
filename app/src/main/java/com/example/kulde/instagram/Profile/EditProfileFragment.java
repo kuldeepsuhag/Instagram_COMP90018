@@ -1,6 +1,7 @@
 package com.example.kulde.instagram.Profile;
 
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
+import android.content.Intent;
 import android.media.Image;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -20,6 +21,7 @@ import com.example.kulde.instagram.Model.UserSettings;
 import com.example.kulde.instagram.R;
 import com.example.kulde.instagram.Utils.FirebaseMethods;
 import com.example.kulde.instagram.Utils.UniversalImageLoader;
+import com.example.kulde.instagram.share.ShareActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
@@ -37,7 +39,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class EditProfileFragment extends android.support.v4.app.Fragment implements ConfirmPasswordPopup.OnConfirmPasswordListener{
+public class EditProfileFragment extends Fragment implements ConfirmPasswordPopup.OnConfirmPasswordListener{
     private static final String TAG = "EditProfileFragment";
 
     private EditText mDisplayName, mUsername, mWebsite, mDescription, mEmail, mPhoneNumber;
@@ -208,6 +210,16 @@ public class EditProfileFragment extends android.support.v4.app.Fragment impleme
         mEmail.setText(userSettings.getUser().getEmail());
         mPhoneNumber.setText(String.valueOf(userSettings.getUser().getPhone_number()));
 //        mProgressBar.setVisibility(View.GONE);
+        mChangeProfilePhoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(TAG, "onClick: Changing Profile Photo");
+                Intent intent = new Intent(getActivity(), ShareActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);//268435456
+                getActivity().startActivity(intent);
+
+            }
+        });
     }
 
     private void setupFirebaseAuth(){

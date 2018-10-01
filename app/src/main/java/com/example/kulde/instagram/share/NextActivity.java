@@ -99,9 +99,9 @@ public class NextActivity extends AppCompatActivity {
         image.setImageBitmap(bmp);
         image.setRotation(-CommResources.rotationdegree);
 
-//        imgUrl = intent.getStringExtra("selected_image");
-//        Log.d(TAG, "setImage: got new image url: " + imgUrl);
-//        UniversalImageLoader.setImage(imgUrl, image, null, mAppend);
+       imgUrl = intent.getStringExtra("selected_image");
+        Log.d(TAG, "setImage: got new image url: " + imgUrl);
+        UniversalImageLoader.setImage(imgUrl, image, null, mAppend);
     }
 
     private void setupFirebaseAuth() {
