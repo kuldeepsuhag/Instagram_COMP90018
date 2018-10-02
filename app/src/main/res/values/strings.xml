@@ -21,7 +21,7 @@
     <string name="selected_image">selected_image</string>
     <string name="dbname_user_photos">user_photos</string>
 
-    <string name="field_website">Website</string>
+    <string name="field_website">website</string>
     <string name="return_to_fragment">return_to_fragment</string>
 
     <string name="calling_activity">calling_activity</string>
