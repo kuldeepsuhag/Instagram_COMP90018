@@ -185,6 +185,7 @@ public class GalleryFragment extends Fragment {
         Bitmap myBitmap = BitmapFactory.decodeFile(imgURL);
         CommResources.photoFinishBitmap = myBitmap;
         CommResources.edit_template = myBitmap;
+        CommResources.rotationdegree = 0;
     }
 
     private void setImage(final String imgURL, ImageView image, String dir) {

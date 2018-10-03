@@ -104,7 +104,7 @@ public class NextActivity extends AppCompatActivity {
 
         ImageView image = (ImageView) findViewById(R.id.imageShare);
         image.setImageBitmap(bmp);
-        image.setRotation(CommResources.rotationdegree);
+        image.setRotation(- CommResources.rotationdegree);
     }
 
     private void setupFirebaseAuth() {

@@ -40,13 +40,17 @@ public class ShareActivity extends AppCompatActivity{
         setContentView(R.layout.activity_share);
         Log.d(TAG, "onCreate: started.");
 
-        if(checkPermissionsArray(Permissions.PERMISSIONS)){
-            initImageLoader();
-            setupViewPager();
-        }else{
+        while(!checkPermissionsArray(Permissions.PERMISSIONS)){
             verifyPermissions(Permissions.PERMISSIONS);
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
         }
-
+        initImageLoader();
+        setupViewPager();
     }
     public void navigation(){
         BottomNavigationView bottomNavigationView = (BottomNavigationView)findViewById(R.id.bottomNavViewwBar);
