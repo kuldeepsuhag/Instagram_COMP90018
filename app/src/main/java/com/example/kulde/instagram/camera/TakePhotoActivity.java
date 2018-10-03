@@ -292,9 +292,10 @@ public class TakePhotoActivity extends AppCompatActivity {
 
         nextFrag.setArguments(b);
         */
-
+        Log.d(LOGGING_TAG, "Pass image to cache... Rotation:"+rotate);
         CommResources.photoFinishBitmap = bmp;
         CommResources.rotationdegree = rotate;
+
 
 
         this.getSupportFragmentManager().beginTransaction()

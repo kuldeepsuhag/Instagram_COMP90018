@@ -3,6 +3,7 @@ package com.example.kulde.instagram.share;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -23,6 +24,10 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 public class NextActivity extends AppCompatActivity {
 
@@ -89,19 +94,17 @@ public class NextActivity extends AppCompatActivity {
 
     private void setImage(){
         Bitmap bmp;
+        intent = getIntent();
+
         if(CommResources.edit_template != null){
             bmp = CommResources.edit_template;
         }else{
             bmp = CommResources.photoFinishBitmap;
         }
-        intent = getIntent();
+
         ImageView image = (ImageView) findViewById(R.id.imageShare);
         image.setImageBitmap(bmp);
-        image.setRotation(-CommResources.rotationdegree);
-
-       imgUrl = intent.getStringExtra("selected_image");
-        Log.d(TAG, "setImage: got new image url: " + imgUrl);
-        UniversalImageLoader.setImage(imgUrl, image, null, mAppend);
+        image.setRotation(CommResources.rotationdegree);
     }
 
     private void setupFirebaseAuth() {

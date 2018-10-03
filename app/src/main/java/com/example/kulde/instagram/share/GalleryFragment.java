@@ -83,12 +83,9 @@ public class GalleryFragment extends Fragment {
                 Log.d(TAG, "onClick: Move to NextActivity.");
                 if(isRootTask()){
                     Intent intent = new Intent(getActivity(), NextActivity.class);
-                    intent.putExtra("selected_image", mSelectedImage);
                     startActivity(intent);
                 }else{
                     Intent intent = new Intent(getActivity(), AccountSettings.class);
-                    intent.putExtra("selected_image", mSelectedImage);
-                    intent.putExtra(getString(R.string.return_to_fragment), getString(R.string.edit_profile));
                     startActivity(intent);
                 }
 
