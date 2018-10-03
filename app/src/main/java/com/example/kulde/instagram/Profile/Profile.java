@@ -3,30 +3,23 @@ package com.example.kulde.instagram.Profile;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.DialogTitle;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
+import com.example.kulde.instagram.Model.Photo;
 import com.example.kulde.instagram.R;
-import com.example.kulde.instagram.Utils.GridImageAdapter;
-import com.example.kulde.instagram.Utils.Navigation;
-import com.example.kulde.instagram.Utils.UniversalImageLoader;
-
-import java.util.ArrayList;
+import com.example.kulde.instagram.Utils.ViewComments;
+import com.example.kulde.instagram.Utils.ViewProfile;
+import com.example.kulde.instagram.Utils.Viewpost;
 
 //import static com.example.kulde.instagram.R.menu.profile_menu;
 
-public class Profile extends AppCompatActivity {
+public class Profile extends AppCompatActivity implements ProfileFragment.onGridImageselector, Viewpost.OnCommentThreadSelectedListener {
     private static final String TAG = "Profile Activity";
     private static final int ACTIVITY_NUM = 4;
     private Context mContext = Profile.this;
@@ -40,95 +33,68 @@ public class Profile extends AppCompatActivity {
         Log.d(TAG, "onCreate: Activity Profile Starting......");
         init();
 
-//        navigation();
-//        setupToolbar();
-//       setupActivityWidgets();
-//       setProfileImage();
-//       tempGridSetup();
-    }
+   }
 
     private void init() {
         Log.d(TAG, "init() called " + getString(R.string.profile_fragment));
-        ProfileFragment frag = new ProfileFragment();
-        FragmentTransaction ftrans = Profile.this.getSupportFragmentManager().beginTransaction();
-        ftrans.replace(R.id.container, frag);
-        ftrans.addToBackStack(getString(R.string.profile_fragment));
-        ftrans.commit();
+        Intent intent = getIntent();
+
+        if(intent.hasExtra(getString(R.string.calling_activity))) {
+            Log.d(TAG, "init: Searching for user object attached as Intent Extra");
+            if (intent.hasExtra(getString(R.string.intent_user))) {
+                Log.d(TAG, "init: Inflating ViewProfile");
+                ViewProfile fragment = new ViewProfile();
+                Bundle args = new Bundle();
+                args.putParcelable(getString(R.string.intent_user), intent.getParcelableExtra(getString(R.string.intent_user)));
+
+                fragment.setArguments(args);
+
+                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.container, fragment);
+                transaction.addToBackStack(getString(R.string.view_profile_fragment));
+                transaction.commit();
+            } else {
+                Toast.makeText(mContext, "Something went wrong", Toast.LENGTH_SHORT).show();
+            }
+        }
+            else{
+            Log.d(TAG, "init: Inflating Profile");
+            ProfileFragment frag = new ProfileFragment();
+            FragmentTransaction ftrans = Profile.this.getSupportFragmentManager().beginTransaction();
+            ftrans.replace(R.id.container, frag);
+            ftrans.addToBackStack(getString(R.string.profile_fragment));
+            ftrans.commit();
+            }
+
+        }
+
+
+    @Override
+    public void onGridImageselected(Photo photo, int activitynumber) {
+        Log.d(TAG, "onGridImageselected: Selected Image from Grid View" + photo.toString());
+        Viewpost post = new Viewpost();
+        Bundle args = new Bundle();
+        args.putParcelable(getString(R.string.photo),photo);
+        args.putInt(getString(R.string.activity_number), activitynumber);
+
+        post.setArguments(args);
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.container, post);
+        transaction.addToBackStack(getString(R.string.view_post_fragment));
+        transaction.commit();
     }
 
-//    }
-//    private void setProfileImage(){
-//        Log.d(TAG, "setProfileImage: Setting Profile Photo");
-//        String imgURL = "https://wallpaperbrowse.com/media/images/3848765-wallpaper-images-download.jpg";
-//        UniversalImageLoader.setImage(imgURL, profilephoto,mProgressbar, "");
-//    }
-//
-//    private void tempGridSetup(){
-//        ArrayList<String> imgUrls = new ArrayList<>();
-//
-//        imgUrls.add("https://wallpaperbrowse.com/media/images/3848765-wallpaper-images-download.jpg");
-//        imgUrls.add("https://wallpaperbrowse.com/media/images/3848765-wallpaper-images-download.jpg");
-//        imgUrls.add("https://wallpaperbrowse.com/media/images/3848765-wallpaper-images-download.jpg");
-//        imgUrls.add("https://wallpaperbrowse.com/media/images/3848765-wallpaper-images-download.jpg");
-//        imgUrls.add("https://wallpaperbrowse.com/media/images/3848765-wallpaper-images-download.jpg");
-//        imgUrls.add("https://wallpaperbrowse.com/media/images/3848765-wallpaper-images-download.jpg");
-//        imgUrls.add("https://wallpaperbrowse.com/media/images/3848765-wallpaper-images-download.jpg");
-//        imgUrls.add("https://wallpaperbrowse.com/media/images/3848765-wallpaper-images-download.jpg");
-//        imgUrls.add("https://wallpaperbrowse.com/media/images/3848765-wallpaper-images-download.jpg");
-//        imgUrls.add("https://wallpaperbrowse.com/media/images/3848765-wallpaper-images-download.jpg");
-//        imgUrls.add("https://wallpaperbrowse.com/media/images/3848765-wallpaper-images-download.jpg");
-//
-//        setupImageGrid(imgUrls);
-//    }
-//    private void setupImageGrid(ArrayList<String> imgUrls){
-//        GridView gridView = (GridView)findViewById(R.id.gridView);
-//        int grid_width = getResources().getDisplayMetrics().widthPixels;
-//        int imageWidth = grid_width/3;
-//        gridView.setColumnWidth(imageWidth);
-//        GridImageAdapter adapter = new GridImageAdapter(mContext, R.layout.layout_grid_imageview,"",imgUrls);
-//        gridView.setAdapter(adapter);
-//    }
-//
-//    private void setupActivityWidgets(){
-// //       mProgressbar=(ProgressBar)findViewById(R.id.progressBar);
-////        mProgressbar.setVisibility(View.GONE);
-//        profilephoto = (ImageView)findViewById(R.id.profile_image);
-//
-//    }
-//    private void setupToolbar(){
-//        Toolbar toolbar = (Toolbar)findViewById(R.id.profileToolBar);
-//        setSupportActionBar(toolbar);
-//        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-//            @Override
-//            public boolean onMenuItemClick(MenuItem item) {
-//                Log.d(TAG, "onMenuItemClick: ");
-//                switch(item.getItemId()) {
-//                    case R.id.profileMenu:
-//                        Log.d(TAG, "onMenuItemClick: Naviagting to Profile References");
-//                }
-//                return false;
-//            }
-//        });
-//        ImageView profileMenu = (ImageView)findViewById(R.id.profileMenu);
-//        profileMenu.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Log.d(TAG, "onClick: Navigating to account Settings");
-//                Intent intent = new Intent(mContext, AccountSettings.class);
-//                startActivity(intent);
-//            }
-//        });
-//    }
-//
-//    /**
-//     * Function Bar Setup
-//     */
-//    public void navigation(){
-//        BottomNavigationView bottomNavigationView = (BottomNavigationView)findViewById(R.id.bottomNavViewwBar);
-//        Navigation.enablenavigation(Profile.this, bottomNavigationView);
-//        Menu menu = bottomNavigationView.getMenu();
-//        MenuItem menuItem = menu.getItem(ACTIVITY_NUM);
-//        menuItem.setChecked(true);
-//    }
-//}
+    @Override
+    public void OnCommentThreadSelectedListener(Photo photo) {
+        Log.d(TAG, "OnCommentThreadSelectedListener: Selected a Comment Thread");
+        ViewComments fragment = new ViewComments();
+        Bundle args = new Bundle();
+        args.putParcelable(getString(R.string.photo),photo);
+        fragment.setArguments(args);
+
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.container,fragment);
+        transaction.addToBackStack(getString(R.string.view_comments));
+        transaction.commit();
+    }
 }

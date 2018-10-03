@@ -34,10 +34,10 @@
                                   <option name="values">
                                     <map>
                                       <entry key="assetType" value="IMAGE" />
-                                      <entry key="imageAsset" value="C:\Users\kulde\Downloads\ic_speech_bubble.png" />
-                                      <entry key="outputName" value="ic_speech_bubble" />
+                                      <entry key="imageAsset" value="C:\Users\kulde\Downloads\ic_heart.red.png" />
+                                      <entry key="outputName" value="ic_heart_red" />
                                       <entry key="theme" value="CUSTOM" />
-                                      <entry key="themeColor" value="000000" />
+                                      <entry key="themeColor" value="d40008" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -56,6 +56,11 @@
                 </map>
               </option>
             </PersistentState>
+          </value>
+        </entry>
+        <entry key="vectorWizard">
+          <value>
+            <PersistentState />
           </value>
         </entry>
       </map>

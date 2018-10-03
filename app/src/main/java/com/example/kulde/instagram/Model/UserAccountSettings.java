@@ -1,6 +1,6 @@
 package com.example.kulde.instagram.Model;
 
-public class UserAccountSettings {
+public class    UserAccountSettings {
 
     private String description;
     private String display_name;
