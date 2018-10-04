@@ -36,6 +36,7 @@ import io.fotoapparat.result.BitmapPhoto;
 import io.fotoapparat.result.PhotoResult;
 import io.fotoapparat.result.WhenDoneListener;
 import io.fotoapparat.view.CameraView;
+import io.fotoapparat.view.FocusView;
 
 import static io.fotoapparat.log.LoggersKt.fileLogger;
 
@@ -69,6 +70,7 @@ public class TakePhotoActivity extends AppCompatActivity {
     private GridLines gridLines;
     private ImageButton switchcm;
     private boolean activeCameraBack = true;
+    private FocusView focusview;
 
     private CameraConfiguration cameraConfiguration = CameraConfiguration
             .builder()
@@ -99,6 +101,7 @@ public class TakePhotoActivity extends AppCompatActivity {
         capture = findViewById(R.id.capture);
         gallery = findViewById(R.id.gallary);
         switchcm = findViewById(R.id.switch_camera);
+        focusview = findViewById(R.id.focusView);
 
         hasCameraPermission = permissionsDelegate.hasCameraPermission();
         if (hasCameraPermission) {
@@ -142,6 +145,7 @@ public class TakePhotoActivity extends AppCompatActivity {
         return Fotoapparat
                 .with(this)
                 .into(cameraView)
+                .focusView(focusview)
                 .previewScaleType(ScaleType.CenterCrop)
                 .lensPosition(back())
                 .frameProcessor(new SampleFrameProcessor())
