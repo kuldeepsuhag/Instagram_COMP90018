@@ -48,6 +48,7 @@ import static io.fotoapparat.selector.FlashSelectorsKt.off;
 import static io.fotoapparat.selector.FlashSelectorsKt.on;
 import static io.fotoapparat.selector.FlashSelectorsKt.torch;
 import static io.fotoapparat.selector.LensPositionSelectorsKt.back;
+import static io.fotoapparat.selector.LensPositionSelectorsKt.front;
 import static io.fotoapparat.selector.PreviewFpsRangeSelectorsKt.highestFps;
 import static io.fotoapparat.selector.ResolutionSelectorsKt.highestResolution;
 import static io.fotoapparat.selector.SelectorsKt.firstAvailable;
@@ -66,6 +67,8 @@ public class TakePhotoActivity extends AppCompatActivity {
     private ImageButton gallery;
     private boolean flash_on = false;
     private GridLines gridLines;
+    private ImageButton switchcm;
+    private boolean activeCameraBack = true;
 
     private CameraConfiguration cameraConfiguration = CameraConfiguration
             .builder()
@@ -95,6 +98,7 @@ public class TakePhotoActivity extends AppCompatActivity {
         cameraView = findViewById(R.id.camera_view);
         capture = findViewById(R.id.capture);
         gallery = findViewById(R.id.gallary);
+        switchcm = findViewById(R.id.switch_camera);
 
         hasCameraPermission = permissionsDelegate.hasCameraPermission();
         if (hasCameraPermission) {
@@ -113,6 +117,7 @@ public class TakePhotoActivity extends AppCompatActivity {
         takePictureOnClick();
         galleryOnClick();
         toggleTorchOnSwitch();   // control flash light
+        switchCameraOnClick();   // control front or back camera
 
     }
 
@@ -213,6 +218,20 @@ public class TakePhotoActivity extends AppCompatActivity {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
+            }
+        });
+    }
+
+    private void switchCameraOnClick() {
+        switchcm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                activeCameraBack = !activeCameraBack;
+                fotoapparat.switchTo(
+                        activeCameraBack ? back() : front(),
+                        cameraConfiguration
+                );
+
             }
         });
     }
