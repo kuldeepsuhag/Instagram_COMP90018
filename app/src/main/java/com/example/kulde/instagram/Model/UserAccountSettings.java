@@ -1,6 +1,9 @@
 package com.example.kulde.instagram.Model;
 
-public class    UserAccountSettings {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class UserAccountSettings implements Parcelable {
 
     private String description;
     private String display_name;
@@ -53,6 +56,30 @@ public class    UserAccountSettings {
             return new UserAccountSettings[size];
         }
     };*/
+
+    protected UserAccountSettings(Parcel in) {
+        description = in.readString();
+        display_name = in.readString();
+        followers = in.readLong();
+        following = in.readLong();
+        posts = in.readLong();
+        profile_photo = in.readString();
+        username = in.readString();
+        website = in.readString();
+        user_id = in.readString();
+    }
+
+    public static final Creator<UserAccountSettings> CREATOR = new Creator<UserAccountSettings>() {
+        @Override
+        public UserAccountSettings createFromParcel(Parcel in) {
+            return new UserAccountSettings(in);
+        }
+
+        @Override
+        public UserAccountSettings[] newArray(int size) {
+            return new UserAccountSettings[size];
+        }
+    };
 
     public String getUser_id() {
         return user_id;
@@ -139,6 +166,24 @@ public class    UserAccountSettings {
                 ", username='" + username + '\'' +
                 ", website='" + website + '\'' +
                 '}';
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(description);
+        dest.writeString(display_name);
+        dest.writeLong(followers);
+        dest.writeLong(following);
+        dest.writeLong(posts);
+        dest.writeString(profile_photo);
+        dest.writeString(username);
+        dest.writeString(website);
+        dest.writeString(user_id);
     }
 
     /*@Override

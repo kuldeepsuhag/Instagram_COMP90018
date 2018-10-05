@@ -22,6 +22,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.kulde.instagram.Home.MainPage;
 import com.example.kulde.instagram.Model.Comment;
 import com.example.kulde.instagram.Model.Likes;
 import com.example.kulde.instagram.Model.Photo;
@@ -99,6 +100,17 @@ public class ViewComments extends Fragment {
         return view;
     }
 
+    private String getCallingActivityfromBundle(){
+        Log.d(TAG, "getPhotoFromBundle: arguments: " + getArguments());
+
+        Bundle bundle = this.getArguments();
+        if(bundle != null) {
+            return bundle.getString(getString(R.string.home_activity ));
+        }else{
+            return null;
+        }
+    }
+
     private void setupWidgets(){
 
         CommentListAdapter adapter = new CommentListAdapter(mContext,
@@ -125,7 +137,13 @@ public class ViewComments extends Fragment {
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "onClick: navigating back");
-                getActivity().getSupportFragmentManager().popBackStack();
+                if(getCallingActivityfromBundle().equals(getString(R.string.home_activity))){
+                    getActivity().getSupportFragmentManager().popBackStack();
+                    //((MainPage)getActivity()).showlayout();
+                }else{
+                    getActivity().getSupportFragmentManager().popBackStack();
+                }
+
             }
         });
     }
@@ -158,7 +176,7 @@ public class ViewComments extends Fragment {
 
         //insert into user_photos node
         myRef.child(getString(R.string.dbname_user_photos))
-                .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                .child(mPhoto.getUser_id())
                 .child(mPhoto.getPhoto_id())
                 .child(getString(R.string.field_comments))
                 .child(commentID)

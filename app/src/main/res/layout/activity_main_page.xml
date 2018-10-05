@@ -7,10 +7,14 @@
     android:layout_height="match_parent"
     tools:context=".Home.MainPage">
 
-
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/container"></FrameLayout>
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:id="@+id/relLayoutparent">
         <!-- Top Tabs-->
         <RelativeLayout
             android:layout_width="match_parent"
@@ -21,12 +25,12 @@
 
         <!--Middle Section-->
         <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:id="@+id/relLayout2"
+            android:layout_width="match_parent"
+            android:layout_height="493dp"
             android:layout_below="@+id/relLayout1">
 
-            <include layout="@layout/layout_center_viewpager"/>
+            <include layout="@layout/layout_center_viewpager" />
 
 
         </RelativeLayout>

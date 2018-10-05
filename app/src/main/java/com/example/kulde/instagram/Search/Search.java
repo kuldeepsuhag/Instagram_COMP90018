@@ -82,6 +82,8 @@ public class Search extends AppCompatActivity{
 
     }
 
+
+
     private void updateUserList(){
         Log.d(TAG, "updateUserList: Updating Users list");
 
