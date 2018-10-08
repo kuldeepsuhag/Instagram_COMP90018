@@ -1,6 +1,7 @@
 package com.example.kulde.instagram.Utils;
 
 import android.content.Context;
+import android.content.Intent;
 import android.media.Image;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -23,6 +24,7 @@ import com.example.kulde.instagram.Model.Likes;
 import com.example.kulde.instagram.Model.Photo;
 import com.example.kulde.instagram.Model.User;
 import com.example.kulde.instagram.Model.UserAccountSettings;
+import com.example.kulde.instagram.Profile.AccountSettings;
 import com.example.kulde.instagram.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -57,7 +59,7 @@ public class Viewpost extends Fragment {
     private Context mContext;
     private SquareImageView mPostImage;
     private BottomNavigationView bottomNavigationView;
-    private TextView mBackLabel, mCaption, mUsername, mTimestamp, mLikes, mComments;
+    private TextView mBackLabel, mCaption, mUsername, mTimestamp, mLikes, mComments, editProfile;
     private ImageView mBackarrow, mEllipses, mHeartwhite,mHeartred, mProfileImage, mComment;
 
     private UserAccountSettings accountSettings;
@@ -73,6 +75,8 @@ public class Viewpost extends Fragment {
     private Boolean mLikedbyCurrentuser;
     private StringBuilder mUsers;
     private String mLikesstring = "";
+
+    private User mUser;
 
     public Viewpost() {
         super();
@@ -99,20 +103,22 @@ public class Viewpost extends Fragment {
 
         mlike = new Like(mHeartred,mHeartwhite);
         mLikes = (TextView)view.findViewById(R.id.image_likes);
+
+
         try{
             mphoto = getphotofrombundle();
             UniversalImageLoader.setImage(mphoto.getImage_path(),mPostImage,null,"");
             mActivityNumber = getActivitynumBundle();
             getPhotodetails();
-            getLikesString();
+            //getLikesString();
         }catch (NullPointerException e){
             Log.e(TAG, "onCreateView: NullPointer Exception " + e.getMessage());
         }
         setupFirebaseAuth();
         navigation();
-
         return view;
     }
+
 
     @Override
     public void onAttach(Context context) {
@@ -150,7 +156,7 @@ public class Viewpost extends Fragment {
                                 mUsers.append(",");
                             }
                             String[] splitUsers = mUsers.toString().split(",");
-                            if(mUsers.toString().contains(accountSettings.getUsername() + ",")){
+                            if(mUsers.toString().contains(mUser.getUsername() + ",")){
                                 mLikedbyCurrentuser = true;
                             }else{
                                 mLikedbyCurrentuser = false;
@@ -161,7 +167,7 @@ public class Viewpost extends Fragment {
                                 mLikesstring = "Liked by " + splitUsers[0];
                             }else if(length == 2){
                                 mLikesstring = "Liked by " + splitUsers[0]
-                                + "and " + splitUsers[1];
+                                        + "and " + splitUsers[1];
                             }else if(length == 3){
                                 mLikesstring = "Liked by " + splitUsers[0]
                                         + ", " + splitUsers[1] + " and " + splitUsers[2];
@@ -268,7 +274,7 @@ public class Viewpost extends Fragment {
                 .setValue(likes);
 
         myRef.child(getString(R.string.dbname_user_photos))
-                .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                .child(mphoto.getUser_id())
                 .child(mphoto.getPhoto_id())
                 .child(getString(R.string.field_likes))
                 .child(newLikeID)

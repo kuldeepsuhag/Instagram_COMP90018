@@ -4,11 +4,11 @@
 
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.INTERNET" />
 
     <uses-feature android:name="android.hardware.camera2.full" />
-    <uses-feature android:name="android.hardware.location.gps" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <uses-feature android:name="android.hardware.camera.flash" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
 
@@ -20,13 +20,16 @@
         android:roundIcon="@drawable/nuhuu"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Home.MainPage" />
+        <activity android:name=".Home.MainPage" >
+
+
+        </activity>
         <activity android:name=".Profile.AccountSettings"/>
 
         <activity android:name=".SignUp" />
-        <activity android:name=".Search.Search"/>
-        <activity android:name=".share.ShareActivity"/>
-        <activity android:name=".UserFeed.Userfeed"/>
+        <activity android:name=".Search.Search"
+            android:windowSoftInputMode="adjustNothing"/>
+        <activity android:name=".share.ShareActivity"></activity>
         <activity android:name=".share.NextActivity" />
         <activity android:name=".LogIn">
             <intent-filter>

@@ -12,6 +12,11 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/capture_bottom">
+        <!--Optionally add tap to focus-->
+        <io.fotoapparat.view.FocusView
+            android:id="@+id/focusView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
 
     </io.fotoapparat.view.CameraView>
 
@@ -47,6 +52,8 @@
         android:scaleType="fitCenter"
         app:srcCompat="@drawable/switch_camera" />
 
+
+
     <ImageView
         android:id="@id/result"
         android:layout_width="match_parent"
@@ -60,7 +67,8 @@
         android:layout_height="100dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
-        android:background="#ffffff">
+        android:background="#ffffff"
+        android:layout_alignParentLeft="true">
 
         <ImageButton
             android:id="@+id/capture"
@@ -92,13 +100,13 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_alignBottom="@+id/capture"
-
-
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="61dp"
             android:background="?android:selectableItemBackground"
             android:scaleType="fitCenter"
-            app:srcCompat="@drawable/gallery">
+            app:srcCompat="@drawable/gallery"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="61dp">
 
         </ImageButton>
 

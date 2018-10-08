@@ -1,5 +1,6 @@
 package com.example.kulde.instagram.Home;
 
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -11,21 +12,42 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.FrameLayout;
+import android.widget.RelativeLayout;
 
 import com.example.kulde.instagram.LogIn;
+import com.example.kulde.instagram.Model.Photo;
+import com.example.kulde.instagram.Model.UserAccountSettings;
 import com.example.kulde.instagram.R;
+import com.example.kulde.instagram.Utils.Mainfeedlistadapter;
 import com.example.kulde.instagram.Utils.Navigation;
 import com.example.kulde.instagram.Utils.SectionPagerAdapter;
 import com.example.kulde.instagram.Utils.UniversalImageLoader;
+import com.example.kulde.instagram.Utils.ViewComments;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 //import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 
-public class MainPage extends AppCompatActivity {
+public class MainPage extends AppCompatActivity implements Mainfeedlistadapter.OnLoadMoreItems {
+
+
+    @Override
+    public void onLoadMoreItems() {
+        Log.d(TAG, "onLoadMoreItems: Displaying More photos");
+        FragmentHome fragmentHome = (FragmentHome)getSupportFragmentManager()
+                .findFragmentByTag("android:switcher:" + R.id.viewpager_container + ":" + mViewPager.getCurrentItem());
+
+        if(fragmentHome != null){
+            fragmentHome.displaymorephotos();
+        }
+    }
+    
     private static final String TAG = "MainPage";
     private static final int ACTIVITY_NUM = 0;
+    private static final int HOME_FRAGMENT = 1;
 
     private Context mainContext = MainPage.this;
 
@@ -33,15 +55,38 @@ public class MainPage extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
 
+    private ViewPager mViewPager;
+    private FrameLayout frameLayout;
+    private RelativeLayout mRelativeLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_page);
         Log.d(TAG, "onCreate: Starting......");
+        mViewPager = (ViewPager)findViewById(R.id.viewpager_container);
+        frameLayout = (FrameLayout)findViewById(R.id.container);
+        mRelativeLayout = (RelativeLayout)findViewById(R.id.relLayoutparent);
         setupFirebaseAuth();
         initimageloader();
         navigation();
         setupViewpager();
+
+    }
+
+    public void onCommentThreadSelected(Photo photo, String callingActivity){
+        Log.d(TAG, "onCommentThreadSelected: Selected a comment thread");
+        ViewComments fragment = new ViewComments();
+        Bundle args = new Bundle();
+        args.putParcelable(getString(R.string.photo), photo);
+        args.putString(getString(R.string.home_activity),getString(R.string.home_activity));
+        fragment.setArguments(args);
+
+        android.support.v4.app.FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.container, fragment);
+        transaction.addToBackStack(getString(R.string.view_comments));
+        transaction.commit();
+
 
     }
 
@@ -81,6 +126,7 @@ public class MainPage extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         mAuth.addAuthStateListener(mAuthListener);
+        mViewPager.setCurrentItem(HOME_FRAGMENT);
         checkCurrentUser(mAuth.getCurrentUser());
     }
 
@@ -107,7 +153,8 @@ public class MainPage extends AppCompatActivity {
     private void setupViewpager(){
         SectionPagerAdapter adapter = new SectionPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(new FragmentHome());
-        ViewPager viewPager = (ViewPager)findViewById(R.id.viewpager_container);
+        //mViewPager.setAdapter(adapter);
+        ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager_container);
         viewPager.setAdapter(adapter);
         TabLayout tabLayout = (TabLayout)findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
@@ -115,5 +162,25 @@ public class MainPage extends AppCompatActivity {
 
     }
 
+    public void hidelayout(){
+        Log.d(TAG, "hidelayout: Hidding layout");
+        mRelativeLayout.setVisibility(View.GONE);
+        frameLayout.setVisibility(View.VISIBLE);
+    }
+
+
+    public void showlayout(){
+        Log.d(TAG, "hidelayout: showing layout");
+        mRelativeLayout.setVisibility(View.VISIBLE);
+        frameLayout.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        if(frameLayout.getVisibility() == View.VISIBLE){
+            showlayout();
+        }
+    }
 
 }

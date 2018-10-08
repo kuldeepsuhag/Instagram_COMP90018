@@ -36,9 +36,12 @@ public class BitmapFilter extends AsyncTask<Integer, Void, Bitmap> {
 
     public static final int NIGHT_WHIS = 6;
 
+    public static final int ORIGINAL_ = 0;
+
     private WeakReference<ImageView> imageViewReference;
     private int styleNo;
     private Bitmap bitmap;
+    private boolean flag = false;
 
     static
     {
@@ -54,10 +57,11 @@ public class BitmapFilter extends AsyncTask<Integer, Void, Bitmap> {
      * @param styleNo, filter sytle id
      */
 
-    public BitmapFilter(Bitmap bitmap, ImageView imageView, int styleNo) {
+    public BitmapFilter(Bitmap bitmap, ImageView imageView, int styleNo, boolean flag) {
         // Use a WeakReference to ensure the ImageView can be garbage collected
         this.bitmap=bitmap;
         this.styleNo=styleNo;
+        this.flag = flag;
         imageViewReference = new WeakReference<ImageView>(imageView);
     }
 
@@ -102,6 +106,10 @@ public class BitmapFilter extends AsyncTask<Integer, Void, Bitmap> {
             Bitmap ouputImage = fooFilter.processFilter(bitmap);
             return ouputImage;
         }
+        else if (styleNo == ORIGINAL_) {
+
+            return bitmap;
+        }
 
         return bitmap;
     }
@@ -118,7 +126,9 @@ public class BitmapFilter extends AsyncTask<Integer, Void, Bitmap> {
         if (imageViewReference != null && bitmap != null) {
             final ImageView imageView = imageViewReference.get();
             if (imageView != null) {
-                CommResources.edit_template = bitmap;
+                if (flag) {
+                    CommResources.edit_template = bitmap;
+                }
                 imageView.setImageBitmap(bitmap);
             }
         }

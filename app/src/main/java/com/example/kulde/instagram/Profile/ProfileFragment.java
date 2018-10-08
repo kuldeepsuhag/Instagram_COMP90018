@@ -62,6 +62,10 @@ public class ProfileFragment extends Fragment {
     private static final int NUM_GRID_COLUMNS = 3;
     private Context mContext;
     private FirebaseMethods mFirebaseMethods;
+    private int mfollowersCount = 0;
+    private int mfollowingCount = 0;
+    private int mPostCount = 0;
+
 
     public interface onGridImageselector{
         void onGridImageselected(Photo photo, int activityNumber);
@@ -110,6 +114,9 @@ public class ProfileFragment extends Fragment {
         setupToolbar();
         setupFirebaseAuth();
         setupGridview();
+        getFollowingCount();
+        getFollowersCount();
+        getPostsCount();
         return view;
 
     }
@@ -124,35 +131,39 @@ public class ProfileFragment extends Fragment {
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot singlesnapshot : dataSnapshot.getChildren()){
+                for (DataSnapshot singlesnapshot : dataSnapshot.getChildren()) {
                     Photo photo = new Photo();
-                    Map<String,Object> objectMap = (HashMap<String, Object>) singlesnapshot.getValue();
-                    photo.setCaption(objectMap.get(getString(R.string.field_caption)).toString());
-                    photo.setTags(objectMap.get(getString(R.string.field_tags)).toString());
-                    photo.setPhoto_id(objectMap.get(getString(R.string.field_photo_id)).toString());
-                    photo.setUser_id(objectMap.get(getString(R.string.user_id)).toString());
-                    photo.setDate_created(objectMap.get(getString(R.string.field_date_created)).toString());
-                    photo.setImage_path(objectMap.get(getString(R.string.field_image_path)).toString());
+                    Map<String, Object> objectMap = (HashMap<String, Object>) singlesnapshot.getValue();
+                    try{
+                        photo.setCaption(objectMap.get(getString(R.string.field_caption)).toString());
+                        photo.setTags(objectMap.get(getString(R.string.field_tags)).toString());
+                        photo.setPhoto_id(objectMap.get(getString(R.string.field_photo_id)).toString());
+                        photo.setUser_id(objectMap.get(getString(R.string.user_id)).toString());
+                        photo.setDate_created(objectMap.get(getString(R.string.field_date_created)).toString());
+                        photo.setImage_path(objectMap.get(getString(R.string.field_image_path)).toString());
 
-                    ArrayList<Comment> comments = new ArrayList<Comment>();
-                    for(DataSnapshot dsnapshot: singlesnapshot.child(getString(R.string.field_comments)).getChildren()){
-                        Comment comment = new Comment();
-                        comment.setUser_id(dsnapshot.getValue(Comment.class).getUser_id());
-                        comment.setComment(dsnapshot.getValue(Comment.class).getComment());
-                        comment.setDate_created(dsnapshot.getValue(Comment.class).getDate_created());
+                        ArrayList<Comment> comments = new ArrayList<Comment>();
+                        for (DataSnapshot dsnapshot : singlesnapshot.child(getString(R.string.field_comments)).getChildren()) {
+                            Comment comment = new Comment();
+                            comment.setUser_id(dsnapshot.getValue(Comment.class).getUser_id());
+                            comment.setComment(dsnapshot.getValue(Comment.class).getComment());
+                            comment.setDate_created(dsnapshot.getValue(Comment.class).getDate_created());
 
-                        comments.add(comment);
+                            comments.add(comment);
+                        }
+                        photo.setComments(comments);
+
+                        List<Likes> likesList = new ArrayList<Likes>();
+                        for (DataSnapshot dsnapshot : singlesnapshot.child(getString(R.string.field_likes)).getChildren()) {
+                            Likes likes = new Likes();
+                            likes.setUser_id(dsnapshot.getValue(Likes.class).getUser_id());
+                            likesList.add(likes);
+                        }
+                        photo.setLikes(likesList);
+                        photos.add(photo);
+                    } catch (NullPointerException e) {
+                        Log.e(TAG, "onDataChange: NullPOinterException" + e.getMessage());
                     }
-                    photo.setComments(comments);
-
-                    List<Likes> likesList = new ArrayList<Likes>();
-                    for(DataSnapshot dsnapshot: singlesnapshot.child(getString(R.string.field_likes)).getChildren()){
-                        Likes likes = new Likes();
-                        likes.setUser_id(dsnapshot.getValue(Likes.class).getUser_id());
-                        likesList.add(likes);
-                    }
-                    photo.setLikes(likesList);
-                    photos.add(photo);
                 }
                 Log.d(TAG, "onDataChange: Photos retrieved, Setting up Image Grid");
                 int gridwidth = getResources().getDisplayMetrics().widthPixels;
@@ -188,11 +199,83 @@ public class ProfileFragment extends Fragment {
         mUsername.setText(settings.getUsername());
         mWebsite.setText(settings.getWebsite());
         mDescription.setText(settings.getDescription());
-        mPosts.setText(String.valueOf(settings.getPosts()));
-        mFollowing.setText(String.valueOf(settings.getFollowing()));
-        mFollowers.setText(String.valueOf(settings.getFollowers()));
+//        mPosts.setText(String.valueOf(settings.getPosts()));
+//        mFollowing.setText(String.valueOf(settings.getFollowing()));
+//        mFollowers.setText(String.valueOf(settings.getFollowers()));
         mProgressbar.setVisibility(View.GONE);
 
+
+    }
+
+    private void getFollowersCount(){
+        mfollowersCount = 0;
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+        Query query = reference.child(getString(R.string.dbname_followers))
+                .child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for(DataSnapshot singleSnapshot: dataSnapshot.getChildren()){
+                    Log.d(TAG, "onDataChange: found Follower" + singleSnapshot.getValue());
+                    mfollowersCount++;
+                }
+                mFollowers.setText(String.valueOf(mfollowersCount));
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+    }
+
+    private void getFollowingCount(){
+        mfollowingCount = 0;
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+        Query query = reference.child(getString(R.string.dbname_following))
+                .child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for(DataSnapshot singleSnapshot: dataSnapshot.getChildren()){
+                    Log.d(TAG, "onDataChange: found Following" + singleSnapshot.getValue());
+                    mfollowingCount++;
+                }
+                mFollowing.setText(String.valueOf(mfollowingCount));
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+    }
+
+    private void getPostsCount(){
+        mPostCount = 0;
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+        Query query = reference.child(getString(R.string.dbname_user_photos))
+                .child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for(DataSnapshot singleSnapshot: dataSnapshot.getChildren()){
+                    Log.d(TAG, "onDataChange: found Posts" + singleSnapshot.getValue());
+                    mPostCount++;
+                }
+                mPosts.setText(String.valueOf(mPostCount));
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
 
     }
 

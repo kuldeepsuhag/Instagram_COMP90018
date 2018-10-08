@@ -8,6 +8,7 @@ import android.view.View;
 
 import com.example.kulde.instagram.R;
 import com.example.kulde.instagram.Utils.CommResources;
+import com.example.kulde.instagram.share.NextActivity;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
 public class CropActivity extends AppCompatActivity {
@@ -51,7 +52,7 @@ public class CropActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 cropListener();
-                Intent intent = new Intent(CropActivity.this, FilterActivity.class);
+                Intent intent = new Intent(CropActivity.this, NextActivity.class);
                 startActivity(intent);
             }
         });
@@ -76,8 +77,8 @@ public class CropActivity extends AppCompatActivity {
             }
         });
         //cropImage.getCroppedImageAsync();
-        CommResources.cache = cropImage.getCroppedImage();
-        CommResources.edit_template = CommResources.cache;
+        CommResources.edit_template = cropImage.getCroppedImage();
+        //CommResources.edit_template = CommResources.cache;
 
     }
 }

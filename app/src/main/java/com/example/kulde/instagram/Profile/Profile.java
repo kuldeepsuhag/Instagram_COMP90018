@@ -3,6 +3,7 @@ package com.example.kulde.instagram.Profile;
 
 import android.content.Context;
 import android.content.Intent;
+import android.provider.ContactsContract;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -19,7 +20,7 @@ import com.example.kulde.instagram.Utils.Viewpost;
 
 //import static com.example.kulde.instagram.R.menu.profile_menu;
 
-public class Profile extends AppCompatActivity implements ProfileFragment.onGridImageselector, Viewpost.OnCommentThreadSelectedListener {
+public class Profile extends AppCompatActivity implements ProfileFragment.onGridImageselector,Viewpost.OnCommentThreadSelectedListener, ViewProfile.onGridImageselector {
     private static final String TAG = "Profile Activity";
     private static final int ACTIVITY_NUM = 4;
     private Context mContext = Profile.this;

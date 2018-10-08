@@ -54,10 +54,9 @@ public class ViewProfile extends Fragment {
     private ProgressBar mProgressbar;
     private CircleImageView mProfilephoto;
     private GridView gridView;
-    private Toolbar toolbar;
-    private ImageView profileMenu;
+    private ImageView profileMenu,mBackarrow;
     private BottomNavigationView bottomNavigationView;
-    private static final int ACTIVITY_NUM = 4;
+    private static final int ACTIVITY_NUM = 1;
     private static final int NUM_GRID_COLUMNS = 3;
     private Context mContext;
     private TextView editProfile;
@@ -75,6 +74,10 @@ public class ViewProfile extends Fragment {
     private FirebaseDatabase mFirebasedatabase;
     private DatabaseReference myRef;
 
+    private int mfollowersCount = 0;
+    private int mfollowingCount = 0;
+    private int mPostCount = 0;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -89,13 +92,14 @@ public class ViewProfile extends Fragment {
         mFollowing = (TextView)view.findViewById(R.id.tvFollowing);
         mProgressbar = (ProgressBar)view.findViewById(R.id.progressBar);
         gridView = (GridView)view.findViewById(R.id.gridView);
-        toolbar = (Toolbar) view.findViewById(R.id.profileToolBar);
         profileMenu = (ImageView)view.findViewById(R.id.profileMenu);
         bottomNavigationView =(BottomNavigationView)view.findViewById(R.id.bottomNavViewwBar);
         mFollow = (TextView)view.findViewById(R.id.follow);
         mUnfollow = (TextView)view.findViewById(R.id.unFollow);
         mContext = getActivity();
         editProfile = (TextView)view.findViewById(R.id.textEditProfile);
+        mBackarrow = (ImageView)view.findViewById(R.id.backarrow);
+
 
         Log.d(TAG, "onCreateView: stared");
         try{
@@ -107,21 +111,30 @@ public class ViewProfile extends Fragment {
             getActivity().getSupportFragmentManager().popBackStack();
         }
         navigation();
-        setupToolbar();
+
         setupFirebaseAuth();
+        isFollowiing();
+        getFollowersCount();
+        getFollowingCount();
+        getPostsCount();
         //setupGridview();
         mFollow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "onClick: Now following "+mUser.getUsername());
-                FirebaseDatabase.getInstance().getReference().child(getString(R.string.dbname_following))
+                FirebaseDatabase.getInstance().getReference()
+                        .child(getString(R.string.dbname_following))
                         .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                        .removeValue();
+                        .child(mUser.getUser_id())
+                        .child(getString(R.string.user_id))
+                        .setValue(mUser.getUser_id());
 
-                FirebaseDatabase.getInstance().getReference().child(getString(R.string.dbname_followers))
+                FirebaseDatabase.getInstance().getReference()
+                        .child(getString(R.string.dbname_followers))
                         .child(mUser.getUser_id())
                         .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                        .removeValue();
+                        .child(getString(R.string.user_id))
+                        .setValue(FirebaseAuth.getInstance().getCurrentUser().getUid());
 
                 setFollowing();
             }
@@ -130,17 +143,16 @@ public class ViewProfile extends Fragment {
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "onClick: Now Unfollowing " + mUser.getUsername());
-                Log.d(TAG, "onClick: Now following "+mUser.getUsername());
                 FirebaseDatabase.getInstance().getReference().child(getString(R.string.dbname_following))
                         .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
                         .child(getString(R.string.user_id))
-                        .setValue(mUser.getUser_id());
+                        .removeValue();
 
                 FirebaseDatabase.getInstance().getReference().child(getString(R.string.dbname_followers))
                         .child(mUser.getUser_id())
                         .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
                         .child(getString(R.string.user_id))
-                        .setValue(FirebaseAuth.getInstance().getCurrentUser().getUid());
+                        .removeValue();
 
                 setUnFollowing();
             }
@@ -158,6 +170,102 @@ public class ViewProfile extends Fragment {
         });
 
         return view;
+
+    }
+
+    private void getFollowersCount(){
+        mfollowersCount = 0;
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+        Query query = reference.child(getString(R.string.dbname_followers))
+                .child(mUser.getUser_id());
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for(DataSnapshot singleSnapshot: dataSnapshot.getChildren()){
+                    Log.d(TAG, "onDataChange: found Follower" + singleSnapshot.getValue());
+                    mfollowersCount++;
+                }
+                mFollowers.setText(String.valueOf(mfollowersCount));
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+    }
+
+    private void getFollowingCount(){
+        mfollowingCount = 0;
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+        Query query = reference.child(getString(R.string.dbname_following))
+                .child(mUser.getUser_id());
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for(DataSnapshot singleSnapshot: dataSnapshot.getChildren()){
+                    Log.d(TAG, "onDataChange: found Following" + singleSnapshot.getValue());
+                    mfollowingCount++;
+                }
+                mFollowing.setText(String.valueOf(mfollowingCount));
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+    }
+
+    private void getPostsCount(){
+        mPostCount = 0;
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+        Query query = reference.child(getString(R.string.dbname_user_photos))
+                .child(mUser.getUser_id());
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for(DataSnapshot singleSnapshot: dataSnapshot.getChildren()){
+                    Log.d(TAG, "onDataChange: found Posts" + singleSnapshot.getValue());
+                    mPostCount++;
+                }
+                mPosts.setText(String.valueOf(mPostCount));
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+    }
+    private void isFollowiing(){
+        Log.d(TAG, "isFollowiing:  Checking if follwing this users");
+        setUnFollowing();
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+        Query query = reference.child(getString(R.string.dbname_following))
+                .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                .orderByChild(getString(R.string.user_id)).equalTo(mUser.getUser_id());
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for(DataSnapshot singleSnapshot: dataSnapshot.getChildren()){
+                    Log.d(TAG, "onDataChange: found user" + singleSnapshot.getValue());
+                    setFollowing();
+                }
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
 
     }
 
@@ -240,7 +348,7 @@ public class ViewProfile extends Fragment {
 
                     List<Likes> likesList = new ArrayList<Likes>();
                     for(DataSnapshot dsnapshot: singlesnapshot.child(getString(R.string.field_likes)).getChildren()){
-                        Likes likes = new Likes();
+                        Likes likes  = new Likes();
                         likes.setUser_id(dsnapshot.getValue(Likes.class).getUser_id());
                         likesList.add(likes);
                     }
@@ -302,24 +410,18 @@ public class ViewProfile extends Fragment {
         mFollowing.setText(String.valueOf(settings.getFollowing()));
         mFollowers.setText(String.valueOf(settings.getFollowers()));
         mProgressbar.setVisibility(GONE);
-
-
-    }
-
-    private void setupToolbar() {
-        ((Profile)getActivity()).setSupportActionBar(toolbar);
-        profileMenu.setOnClickListener(new View.OnClickListener() {
+        mBackarrow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d(TAG, "onClick: Navigting to account setting");
-
-                Intent intent = new Intent(mContext, AccountSettings.class);
-                startActivity(intent);
-                getActivity().overridePendingTransition(R.anim.fade_in,R.anim.fade_out);
+                Log.d(TAG, "onClick: Navigating Back to search");
+                getActivity().getSupportFragmentManager().popBackStack();
+                getActivity().finish();
             }
         });
+
+
     }
-        /**
+    /**
      * Function Bar Setup
      */
     public void navigation(){

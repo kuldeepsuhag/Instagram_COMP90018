@@ -67,6 +67,9 @@ public class FilterActivity extends AppCompatActivity {
 
     private void refresh(ImageButton origin){
         // strip off all filters and go back to original style
+        BitmapFilter task = new BitmapFilter(CommResources.RotateBitmap(bitmapEdit,90), origin, BitmapFilter.ORIGINAL_,false);
+        task.execute();
+
         origin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -90,13 +93,12 @@ public class FilterActivity extends AppCompatActivity {
         ImageButton night = findViewById(R.id.nigth_wh);
         ImageButton awe = findViewById(R.id.awe);
 
-        filterListener(imageEdit, gray, BitmapFilter.GRAY_STYLE, bitmapEdit);
-        filterListener(imageEdit, invert, BitmapFilter.BLUE_MESS, bitmapEdit);
-        filterListener(imageEdit, oldStyle, BitmapFilter.OLD_STYLE, bitmapEdit);
-        filterListener(imageEdit, lime, BitmapFilter.LIME_STUTTER, bitmapEdit);
-        filterListener(imageEdit, awe, BitmapFilter.AWE_STRUCK, bitmapEdit);
-        filterListener(imageEdit, night, BitmapFilter.NIGHT_WHIS, bitmapEdit);
-
+        filterListener(imageEdit, gray, BitmapFilter.GRAY_STYLE);
+        filterListener(imageEdit, invert, BitmapFilter.BLUE_MESS);
+        filterListener(imageEdit, oldStyle, BitmapFilter.OLD_STYLE);
+        filterListener(imageEdit, lime, BitmapFilter.LIME_STUTTER);
+        filterListener(imageEdit, awe, BitmapFilter.AWE_STRUCK);
+        filterListener(imageEdit, night, BitmapFilter.NIGHT_WHIS);
         refresh(origin);
 
 
@@ -111,11 +113,14 @@ public class FilterActivity extends AppCompatActivity {
         new BnCFilter(brightness, imageEdit, BnCFilter.BRIGHTNESS);
     }
 
-    private void filterListener(final ImageView image, final ImageButton button, final int styleNo, final Bitmap originBitmap){
+    private void filterListener(final ImageView image, final ImageButton button, final int styleNo){
+        BitmapFilter task = new BitmapFilter(CommResources.RotateBitmap(bitmapEdit,90),button,styleNo,false);
+        task.execute();
+
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                BitmapFilter task = new BitmapFilter(bitmapEdit, image, styleNo);
+                BitmapFilter task = new BitmapFilter(bitmapEdit, image, styleNo,true);
                 task.execute();
                 //CommResources.edit_template = BitmapFilter.changeStyle(originBitmap, styleNo);
                 //image.setImageBitmap(CommResources.edit_template);
@@ -145,12 +150,9 @@ public class FilterActivity extends AppCompatActivity {
 
         Bitmap decodedBitmap = CommResources.photoFinishBitmap;
         int rotationDegrees = CommResources.rotationdegree;
-        if (CommResources.cache == null) {
+        if (CommResources.photoFinishBitmap != null) {
             imageEdit.setImageBitmap(decodedBitmap);
             CommResources.edit_template = decodedBitmap;
-        } else {
-            imageEdit.setImageBitmap(CommResources.cache);
-            CommResources.edit_template = CommResources.cache;
         }
         imageEdit.setRotation(-rotationDegrees);
 
