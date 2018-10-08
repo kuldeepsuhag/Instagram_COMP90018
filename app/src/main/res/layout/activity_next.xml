@@ -48,6 +48,14 @@
                     android:background="@null"
                     />
 
+                <CheckBox android:id="@+id/geoShare"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/imageShare"
+                    android:text="Share my location"
+                    android:layout_marginLeft="20dp"
+                    android:onClick="onCheckboxClicked"/>
+
             </RelativeLayout>
 
             <TextView
