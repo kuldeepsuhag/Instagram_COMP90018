@@ -142,14 +142,17 @@ public class NextActivity extends AppCompatActivity {
 
         boolean checked = ((CheckBox) view).isChecked();
         if (checked){
-            checkLocationPermission();
+
             LocationManager locationManager = (LocationManager)
                     getSystemService(Context.LOCATION_SERVICE);
             LocationListener locationListener = new MyLocationListener();
-
-            locationManager.requestLocationUpdates(
-                    LocationManager.GPS_PROVIDER, 5000, 10, locationListener);
-            Log.d(TAG,"Get share info" + locationManager.toString());
+            if (checkLocationPermission()) {
+                locationManager.requestLocationUpdates(
+                        LocationManager.GPS_PROVIDER, 5000, 10, locationListener);
+                Log.d(TAG, "Get share info" + locationManager.toString());
+            }else{
+                // uncheck the checkbox
+            }
         }
         // Check which checkbox was clicked
 

@@ -50,8 +50,8 @@ import java.util.Map;
 
 import com.example.kulde.instagram.R;
 
-public class UserFeedFragment extends Fragment{
-    private static final String TAG = "UserFeedFragment";
+public class MyFeedFragment extends Fragment{
+    private static final String TAG = "MyFeedFragment";
     private static final int ACTIVITY_NUM = 3;
     private Context mContext;
     private BottomNavigationView bottomNavigationView;
@@ -91,8 +91,8 @@ public class UserFeedFragment extends Fragment{
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_userfeed, container, false);
         listView = (ListView) view.findViewById(R.id.feedList);
-        setupFirebaseAuth();
-        setupListview();
+//        setupFirebaseAuth();
+//        setupListview();
         return view;
     }
 
@@ -118,7 +118,7 @@ public class UserFeedFragment extends Fragment{
                         comment.setComment(dsnapshot.getValue(Comment.class).getComment());
                         comment.setDate_created(dsnapshot.getValue(Comment.class).getDate_created());
 
-                        comments.add(comment.getUser_id()+" said: " + comment.getComment());
+                        comments.add(comment.getComment());
                     }
 
                     for(DataSnapshot dsnapshot: singlesnapshot.child(getString(R.string.field_likes)).getChildren()){
@@ -170,19 +170,4 @@ public class UserFeedFragment extends Fragment{
             }
         };
     }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        mAuth.addAuthStateListener(mAuthListener);
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        if(mAuthListener != null){
-            mAuth.removeAuthStateListener(mAuthListener);
-        }
-    }
-
 }
