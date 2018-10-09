@@ -141,25 +141,25 @@ public class NextActivity extends AppCompatActivity {
     public void onCheckboxClicked(View view) {
         boolean checked = ((CheckBox) view).isChecked();
         if (checked){
-
+            geoText.setText("share my location");
             LocationManager locationManager = (LocationManager)
                     getSystemService(Context.LOCATION_SERVICE);
             LocationListener locationListener = new MyLocationListener();
             if (checkLocationPermission()) {
                 locationManager.requestLocationUpdates(
                         LocationManager.GPS_PROVIDER, 5000, 10, locationListener);
-                Log.d(TAG, "Get share info" + locationManager.toString());
+                Log.d(TAG, "Get share info");
                 this.geo = CommResources.location;
 
                 Log.d("location",CommResources.location);
 
 
 
-            }else{
-                // uncheck the checkbox
-                geo = "";
-                geoText.setText("hide location");
             }
+        }else{
+            // uncheck the checkbox
+            geo = "";
+            geoText.setText("hide location");
         }
         // Check which checkbox was clicked
     }
