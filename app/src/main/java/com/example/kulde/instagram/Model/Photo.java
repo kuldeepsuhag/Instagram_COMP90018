@@ -15,6 +15,7 @@ public class Photo implements Parcelable {
     private String tags;
     private List<Likes> likes;
     private List<Comment> comments;
+    private String cityName;
 
 
 
@@ -33,13 +34,14 @@ public class Photo implements Parcelable {
         this.comments = comments;
     }
 
-    public Photo(String caption, String date_created, String image_path, String photo_id, String user_id, String tags) {
+    public Photo(String caption, String date_created, String image_path, String photo_id, String user_id, String tags, String cityName) {
         this.caption = caption;
         this.date_created = date_created;
         this.image_path = image_path;
         this.photo_id = photo_id;
         this.user_id = user_id;
         this.tags = tags;
+        this.cityName = cityName;
     }
 
     public List<Comment> getComments() {
@@ -106,6 +108,9 @@ public class Photo implements Parcelable {
         this.likes = likes;
     }
 
+    public String getCityName(){return cityName;}
+    public void setCityName(String cityName){this.cityName = cityName;}
+
     @Override
     public String toString() {
         return "Photo{" +
@@ -116,6 +121,7 @@ public class Photo implements Parcelable {
                 ", user_id='" + user_id + '\'' +
                 ", tags='" + tags + '\'' +
                 ", likes=" + likes +
+                ", cityName=" + cityName +
                 '}';
     }
 

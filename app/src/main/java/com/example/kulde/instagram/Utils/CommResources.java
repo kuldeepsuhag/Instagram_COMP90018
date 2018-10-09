@@ -8,6 +8,7 @@ public class CommResources {
     public static int rotationdegree = 0;
     public static Bitmap edit_template = null;
     public static Bitmap cache = null;
+    public static String location = "";
 
     public static Bitmap RotateBitmap(Bitmap source, float angle)
     {

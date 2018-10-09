@@ -44,10 +44,11 @@ public class FirebaseInteraction extends AsyncTask{
     private double mPhotoUploadProgress = 0;
     Context mContext;
     String caption;
+    String cityName;
 
 
 
-    public FirebaseInteraction(Context context, Bitmap bitmap, String caption) {
+    public FirebaseInteraction(Context context, Bitmap bitmap, String caption, String cityName) {
 
         //
         this.bitmap=bitmap;
@@ -62,6 +63,7 @@ public class FirebaseInteraction extends AsyncTask{
         }
         mContext = context;
         this.caption=caption;
+        this.cityName = cityName;
 
     }
 
@@ -99,7 +101,7 @@ public class FirebaseInteraction extends AsyncTask{
 
 
                 //add the new photo to 'photos' node and 'user_photos' node
-                addPhotoToDatabase(caption, downloadUrl.toString());
+                addPhotoToDatabase(caption, downloadUrl.toString(),cityName);
 
                 Toast.makeText(mContext, "photo upload success", Toast.LENGTH_SHORT).show();
 
@@ -133,7 +135,7 @@ public class FirebaseInteraction extends AsyncTask{
         return sdf.format(new Date());
     }
 
-    private void addPhotoToDatabase(String caption, String url){
+    private void addPhotoToDatabase(String caption, String url, String cityName){
 
         // add get tag method
 
@@ -149,9 +151,10 @@ public class FirebaseInteraction extends AsyncTask{
                 getTimestamp(),
                 url, newPhotoKey,
                 userID,
-                StringManipulation.getTags(caption));
+                StringManipulation.getTags(caption),
+                cityName);
 
-        Log.d(TAG, photo.toString());
+        Log.d("location", photo.toString());
 
         myRef.child("user_photos")
                 .child(userID).child(newPhotoKey).setValue(photo);

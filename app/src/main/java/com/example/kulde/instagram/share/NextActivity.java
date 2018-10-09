@@ -12,7 +12,6 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
@@ -22,6 +21,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -32,15 +32,12 @@ import com.example.kulde.instagram.R;
 import com.example.kulde.instagram.Utils.CommResources;
 import com.example.kulde.instagram.Utils.FirebaseInteraction;
 import com.example.kulde.instagram.Utils.FirebaseMethods;
-import com.example.kulde.instagram.Utils.UniversalImageLoader;
 import com.example.kulde.instagram.camera.FilterActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
@@ -65,6 +62,8 @@ public class NextActivity extends AppCompatActivity {
     private String imgUrl;
     private Bitmap bitmap;
     private Intent intent;
+    private String geo; //geo location tag
+    private TextView geoText;
 
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
 
@@ -74,6 +73,7 @@ public class NextActivity extends AppCompatActivity {
         setContentView(R.layout.activity_next);
         mFirebaseMethods = new FirebaseMethods(NextActivity.this);
         mCaption = (EditText) findViewById(R.id.caption);
+        geoText = findViewById(R.id.location);
         setCheckBox();
         setupFirebaseAuth();
 
@@ -98,7 +98,8 @@ public class NextActivity extends AppCompatActivity {
                 String caption = mCaption.getText().toString();
 
                 // upload a photo
-                FirebaseInteraction uploadTask = new FirebaseInteraction(NextActivity.this, CommResources.edit_template,caption);
+
+                FirebaseInteraction uploadTask = new FirebaseInteraction(NextActivity.this, CommResources.edit_template,caption, geo);
                 uploadTask.execute();
 
                 //go back to main
@@ -138,8 +139,6 @@ public class NextActivity extends AppCompatActivity {
     }
 
     public void onCheckboxClicked(View view) {
-        // Is the view now checked?
-
         boolean checked = ((CheckBox) view).isChecked();
         if (checked){
 
@@ -150,18 +149,26 @@ public class NextActivity extends AppCompatActivity {
                 locationManager.requestLocationUpdates(
                         LocationManager.GPS_PROVIDER, 5000, 10, locationListener);
                 Log.d(TAG, "Get share info" + locationManager.toString());
+                this.geo = CommResources.location;
+
+                Log.d("location",CommResources.location);
+
+
+
             }else{
                 // uncheck the checkbox
+                geo = "";
+                geoText.setText("hide location");
             }
         }
         // Check which checkbox was clicked
-
     }
 
     private class MyLocationListener implements LocationListener {
+
         @Override
         public void onLocationChanged(Location loc) {
-
+            geoText.setText("hide location");
             Toast.makeText(getBaseContext(),"Location changed : Lat: " +
                             loc.getLatitude()+ " Lng: " + loc.getLongitude(),
                     Toast.LENGTH_SHORT).show();
@@ -187,7 +194,11 @@ public class NextActivity extends AppCompatActivity {
 
             String s = longitude+"\n"+latitude +
                     "\n\nMy Currrent City is: "+cityName;
+            geo = cityName;
+            geoText.setText(geo);
+
         }
+
 
         @Override
         public void onProviderDisabled(String provider) {
