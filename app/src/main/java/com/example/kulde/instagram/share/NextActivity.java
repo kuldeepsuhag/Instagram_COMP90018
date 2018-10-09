@@ -141,7 +141,7 @@ public class NextActivity extends AppCompatActivity {
     public void onCheckboxClicked(View view) {
         boolean checked = ((CheckBox) view).isChecked();
         if (checked){
-            geoText.setText("share my location");
+            geoText.setText("getting current location...");
             LocationManager locationManager = (LocationManager)
                     getSystemService(Context.LOCATION_SERVICE);
             LocationListener locationListener = new MyLocationListener();
