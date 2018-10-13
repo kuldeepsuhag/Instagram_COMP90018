@@ -22,6 +22,13 @@
                     android:layout_marginLeft="15sp"
                     android:id="@+id/profileName"/>
                 <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_suggest"
+                    android:id="@+id/suggest"
+                    android:layout_marginRight="20dp"
+                    android:layout_toLeftOf="@+id/profileMenu"/>
+                <ImageView
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_alignParentRight="true"

@@ -47,7 +47,7 @@
     <string name="search_activity">Search Activity</string>
     <string name="home_activity">Home Activity</string>
     <string name="view_profile_fragment">Profile Fragment</string>
-
+    <string name="friend_suggestion">Friend Suggestion</string>
 
     <string name="activity_number">activity_number</string>
 
