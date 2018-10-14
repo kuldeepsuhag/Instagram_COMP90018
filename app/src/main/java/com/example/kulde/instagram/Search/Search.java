@@ -62,7 +62,9 @@ public class Search extends AppCompatActivity{
         }else{
             DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
             Query query = reference.child(getString(R.string.dbname_users))
-                    .orderByChild(getString(R.string.field_username)).equalTo(keyword);
+                    .orderByChild(getString(R.string.field_username))
+                    .startAt(keyword)
+                    .endAt(keyword+"\uf8ff");
             query.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
