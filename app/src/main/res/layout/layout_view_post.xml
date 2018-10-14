@@ -152,5 +152,5 @@
 
 
     </ScrollView>
-    <include layout="@layout/bottom_navigation"/>
+
 </RelativeLayout>

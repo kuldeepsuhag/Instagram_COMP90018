@@ -75,6 +75,7 @@ public class Viewpost extends Fragment {
     private Boolean mLikedbyCurrentuser;
     private StringBuilder mUsers;
     private String mLikesstring = "";
+    private String currentUsername = "";
 
     private User mUser;
 
@@ -87,7 +88,7 @@ public class Viewpost extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_view_post,container,false);
         mPostImage = (SquareImageView)view.findViewById(R.id.postimage);
-        bottomNavigationView = (BottomNavigationView)view.findViewById(R.id.bottomNavViewwBar);
+//        bottomNavigationView = (BottomNavigationView)view.findViewById(R.id.bottomNavViewwBar);
         mBackarrow = (ImageView)view.findViewById(R.id.imageBackArrow);
         mBackLabel = (TextView)view.findViewById(R.id.tvBackLabel);
         mCaption = (TextView)view.findViewById(R.id.image_caption);
@@ -110,12 +111,12 @@ public class Viewpost extends Fragment {
             UniversalImageLoader.setImage(mphoto.getImage_path(),mPostImage,null,"");
             mActivityNumber = getActivitynumBundle();
             getPhotodetails();
-            //getLikesString();
+            getLikesString();
         }catch (NullPointerException e){
             Log.e(TAG, "onCreateView: NullPointer Exception " + e.getMessage());
         }
         setupFirebaseAuth();
-        navigation();
+//        navigation();
         return view;
     }
 
@@ -130,67 +131,96 @@ public class Viewpost extends Fragment {
         }
     }
 
-    private void getLikesString(){
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
-        Query query = databaseReference
-                .child(getString(R.string.dbname_photos))
-                .child(mphoto.getPhoto_id())
-                .child(getString(R.string.field_likes));
+    private void getLikesString() {
+        Log.d(TAG, "getLikesString: getting Likes string");
+        try {
+            DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+            Query query = databaseReference
+                    .child(getString(R.string.dbname_photos))
+                    .child(mphoto.getPhoto_id())
+                    .child(getString(R.string.field_likes));
+            query.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    mUsers = new StringBuilder();
+                    for (DataSnapshot singledatasnapshot : dataSnapshot.getChildren()) {
+                        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+                        Query query = databaseReference
+                                .child(getString(R.string.dbname_users))
+                                .orderByChild(getString(R.string.user_id))
+                                .equalTo(singledatasnapshot.getValue(Likes.class).getUser_id());
+                        query.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                for (DataSnapshot singledatasnapshot : dataSnapshot.getChildren()) {
+
+                                    Log.d(TAG, "onDataChange: found like : " + singledatasnapshot.getValue(User.class).getUsername());
+                                    mUsers.append(singledatasnapshot.getValue(User.class).getUsername());
+                                    mUsers.append(",");
+                                }
+                                String[] splitUsers = mUsers.toString().split(",");
+
+                                if (mUsers.toString().contains(currentUsername + ",")) {
+                                    mLikedbyCurrentuser = true;
+                                } else {
+                                    mLikedbyCurrentuser = false;
+                                }
+
+                                int length = splitUsers.length;
+                                if (length == 1) {
+                                    mLikesstring = "Liked by " + splitUsers[0];
+                                } else if (length == 2) {
+                                    mLikesstring = "Liked by " + splitUsers[0]
+                                            + "and " + splitUsers[1];
+                                } else if (length == 3) {
+                                    mLikesstring = "Liked by " + splitUsers[0]
+                                            + ", " + splitUsers[1] + " and " + splitUsers[2];
+                                } else if (length == 4) {
+                                    mLikesstring = "Liked by " + splitUsers[0]
+                                            + ", " + splitUsers[1] + ", " + splitUsers[2] + " and " + splitUsers[3];
+                                } else if (length > 4) {
+                                    mLikesstring = "Liked by " + splitUsers[0]
+                                            + ", " + splitUsers[1] + ", " + splitUsers[2] + " and " + (splitUsers.length - 3) + "others";
+                                }
+                                setupWidgets();
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
+                    }
+                    if (!dataSnapshot.exists()) {
+                        mLikesstring = "";
+                        mLikedbyCurrentuser = false;
+                        setupWidgets();
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+        }catch (NullPointerException e) {
+            Log.e(TAG, "getLikesString: NullPointerException" + e.getMessage());
+        }
+    }
+
+
+    private void getCurrentUsername(){
+        Log.d(TAG, "getCurrentUsername: Retrieving User from the user account setting");
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+        Query query = reference
+                .child(mContext.getString(R.string.dbname_users))
+                .orderByChild(mContext.getString(R.string.user_id))
+                .equalTo(FirebaseAuth.getInstance().getCurrentUser().getUid());
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                mUsers = new StringBuilder();
-                for(DataSnapshot singledatasnapshot : dataSnapshot.getChildren()){
-                    DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
-                    Query query = databaseReference
-                            .child(getString(R.string.dbname_users))
-                            .orderByChild(getString(R.string.user_id))
-                            .equalTo(singledatasnapshot.getValue(Likes.class).getUser_id());
-                    query.addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            for(DataSnapshot singledatasnapshot : dataSnapshot.getChildren()){
-
-                                Log.d(TAG, "onDataChange: found like : " + singledatasnapshot.getValue(User.class).getUsername());
-                                mUsers.append(singledatasnapshot.getValue(User.class).getUsername());
-                                mUsers.append(",");
-                            }
-                            String[] splitUsers = mUsers.toString().split(",");
-                            if(mUsers.toString().contains(mUser.getUsername() + ",")){
-                                mLikedbyCurrentuser = true;
-                            }else{
-                                mLikedbyCurrentuser = false;
-                            }
-
-                            int length = splitUsers.length;
-                            if(length == 1){
-                                mLikesstring = "Liked by " + splitUsers[0];
-                            }else if(length == 2){
-                                mLikesstring = "Liked by " + splitUsers[0]
-                                        + "and " + splitUsers[1];
-                            }else if(length == 3){
-                                mLikesstring = "Liked by " + splitUsers[0]
-                                        + ", " + splitUsers[1] + " and " + splitUsers[2];
-                            }else if(length == 4){
-                                mLikesstring = "Liked by " + splitUsers[0]
-                                        + ", " + splitUsers[1] + ", " + splitUsers[2] +" and "+ splitUsers[3];
-                            }else if(length>4){
-                                mLikesstring = "Liked by " + splitUsers[0]
-                                        + ", " + splitUsers[1] + ", " + splitUsers[2] +" and "+ (splitUsers.length - 3) + "others";
-                            }
-                            setupWidgets();
-                        }
-
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {
-
-                        }
-                    });
-                }
-                if(!dataSnapshot.exists()){
-                    mLikesstring = "";
-                    mLikedbyCurrentuser = false;
-                    setupWidgets();
+                for (DataSnapshot singleSnapshot: dataSnapshot.getChildren()){
+                    currentUsername = singleSnapshot.getValue(UserAccountSettings.class).getUsername();
                 }
             }
 
@@ -235,6 +265,7 @@ public class Viewpost extends Fragment {
                                     .child(getString(R.string.field_likes))
                                     .child(keyID)
                                     .removeValue();
+
                             mlike.toggleLike();
                             getLikesString();
                         }

@@ -19,6 +19,7 @@ import com.example.kulde.instagram.Model.User;
 import com.example.kulde.instagram.Model.UserAccountSettings;
 import com.example.kulde.instagram.Model.UserSettings;
 import com.example.kulde.instagram.R;
+import com.example.kulde.instagram.Utils.CommResources;
 import com.example.kulde.instagram.Utils.FirebaseMethods;
 import com.example.kulde.instagram.Utils.UniversalImageLoader;
 import com.example.kulde.instagram.share.ShareActivity;
@@ -214,6 +215,7 @@ public class EditProfileFragment extends Fragment implements ConfirmPasswordPopu
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "onClick: Changing Profile Photo");
+                CommResources.isprofile = true;
                 Intent intent = new Intent(getActivity(), ShareActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);//268435456
                 getActivity().startActivity(intent);

@@ -64,6 +64,7 @@ public class Mainfeedlistadapter extends ArrayAdapter<Photo> {
         mLayoutInflator = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mLayoutresource = resource;
         this.mContext = context;
+        mReference = FirebaseDatabase.getInstance().getReference();
     }
 
     static class ViewHolder {
@@ -324,6 +325,7 @@ public class Mainfeedlistadapter extends ArrayAdapter<Photo> {
                                     .child(mContext.getString(R.string.field_likes))
                                     .child(keyID)
                                     .removeValue();
+
                             mholder.heart.toggleLike();
                             getLikesString(mholder);
                         }
@@ -350,12 +352,19 @@ public class Mainfeedlistadapter extends ArrayAdapter<Photo> {
         }
     }
 
+    private String getTimestamp(){
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.CANADA);
+        sdf.setTimeZone(TimeZone.getTimeZone("Australia/Victoria"));
+        return sdf.format(new Date());
+    }
+
     private void addNewlike(ViewHolder holder) {
         Log.d(TAG, "addNewlike: Adding New Like");
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
         String newLikeID = reference.push().getKey();
         Likes likes = new Likes();
         likes.setUser_id(FirebaseAuth.getInstance().getCurrentUser().getUid());
+        likes.setDate_created(getTimestamp());
 
         reference.child(mContext.getString(R.string.dbname_photos))
                 .child(holder.photo.getPhoto_id())
@@ -387,7 +396,9 @@ public class Mainfeedlistadapter extends ArrayAdapter<Photo> {
                     holder.users = new StringBuilder();
                     for (DataSnapshot singledatasnapshot : dataSnapshot.getChildren()) {
                         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+
                         Query query = databaseReference
+                                .child(mContext.getString(R.string.dbname_users))
                                 .orderByChild(mContext.getString(R.string.user_id))
                                 .equalTo(singledatasnapshot.getValue(Likes.class).getUser_id());
                         query.addListenerForSingleValueEvent(new ValueEventListener() {
