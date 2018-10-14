@@ -358,7 +358,10 @@ public class Viewpost extends Fragment {
 
         if(mphoto.getComments().size() > 0){
             mComments.setText("View all " + mphoto);
-        }
+        }else
+            {
+                mComments.setText("  ");
+            }
         mBackarrow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

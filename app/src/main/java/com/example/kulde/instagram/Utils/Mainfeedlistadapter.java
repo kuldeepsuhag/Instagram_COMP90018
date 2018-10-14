@@ -69,7 +69,7 @@ public class Mainfeedlistadapter extends ArrayAdapter<Photo> {
     static class ViewHolder {
         CircleImageView mProfileImage;
         String likesString;
-        TextView username, timedetail, caption, likes, comments;
+        TextView username, location,timedetail, caption, likes, comments;
         SquareImageView imageView;
         ImageView heartRed, heartWhite, comment;
 
@@ -104,6 +104,7 @@ public class Mainfeedlistadapter extends ArrayAdapter<Photo> {
             holder.caption = (TextView) convertView.findViewById(R.id.image_caption);
             holder.timedetail = (TextView) convertView.findViewById(R.id.image_time);
             holder.mProfileImage = (CircleImageView) convertView.findViewById(R.id.profile_photo);
+            holder.location = (TextView)convertView.findViewById(R.id.location);
             holder.heart = new Like(holder.heartRed, holder.heartWhite);
             holder.photo = getItem(position);
             holder.detector = new GestureDetector(mContext, new GestureListener(holder));
@@ -119,12 +120,21 @@ public class Mainfeedlistadapter extends ArrayAdapter<Photo> {
         getLikesString(holder);
 
         //set the caption
-
+        Log.d(TAG, "getView: Getting the caption of the Image" + getItem(position).getCaption());
         holder.caption.setText(getItem(position).getCaption());
+
+        //set the location
+        Log.d(TAG, "getView: Getting the location of the Image" + getItem(position).getCityName());
+        holder.location.setText(getItem(position).getCityName());
 
         //Set the comment
         List<Comment> comments = getItem(position).getComments();
-        holder.comments.setText("View all " + comments.size() + " comments");
+        if(comments.size() > 0 ) {
+            holder.comments.setText("View all " + comments.size() + " comments");
+        }
+        else{
+            holder.comments.setText(" ");
+        }
         holder.comment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -69,7 +69,7 @@ public class Userfeed extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.d(TAG, "onCreate: Activity user feed Starting......");
-        //setContentView(R.layout.activity_userfeed);
+        setContentView(R.layout.activity_userfeed);
         navigation();
         init();
     }
