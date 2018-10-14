@@ -340,12 +340,19 @@ public class Mainfeedlistadapter extends ArrayAdapter<Photo> {
         }
     }
 
+    private String getTimestamp(){
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.CANADA);
+        sdf.setTimeZone(TimeZone.getTimeZone("Australia/Victoria"));
+        return sdf.format(new Date());
+    }
+
     private void addNewlike(ViewHolder holder) {
         Log.d(TAG, "addNewlike: Adding New Like");
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
         String newLikeID = reference.push().getKey();
         Likes likes = new Likes();
         likes.setUser_id(FirebaseAuth.getInstance().getCurrentUser().getUid());
+        likes.setDate_created(getTimestamp());
 
         reference.child(mContext.getString(R.string.dbname_photos))
                 .child(holder.photo.getPhoto_id())

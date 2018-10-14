@@ -143,7 +143,13 @@ public class NotificationFeedListAdapter extends ArrayAdapter<Notice> {
             }
         });
 //        Log.d("TAG",holder.display_name.getText().toString());
-        holder.date.setText(getTimestampdifference(getItem(position)) + "days ago");
+        String timeDifference = getTimestampdifference(getItem(position));
+        if(!timeDifference.equals("0")){
+            holder.date.setText(timeDifference + " Days Ago");
+
+        }else{
+            holder.date.setText("Today");
+        }
         return convertView;
     }
 
