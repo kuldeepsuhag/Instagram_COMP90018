@@ -155,7 +155,7 @@ public class NotificationFeedListAdapter extends ArrayAdapter<Notice> {
 
 
     private String getTimestampdifference(Notice mnotice){
-        Log.d(TAG, "getTimestampdifference: getting timestamp difference");
+        Log.d(TAG, "getTimestampdifference: getting timestamp difference"+mnotice.getDate_created());
         String difference = "" ;
         Calendar c = Calendar.getInstance();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.CANADA);

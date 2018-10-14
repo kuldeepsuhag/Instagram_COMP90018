@@ -79,7 +79,7 @@ public class UserFeedFragment extends Fragment{
     private HashMap<String,String> dateList = new HashMap<String,String>();
     private HashMap<String,String> typeList = new HashMap<String,String>();
     private ArrayList<Comment> comments = new ArrayList<>();
-    private ArrayList<Like> likes = new ArrayList<>();
+    private ArrayList<Likes> likes = new ArrayList<>();
     private ArrayList<Notice> notices = new ArrayList<>();
 
     //firebase
@@ -154,10 +154,10 @@ public class UserFeedFragment extends Fragment{
                         Notice notice = new Notice();
                         notice.setUser_id_to(FirebaseAuth.getInstance().getCurrentUser().getUid().toString());
                         notice.setAction("liked");
-                        notice.setDate_created("2018-10-11T09:27:37Z");
-                        notice.setUser_id_from(dsnapshot.getValue(Comment.class).getUser_id());
+                        notice.setDate_created(dsnapshot.getValue(Likes.class).getDate_created());
+                        notice.setUser_id_from(dsnapshot.getValue(Likes.class).getUser_id());
                         notices.add(notice);
-//                        likes.add(dsnapshot.getValue(Like.class));
+                        likes.add(dsnapshot.getValue(Likes.class));
                     }
                 }
             }

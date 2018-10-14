@@ -115,7 +115,7 @@ public class MyFeedFragment extends Fragment{
         final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
         final ArrayList<Comment> comments = new ArrayList<>();
         final ArrayList<Notice> notices = new ArrayList<>();
-        final ArrayList<Like> likes = new ArrayList<>();
+        final ArrayList<Likes> likes = new ArrayList<>();
 
         Query query = databaseReference
                 .child(getString(R.string.dbname_user_photos))
@@ -139,9 +139,9 @@ public class MyFeedFragment extends Fragment{
                         Notice notice = new Notice();
                         notice.setUser_id_to(FirebaseAuth.getInstance().getCurrentUser().getUid().toString());
                         notice.setAction("liked");
-                        notice.setDate_created("2018-10-11T09:27:37Z");
-                        notice.setUser_id_from(dsnapshot.getValue(Comment.class).getUser_id());
-//                        likes.add(dsnapshot.getValue(Like.class));
+                        notice.setDate_created(dsnapshot.getValue(Likes.class).getDate_created());
+                        notice.setUser_id_from(dsnapshot.getValue(Likes.class).getUser_id());
+                        likes.add(dsnapshot.getValue(Likes.class));
                         notices.add(notice);
                     }
                 }
