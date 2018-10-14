@@ -88,7 +88,7 @@ public class Viewpost extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_view_post,container,false);
         mPostImage = (SquareImageView)view.findViewById(R.id.postimage);
-        bottomNavigationView = (BottomNavigationView)view.findViewById(R.id.bottomNavViewwBar);
+//        bottomNavigationView = (BottomNavigationView)view.findViewById(R.id.bottomNavViewwBar);
         mBackarrow = (ImageView)view.findViewById(R.id.imageBackArrow);
         mBackLabel = (TextView)view.findViewById(R.id.tvBackLabel);
         mCaption = (TextView)view.findViewById(R.id.image_caption);
@@ -116,7 +116,7 @@ public class Viewpost extends Fragment {
             Log.e(TAG, "onCreateView: NullPointer Exception " + e.getMessage());
         }
         setupFirebaseAuth();
-        navigation();
+//        navigation();
         return view;
     }
 
