@@ -93,7 +93,7 @@ public class ProfileFragment extends Fragment {
         gridView = (GridView)view.findViewById(R.id.gridView);
         toolbar = (Toolbar) view.findViewById(R.id.profileToolBar);
         profileMenu = (ImageView)view.findViewById(R.id.profileMenu);
-        friendSuggestion = (ImageView)view.findViewById(R.id.suggest);
+//        friendSuggestion = (ImageView)view.findViewById(R.id.suggest);
         bottomNavigationView =(BottomNavigationView)view.findViewById(R.id.bottomNavViewwBar);
         mContext = getActivity();
         mFirebaseMethods = new FirebaseMethods(getActivity());
@@ -110,15 +110,15 @@ public class ProfileFragment extends Fragment {
             }
         });
 
-        friendSuggestion.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d(TAG, "onClick: Navigating to " + mContext.getString(R.string.friend_suggestion));
-                Intent intent = new Intent(getActivity(), FriendSuggestion.class);
-                startActivity(intent);
-                getActivity().overridePendingTransition(R.anim.fade_in,R.anim.fade_out);
-            }
-        });
+//        friendSuggestion.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Log.d(TAG, "onClick: Navigating to " + mContext.getString(R.string.friend_suggestion));
+//                Intent intent = new Intent(getActivity(), FriendSuggestion.class);
+//                startActivity(intent);
+//                getActivity().overridePendingTransition(R.anim.fade_in,R.anim.fade_out);
+//            }
+//        });
         Log.d(TAG, "onCreateView: stared");
         navigation();
         setupToolbar();
@@ -167,6 +167,7 @@ public class ProfileFragment extends Fragment {
                         for (DataSnapshot dsnapshot : singlesnapshot.child(getString(R.string.field_likes)).getChildren()) {
                             Likes likes = new Likes();
                             likes.setUser_id(dsnapshot.getValue(Likes.class).getUser_id());
+                            likes.setDate_created(dsnapshot.getValue(Likes.class).getDate_created());
                             likesList.add(likes);
                         }
                         photo.setLikes(likesList);

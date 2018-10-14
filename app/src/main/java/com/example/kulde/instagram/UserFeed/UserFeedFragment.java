@@ -1,4 +1,3 @@
-
 package com.example.kulde.instagram.UserFeed;
 
 
@@ -22,16 +21,21 @@ import android.widget.ArrayAdapter;
 import android.widget.GridView;
 import android.widget.ListView;
 
+import com.eschao.android.widget.elasticlistview.LoadFooter;
 import com.example.kulde.instagram.LogIn;
 import com.example.kulde.instagram.Model.Comment;
 import com.example.kulde.instagram.Model.Likes;
+import com.example.kulde.instagram.Model.Notice;
 import com.example.kulde.instagram.Model.Photo;
+import com.example.kulde.instagram.Model.User;
+import com.example.kulde.instagram.Model.UserAccountSettings;
+import com.example.kulde.instagram.Profile.Profile;
 import com.example.kulde.instagram.R;
-import com.example.kulde.instagram.Utils.GridImageAdapter;
-import com.example.kulde.instagram.Utils.Navigation;
-import com.example.kulde.instagram.Utils.SectionPagerAdapter;
 
 
+import com.example.kulde.instagram.Utils.Like;
+import com.example.kulde.instagram.Utils.Mainfeedlistadapter;
+import com.example.kulde.instagram.Utils.NotificationFeedListAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserInfo;
@@ -45,23 +49,38 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import com.example.kulde.instagram.R;
+import com.nostra13.universalimageloader.core.ImageLoader;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class UserFeedFragment extends Fragment{
     private static final String TAG = "UserFeedFragment";
     private static final int ACTIVITY_NUM = 3;
     private Context mContext;
     private BottomNavigationView bottomNavigationView;
-    private ListView listView;
+    private ListView mListView;
 
 
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
     private DatabaseReference myRef = database.getReference("message");
     private StorageReference mStorageRef = FirebaseStorage.getInstance().getReference();
+    private NotificationFeedListAdapter adapter;
+    private HashMap<String,String> nameList =new HashMap<String,String>();
+    private ArrayList<String> followingList =new ArrayList<String>();
+    private HashMap<Integer,String> idList = new HashMap<Integer,String>();
+    private HashMap<String,String> dateList = new HashMap<String,String>();
+    private HashMap<String,String> typeList = new HashMap<String,String>();
+    private ArrayList<Comment> comments = new ArrayList<>();
+    private ArrayList<Likes> likes = new ArrayList<>();
+    private ArrayList<Notice> notices = new ArrayList<>();
 
     //firebase
     private FirebaseAuth mAuth;
@@ -90,46 +109,57 @@ public class UserFeedFragment extends Fragment{
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+//        Userfeed activity = (Userfeed) getActivity();
+//        nameList = activity.getNameList();
         View view = inflater.inflate(R.layout.fragment_userfeed, container, false);
-        listView = (ListView) view.findViewById(R.id.feedList);
-        setupFirebaseAuth();
+        mListView = (ListView) view.findViewById(R.id.listview);
+//        mProfileImage = (CircleImageView) view.findViewById(R.id.profile_photo);
+
+//        mFollowing = new ArrayList<>();
+
+        getFollowingList();
+
+        for (String following: followingList){
+            getLatestFeeds(following);
+        }
+
+//        setupFirebaseAuth();
         setupListview();
-        return null;
+        return view;
     }
 
-    private void setupListview(){
-        Log.d(TAG, "setupListview: Settig up");
-
+    private void getLatestFeeds(String userid){
         final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
-        final ArrayList<String> comments = new ArrayList<>();
-        final ArrayList<String> likesList = new ArrayList<>();
-
         Query query = databaseReference
                 .child(getString(R.string.dbname_user_photos))
-                .child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+                .child(userid);
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                int i = 0;
                 for (DataSnapshot singlesnapshot : dataSnapshot.getChildren()){
-
-
                     for(DataSnapshot dsnapshot: singlesnapshot.child(getString(R.string.field_comments)).getChildren()){
-                        Comment comment = new Comment();
-                        comment.setUser_id(dsnapshot.getValue(Comment.class).getUser_id());
-                        comment.setComment(dsnapshot.getValue(Comment.class).getComment());
-                        comment.setDate_created(dsnapshot.getValue(Comment.class).getDate_created());
-
-                        comments.add(comment.getUser_id()+" said: " + comment.getComment());
+                        Notice notice = new Notice();
+                        notice.setUser_id_to(FirebaseAuth.getInstance().getCurrentUser().getUid().toString());
+                        notice.setAction("commented");
+                        notice.setDate_created(dsnapshot.getValue(Comment.class).getDate_created());
+                        notice.setUser_id_from(dsnapshot.getValue(Comment.class).getUser_id());
+                        comments.add(dsnapshot.getValue(Comment.class));
+                        notices.add(notice);
+                        comments.add(dsnapshot.getValue(Comment.class));
+//
                     }
 
                     for(DataSnapshot dsnapshot: singlesnapshot.child(getString(R.string.field_likes)).getChildren()){
-                        Likes likes = new Likes();
-                        likes.setUser_id(dsnapshot.getValue(Likes.class).getUser_id());
-                        likesList.add(likes.getUser_id()+" liked you photo!");
+                        Notice notice = new Notice();
+                        notice.setUser_id_to(FirebaseAuth.getInstance().getCurrentUser().getUid().toString());
+                        notice.setAction("liked");
+                        notice.setDate_created(dsnapshot.getValue(Likes.class).getDate_created());
+                        notice.setUser_id_from(dsnapshot.getValue(Likes.class).getUser_id());
+                        notices.add(notice);
+                        likes.add(dsnapshot.getValue(Likes.class));
                     }
                 }
-                ArrayAdapter adapter = new ArrayAdapter(getActivity(),R.layout.list_item_layout,comments);
-                listView.setAdapter(adapter);
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {
@@ -137,53 +167,81 @@ public class UserFeedFragment extends Fragment{
             }
         });
     }
+    private void setupListview(){
+        Log.d(TAG, "setupListview: Settig up");
 
-
-    private void checkCurrentUser(FirebaseUser user){
-        Log.d(TAG, "checkCurrentUser: checking if user is logged in.");
-
-        if(user == null){
-            Intent intent = new Intent(mContext, LogIn.class);
-            startActivity(intent);
+        if(notices.size()<1){
+            Log.d(TAG, "setupListview: Seems no update...");
+            Notice notice = new Notice();
+            notice.setUser_id_to("vMaP6cL7zrdGWBo2a99NmVjdkEF2");
+            notice.setAction("Seems no update...");
+            notice.setDate_created("2018-10-11T09:27:37Z");
+            notice.setUser_id_from("vMaP6cL7zrdGWBo2a99NmVjdkEF2");
+            notices.add(notice);
         }
+//
+//        for (Comment comment: comments){
+//            comment.setUser_id(idList.get(comment.getUser_id()));
+//        }
+
+
+        adapter = new NotificationFeedListAdapter(getActivity(),R.layout.list_item_layout,notices);
+        mListView.setAdapter(adapter);
+
     }
 
-    private void setupFirebaseAuth() {
-        Log.d(TAG, "setupFirebaseAuth: setting up firebase auth.");
-        mAuth = FirebaseAuth.getInstance();
-        mFirebaseDatabase = FirebaseDatabase.getInstance();
-        myRef = mFirebaseDatabase.getReference();
+    private void getFollowingList(){
 
-        mAuthListener = new FirebaseAuth.AuthStateListener() {
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+        Query query = reference.child(getString(R.string.dbname_following))
+                .child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                FirebaseUser user = firebaseAuth.getCurrentUser();
-
-
-                if (user != null) {
-                    // User is signed in
-                    Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
-                } else {
-                    // User is signed out
-                    Log.d(TAG, "onAuthStateChanged:signed_out");
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for(final DataSnapshot singleSnapshot: dataSnapshot.getChildren()){
+                    Log.d(TAG, "onDataChange: found Following" + singleSnapshot.child("user_id").getValue());
+                    followingList.add(singleSnapshot.child("user_id").getValue().toString());
                 }
-                // ...
             }
-        };
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        mAuth.addAuthStateListener(mAuthListener);
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        if(mAuthListener != null){
-            mAuth.removeAuthStateListener(mAuthListener);
-        }
-    }
-
+//    private void checkCurrentUser(FirebaseUser user){
+//        Log.d(TAG, "checkCurrentUser: checking if user is logged in.");
+//
+//        if(user == null){
+//            Intent intent = new Intent(mContext, LogIn.class);
+//            startActivity(intent);
+//        }
+//    }
+//
+//    private void setupFirebaseAuth() {
+//        Log.d(TAG, "setupFirebaseAuth: setting up firebase auth.");
+//        mAuth = FirebaseAuth.getInstance();
+//        mFirebaseDatabase = FirebaseDatabase.getInstance();
+//        myRef = mFirebaseDatabase.getReference();
+//
+//        mAuthListener = new FirebaseAuth.AuthStateListener() {
+//            @Override
+//            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+//                FirebaseUser user = firebaseAuth.getCurrentUser();
+//
+//
+//                if (user != null) {
+//                    // User is signed in
+//                    Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
+//                } else {
+//                    // User is signed out
+//                    Log.d(TAG, "onAuthStateChanged:signed_out");
+//                }
+//                // ...
+//            }
+//        };
+//    }
 }
