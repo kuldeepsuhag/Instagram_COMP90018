@@ -44,6 +44,7 @@ public class UserlistAdapter extends ArrayAdapter<User> {
         this.mUsers = objects;
     }
 
+
     private static class ViewHolder{
         TextView username;
         CircleImageView profileImage;

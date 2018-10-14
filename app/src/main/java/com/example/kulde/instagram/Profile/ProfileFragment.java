@@ -28,11 +28,11 @@ import com.example.kulde.instagram.Model.User;
 import com.example.kulde.instagram.Model.UserAccountSettings;
 import com.example.kulde.instagram.Model.UserSettings;
 import com.example.kulde.instagram.R;
+import com.example.kulde.instagram.Suggestions.FriendSuggestion;
 import com.example.kulde.instagram.Utils.FirebaseMethods;
 import com.example.kulde.instagram.Utils.GridImageAdapter;
 import com.example.kulde.instagram.Utils.Navigation;
 import com.example.kulde.instagram.Utils.UniversalImageLoader;
-import com.example.kulde.instagram.FriendSuggestion;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -93,7 +93,7 @@ public class ProfileFragment extends Fragment {
         gridView = (GridView)view.findViewById(R.id.gridView);
         toolbar = (Toolbar) view.findViewById(R.id.profileToolBar);
         profileMenu = (ImageView)view.findViewById(R.id.profileMenu);
-//        friendSuggestion = (ImageView)view.findViewById(R.id.suggest);
+        friendSuggestion = (ImageView)view.findViewById(R.id.suggest);
         bottomNavigationView =(BottomNavigationView)view.findViewById(R.id.bottomNavViewwBar);
         mContext = getActivity();
         mFirebaseMethods = new FirebaseMethods(getActivity());
@@ -110,15 +110,15 @@ public class ProfileFragment extends Fragment {
             }
         });
 
-//        friendSuggestion.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Log.d(TAG, "onClick: Navigating to " + mContext.getString(R.string.friend_suggestion));
-//                Intent intent = new Intent(getActivity(), FriendSuggestion.class);
-//                startActivity(intent);
-//                getActivity().overridePendingTransition(R.anim.fade_in,R.anim.fade_out);
-//            }
-//        });
+        friendSuggestion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(TAG, "onClick: Navigating to " + mContext.getString(R.string.friend_suggestion));
+                Intent intent = new Intent(getActivity(), FriendSuggestion.class);
+                startActivity(intent);
+                getActivity().overridePendingTransition(R.anim.fade_in,R.anim.fade_out);
+            }
+        });
         Log.d(TAG, "onCreateView: stared");
         navigation();
         setupToolbar();

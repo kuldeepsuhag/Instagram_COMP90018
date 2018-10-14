@@ -239,7 +239,7 @@ public class Viewpost extends Fragment {
 
         @Override
         public boolean onDoubleTap(MotionEvent e) {
-            Log.d(TAG, "onDoubleTap: Doublt tap detected");
+            Log.d(TAG, "onDoubleTap: Double tap detected");
             DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
             Query query = databaseReference
                     .child(getString(R.string.dbname_photos))
