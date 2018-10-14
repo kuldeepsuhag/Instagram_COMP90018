@@ -38,7 +38,7 @@ public class FriendSuggestion extends AppCompatActivity {
     private String currentUser;
     private ArrayList<String> mUsers;
     private List<User> mSuggestions;
-    private UserlistAdapter mAdapter;
+    private SuggestionlistAdapter mAdapter;
     private User latestSuggestion;
     private ImageView mBackarrow;
     private GestureDetector mGesture;
@@ -120,14 +120,12 @@ public class FriendSuggestion extends AppCompatActivity {
         }
     private void updateSuggestionList(){
         Log.d(TAG, "updateSuggestionList: Updating the Suggestion list");
-        mAdapter = new UserlistAdapter(FriendSuggestion.this,R.layout.layout_user_listitem,mSuggestions);
+        mAdapter = new SuggestionlistAdapter(FriendSuggestion.this,R.layout.friend_suggestion,mSuggestions);
         listView.setAdapter(mAdapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Log.d(TAG, "onItemClick: selected user: " + mSuggestions.get(position).toString());
-
-                //Navigating to the user's Profile
                 Intent intent = new Intent(mContext,Profile.class);
                 intent.putExtra(getString(R.string.calling_activity), getString(R.string.search_activity));
                 intent.putExtra(getString(R.string.intent_user), mSuggestions.get(position));
