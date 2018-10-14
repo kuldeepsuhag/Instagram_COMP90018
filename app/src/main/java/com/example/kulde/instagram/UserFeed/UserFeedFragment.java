@@ -152,6 +152,19 @@ public class UserFeedFragment extends Fragment{
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
                             Log.d(TAG,"latest following is " + dataSnapshot.child("display_name").getValue().toString());
+
+                            final User following = dataSnapshot.getValue(User.class);
+                            mFollowerImage.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    Log.d(TAG, "onClick: Navigating to profile of " + following.getUsername());
+                                    Intent intent = new Intent(getActivity(), Profile.class);
+//                                    intent.putExtra(getString(R.string.calling_activity), getString(R.string.search_activity));
+                                    intent.putExtra(getString(R.string.intent_user),following);
+                                    startActivity(intent);
+                                }
+                            });
+
                             mFollowerName.setText("You just followed "+dataSnapshot.child("display_name").getValue().toString() + ".");
                             ImageLoader imageLoader = ImageLoader.getInstance();
 
