@@ -172,8 +172,7 @@ public class FirebaseInteraction extends AsyncTask{
 
             myRef.child("photos").child(newPhotoKey).setValue(photo);
 
-
-            // add code to set up profile photo
+            // add code to reload profile photo
 
         }
 
