@@ -162,10 +162,10 @@ public class FirebaseInteraction extends AsyncTask{
 
         if (phototype.equals("profile")) {
 
-            myRef.child("profile_photos")
-                    .child(userID).child(newPhotoKey).setValue(photo);
+            myRef.child("user_account_settings")
+                    .child(userID).child("profile_photo").setValue(url);
 
-            myRef.child("photos").child(newPhotoKey).setValue(photo);
+            //myRef.child("photos").child(newPhotoKey).setValue(photo);
         } else {
             myRef.child("user_photos")
                     .child(userID).child(newPhotoKey).setValue(photo);
