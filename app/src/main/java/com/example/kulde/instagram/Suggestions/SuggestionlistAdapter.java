@@ -33,6 +33,7 @@ public class SuggestionlistAdapter extends ArrayAdapter<User> {
     private List<User> mUsers = null;
     private int layoutresource;
     private Context mContext;
+    private User suggestion;
 
     public SuggestionlistAdapter(@NonNull Context context, int resource, @NonNull List<User> objects) {
         super(context, resource, objects);
@@ -55,6 +56,8 @@ public class SuggestionlistAdapter extends ArrayAdapter<User> {
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         Log.d(TAG, "getView: Going to database");
+        suggestion =  getItem(position);
+
         final ViewHolder holder;
         if(convertView == null){
             convertView = mInflater.inflate(layoutresource,parent,false);
@@ -68,23 +71,27 @@ public class SuggestionlistAdapter extends ArrayAdapter<User> {
             holder = (ViewHolder)convertView.getTag();
 
         }
-        Log.d(TAG, "getView: Getting User name " + getItem(position).getUsername());
-        holder.username.setText(getItem(position).getUsername());
-        Log.d(TAG, "getView: Getting Display name " + getItem(position).getDisplayname());
-        holder.displayname.setText(getItem(position).getDisplayname());
+
+//        holder.username.setText(getItem(position).getUsername());
+//
+//        holder.displayname.setText("abc");
 
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
         Query query = reference.child(mContext.getString(R.string.dbname_user_account_settings))
-                .orderByChild(mContext.getString(R.string.user_id))
-                .equalTo(getItem(position).getUser_id());
+                .child(getItem(position).getUser_id());
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                for(DataSnapshot singleDatasnapshot : dataSnapshot.getChildren()){
-                    Log.d(TAG, "onDataChange: found User" + singleDatasnapshot.getValue(UserAccountSettings.class).toString());
+//                for(DataSnapshot singleDatasnapshot : dataSnapshot.getChildren()){
+                    Log.d(TAG, "onDataChange: found User" + dataSnapshot.toString());
+                    Log.d(TAG, "getView: Getting User name " + dataSnapshot.child("username").getValue().toString());
+                    holder.username.setText(dataSnapshot.child("username").getValue().toString());
+                    Log.d(TAG, "getView: Getting Display name " + dataSnapshot.child("display_name").getValue().toString());
+                    holder.displayname.setText(dataSnapshot.child("display_name").getValue().toString());
+
                     ImageLoader imageLoader = ImageLoader.getInstance();
-                    imageLoader.displayImage(singleDatasnapshot.getValue(UserAccountSettings.class).getProfile_photo(),holder.profileImage);
-                }
+                    imageLoader.displayImage(dataSnapshot.child("profile_photo").getValue().toString(),holder.profileImage);
+//                }
             }
 
             @Override
