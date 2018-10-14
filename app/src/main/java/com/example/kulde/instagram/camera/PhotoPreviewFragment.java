@@ -80,6 +80,7 @@ public class PhotoPreviewFragment extends Fragment {
         imagePreview = view.findViewById(R.id.photo_preview);
         confirm = view.findViewById(R.id.confirm);
         edit = view.findViewById(R.id.edit);
+        CommResources.isprofile = false;
 
         try {
             setImageView(imagePreview);

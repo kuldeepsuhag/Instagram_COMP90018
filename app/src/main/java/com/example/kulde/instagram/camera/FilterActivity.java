@@ -26,6 +26,7 @@ public class FilterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_filter);
 
+
         imageEdit = findViewById(R.id.picture_view);
 
 

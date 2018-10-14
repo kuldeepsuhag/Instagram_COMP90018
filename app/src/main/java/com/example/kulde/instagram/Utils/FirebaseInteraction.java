@@ -45,10 +45,11 @@ public class FirebaseInteraction extends AsyncTask{
     Context mContext;
     String caption;
     String cityName;
+    String phototype;
 
 
 
-    public FirebaseInteraction(Context context, Bitmap bitmap, String caption, String cityName) {
+    public FirebaseInteraction(Context context, String phototype, Bitmap bitmap, String caption, String cityName) {
 
         //
         this.bitmap=bitmap;
@@ -64,6 +65,7 @@ public class FirebaseInteraction extends AsyncTask{
         mContext = context;
         this.caption=caption;
         this.cityName = cityName;
+        this.phototype = phototype;
 
     }
 
@@ -74,7 +76,7 @@ public class FirebaseInteraction extends AsyncTask{
         return null;
     }
 
-    private void uploadImageBitmap(Bitmap bitmap) {
+    private void uploadImageBitmap( Bitmap bitmap) {
         // upload image via bitmap
         int count = 1;
         bitmap = rotateBitmap(bitmap, -CommResources.rotationdegree);
@@ -101,7 +103,7 @@ public class FirebaseInteraction extends AsyncTask{
 
 
                 //add the new photo to 'photos' node and 'user_photos' node
-                addPhotoToDatabase(caption, downloadUrl.toString(),cityName);
+                addPhotoToDatabase(phototype, caption, downloadUrl.toString(),cityName);
 
                 Toast.makeText(mContext, "photo upload success", Toast.LENGTH_SHORT).show();
 
@@ -135,7 +137,7 @@ public class FirebaseInteraction extends AsyncTask{
         return sdf.format(new Date());
     }
 
-    private void addPhotoToDatabase(String caption, String url, String cityName){
+    private void addPhotoToDatabase(String phototype, String caption, String url, String cityName){
 
         // add get tag method
 
@@ -156,10 +158,26 @@ public class FirebaseInteraction extends AsyncTask{
 
         Log.d("location", photo.toString());
 
-        myRef.child("user_photos")
-                .child(userID).child(newPhotoKey).setValue(photo);
+        Log.d("profile_edit",phototype);
 
-        myRef.child("photos").child(newPhotoKey).setValue(photo);
+        if (phototype.equals("profile")) {
+
+            myRef.child("profile_photos")
+                    .child(userID).child(newPhotoKey).setValue(photo);
+
+            myRef.child("photos").child(newPhotoKey).setValue(photo);
+        } else {
+            myRef.child("user_photos")
+                    .child(userID).child(newPhotoKey).setValue(photo);
+
+            myRef.child("photos").child(newPhotoKey).setValue(photo);
+
+
+            // add code to set up profile photo
+
+        }
+
+
 
         Log.d(TAG, myRef.child(mContext.getString(R.string.dbname_photos)).child(newPhotoKey).toString());
 

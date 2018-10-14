@@ -9,6 +9,7 @@ public class CommResources {
     public static Bitmap edit_template = null;
     public static Bitmap cache = null;
     public static String location = "";
+    public static Boolean isprofile = false;
 
     public static Bitmap RotateBitmap(Bitmap source, float angle)
     {

@@ -98,8 +98,12 @@ public class NextActivity extends AppCompatActivity {
                 String caption = mCaption.getText().toString();
 
                 // upload a photo
-
-                FirebaseInteraction uploadTask = new FirebaseInteraction(NextActivity.this, CommResources.edit_template,caption, geo);
+                String phototype = "";
+                if (CommResources.isprofile){
+                    phototype = "profile";
+                    CommResources.isprofile=false;
+                }
+                FirebaseInteraction uploadTask = new FirebaseInteraction(NextActivity.this, phototype ,CommResources.edit_template,caption, geo);
                 uploadTask.execute();
 
                 //go back to main
@@ -184,10 +188,13 @@ public class NextActivity extends AppCompatActivity {
             List<Address> addresses;
             try {
                 addresses = gcd.getFromLocation(loc.getLatitude(), loc
-                        .getLongitude(), 1);
+                        .getLongitude(), 5);
                 if (addresses.size() > 0)
                     System.out.println(addresses.get(0).getLocality());
                 cityName=addresses.get(0).getLocality();
+                for(int i =0; i < addresses.size();i++){
+                    Log.d("location",addresses.get(i).getLocality());
+                }
             } catch (IOException e) {
                 e.printStackTrace();
             }
