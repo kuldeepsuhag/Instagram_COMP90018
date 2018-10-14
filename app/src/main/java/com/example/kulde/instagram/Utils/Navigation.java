@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.util.Log;
 import android.view.MenuItem;
 
 import com.example.kulde.instagram.Home.MainPage;
@@ -16,10 +17,12 @@ import com.example.kulde.instagram.camera.TakePhotoActivity;
 
 public class Navigation {
     private static final String TAG = "Navigation";
+
     public static void enablenavigation(final Context context, final Activity callingActivity,BottomNavigationView bottomNavigationView){
-        bottomNavigationView.setOnNavigationItemReselectedListener(new BottomNavigationView.OnNavigationItemReselectedListener() {
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
-            public void onNavigationItemReselected(@NonNull MenuItem menuItem) {
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+
                 switch (menuItem.getItemId()){
                     case R.id.ic_house:
                         Intent intent1 = new Intent(context, MainPage.class);
@@ -47,6 +50,7 @@ public class Navigation {
                         callingActivity.overridePendingTransition(R.anim.fade_in,R.anim.fade_out);
                         break;
                 }
+                return false;
             }
         });
     }

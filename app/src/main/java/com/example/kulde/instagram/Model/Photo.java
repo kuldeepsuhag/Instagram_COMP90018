@@ -6,6 +6,8 @@ import android.widget.ListView;
 
 import java.util.List;
 
+import static com.example.kulde.instagram.Utils.CommResources.location;
+
 public class Photo implements Parcelable {
     private String caption;
     private String date_created;
@@ -109,6 +111,7 @@ public class Photo implements Parcelable {
     }
 
     public String getCityName(){return cityName;}
+
     public void setCityName(String cityName){this.cityName = cityName;}
 
     @Override

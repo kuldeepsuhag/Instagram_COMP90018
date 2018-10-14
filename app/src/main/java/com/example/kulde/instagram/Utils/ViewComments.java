@@ -137,12 +137,13 @@ public class ViewComments extends Fragment {
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "onClick: navigating back");
-                if(getCallingActivityfromBundle().equals(getString(R.string.home_activity))){
-                    getActivity().getSupportFragmentManager().popBackStack();
-                    //((MainPage)getActivity()).showlayout();
-                }else{
-                    getActivity().getSupportFragmentManager().popBackStack();
-                }
+                getActivity().getSupportFragmentManager().popBackStack();
+//                if(getCallingActivityfromBundle().equals(getString(R.string.home_activity))){
+//                    getActivity().getSupportFragmentManager().popBackStack();
+//                    //((MainPage)getActivity()).showlayout();
+//                }else{
+//                    getActivity().getSupportFragmentManager().popBackStack();
+//                }
 
             }
         });
