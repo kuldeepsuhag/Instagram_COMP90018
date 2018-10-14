@@ -27,7 +27,9 @@ import com.example.kulde.instagram.Model.Comment;
 import com.example.kulde.instagram.Model.Likes;
 import com.example.kulde.instagram.Model.Notice;
 import com.example.kulde.instagram.Model.Photo;
+import com.example.kulde.instagram.Model.User;
 import com.example.kulde.instagram.Model.UserAccountSettings;
+import com.example.kulde.instagram.Profile.Profile;
 import com.example.kulde.instagram.R;
 import com.example.kulde.instagram.Utils.GridImageAdapter;
 import com.example.kulde.instagram.Utils.Like;
@@ -138,6 +140,19 @@ public class MyFeedFragment extends Fragment{
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
                             Log.d(TAG,"latest follower is " + dataSnapshot.child("display_name").getValue().toString());
+
+                            final User follower = dataSnapshot.getValue(User.class);
+                            mFollowerImage.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    Log.d(TAG, "onClick: Navigating to profile of " + follower.getUsername());
+                                    Intent intent = new Intent(getActivity(), Profile.class);
+                                    intent.putExtra(getString(R.string.calling_activity), getString(R.string.activity_userfeed));
+                                    intent.putExtra(getString(R.string.intent_user),follower);
+                                    startActivity(intent);
+                                }
+                            });
+
                             mFollowerName.setText(dataSnapshot.child("display_name").getValue().toString() + " just followed you! ");
                             ImageLoader imageLoader = ImageLoader.getInstance();
 

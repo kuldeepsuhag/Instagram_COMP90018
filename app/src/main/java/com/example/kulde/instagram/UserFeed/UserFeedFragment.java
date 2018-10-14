@@ -159,7 +159,7 @@ public class UserFeedFragment extends Fragment{
                                 public void onClick(View v) {
                                     Log.d(TAG, "onClick: Navigating to profile of " + following.getUsername());
                                     Intent intent = new Intent(getActivity(), Profile.class);
-//                                    intent.putExtra(getString(R.string.calling_activity), getString(R.string.search_activity));
+                                    intent.putExtra(getString(R.string.calling_activity), getString(R.string.activity_userfeed));
                                     intent.putExtra(getString(R.string.intent_user),following);
                                     startActivity(intent);
                                 }

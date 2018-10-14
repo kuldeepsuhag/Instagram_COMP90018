@@ -49,7 +49,7 @@
     <string name="home_activity">Home Activity</string>
     <string name="view_profile_fragment">Profile Fragment</string>
     <string name="friend_suggestion">Friend Suggestion</string>
-
+    <string name="activity_userfeed">Userfeed</string>
     <string name="activity_number">activity_number</string>
 
     <!-- TODO: Remove or change this placeholder text -->

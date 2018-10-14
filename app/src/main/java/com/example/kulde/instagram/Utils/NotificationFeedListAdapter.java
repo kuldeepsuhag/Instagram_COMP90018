@@ -134,8 +134,8 @@ public class NotificationFeedListAdapter extends ArrayAdapter<Notice> {
 //                                holder.profileImage);
                     }
                 }
-                holder.notification.setText("Your friend " + display_name_from + " " + getItem(position).getAction() + " on " + display_name_to + "'s photo!");
 
+                holder.notification.setText("Your friend " + display_name_from + " " + getItem(position).getAction() + " on " + display_name_to + "'s photo!");
             }
 
             @Override
