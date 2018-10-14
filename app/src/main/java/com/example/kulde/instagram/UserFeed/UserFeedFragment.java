@@ -20,6 +20,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.GridView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.eschao.android.widget.elasticlistview.LoadFooter;
 import com.example.kulde.instagram.LogIn;
@@ -82,6 +83,10 @@ public class UserFeedFragment extends Fragment{
     private ArrayList<Likes> likes = new ArrayList<>();
     private ArrayList<Notice> notices = new ArrayList<>();
 
+    private String latestFollower;
+    private TextView mFollowerName;
+    private CircleImageView mFollowerImage;
+
     //firebase
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
@@ -113,10 +118,10 @@ public class UserFeedFragment extends Fragment{
 //        nameList = activity.getNameList();
         View view = inflater.inflate(R.layout.fragment_userfeed, container, false);
         mListView = (ListView) view.findViewById(R.id.listview);
-//        mProfileImage = (CircleImageView) view.findViewById(R.id.profile_photo);
+        mFollowerImage = (CircleImageView) view.findViewById(R.id.latest_follower_photo);
+        mFollowerName = (TextView) view.findViewById(R.id.latest_follower);
 
-//        mFollowing = new ArrayList<>();
-
+        getLatestFollower();
         getFollowingList();
 
         for (String following: followingList){
@@ -126,6 +131,51 @@ public class UserFeedFragment extends Fragment{
 //        setupFirebaseAuth();
         setupListview();
         return view;
+    }
+
+    private void getLatestFollower(){
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+        Query query = reference.child(getString(R.string.dbname_following))
+                .child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot singledatasnapshot : dataSnapshot.getChildren()) {
+
+                    latestFollower = singledatasnapshot.child("user_id").getValue().toString();
+                    Log.d(TAG,"latest following is " + latestFollower);
+                    DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+                    Query query = databaseReference
+                            .child(getString(R.string.dbname_user_account_settings))
+                            .child(latestFollower);
+                    query.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            Log.d(TAG,"latest following is " + dataSnapshot.child("display_name").getValue().toString());
+                            mFollowerName.setText("You just followed "+dataSnapshot.child("display_name").getValue().toString() + ".");
+                            ImageLoader imageLoader = ImageLoader.getInstance();
+
+                            imageLoader.displayImage(
+                                    dataSnapshot.getValue(UserAccountSettings.class).getProfile_photo(),
+                                    mFollowerImage);
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
+                    break;
+                }
+
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 
     private void getLatestFeeds(String userid){
