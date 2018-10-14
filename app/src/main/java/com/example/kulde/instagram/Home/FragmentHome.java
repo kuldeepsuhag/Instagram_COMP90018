@@ -103,6 +103,8 @@ public class FragmentHome extends Fragment {
                         photo.setUser_id(objectMap.get(getString(R.string.user_id)).toString());
                         photo.setDate_created(objectMap.get(getString(R.string.field_date_created)).toString());
                         photo.setImage_path(objectMap.get(getString(R.string.field_image_path)).toString());
+                        Log.d(TAG, "onDataChange: Getting the location of the image" + objectMap.get(getString(R.string.field_city_name).toString()));
+                       // photo.setCityName(objectMap.get(R.string.field_city_name).toString());
 
                         ArrayList<Comment> comments = new ArrayList<Comment>();
                         for(DataSnapshot dsnapshot: singleSnapshot.child(getString(R.string.field_comments)).getChildren()){
@@ -110,7 +112,6 @@ public class FragmentHome extends Fragment {
                             comment.setUser_id(dsnapshot.getValue(Comment.class).getUser_id());
                             comment.setComment(dsnapshot.getValue(Comment.class).getComment());
                             comment.setDate_created(dsnapshot.getValue(Comment.class).getDate_created());
-
                             comments.add(comment);
                         }
                         photo.setComments(comments);

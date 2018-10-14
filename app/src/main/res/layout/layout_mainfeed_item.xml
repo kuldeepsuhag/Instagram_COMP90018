@@ -33,16 +33,19 @@
                             android:layout_toRightOf="@+id/profile_photo"
                             android:layout_marginRight="20dp"
                             android:layout_centerVertical="true"
+                            android:textStyle="bold"
                             android:id="@+id/username"
                             android:textColor="@color/black"/>
-                        <ImageView
-                            android:layout_width="30dp"
-                            android:layout_height="30dp"
-                            android:src="@drawable/ic_menuprofile"
-                            android:layout_centerVertical="true"
-                            android:layout_alignParentRight="true"
-                            android:layout_marginRight="20dp"
-                            android:id="@+id/ivmenu"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/username"
+                            android:layout_toRightOf="@+id/profile_photo"
+                            android:id="@+id/location"
+                            android:text="default"
+                            android:layout_centerInParent="true"
+                            />
+
                     </RelativeLayout>
                     <com.example.kulde.instagram.Utils.SquareImageView
                         android:layout_width="match_parent"
