@@ -64,6 +64,7 @@ public class Mainfeedlistadapter extends ArrayAdapter<Photo> {
         mLayoutInflator = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mLayoutresource = resource;
         this.mContext = context;
+        mReference = FirebaseDatabase.getInstance().getReference();
     }
 
     static class ViewHolder {
@@ -314,6 +315,7 @@ public class Mainfeedlistadapter extends ArrayAdapter<Photo> {
                                     .child(mContext.getString(R.string.field_likes))
                                     .child(keyID)
                                     .removeValue();
+
                             mholder.heart.toggleLike();
                             getLikesString(mholder);
                         }
@@ -384,7 +386,9 @@ public class Mainfeedlistadapter extends ArrayAdapter<Photo> {
                     holder.users = new StringBuilder();
                     for (DataSnapshot singledatasnapshot : dataSnapshot.getChildren()) {
                         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+
                         Query query = databaseReference
+                                .child(mContext.getString(R.string.dbname_users))
                                 .orderByChild(mContext.getString(R.string.user_id))
                                 .equalTo(singledatasnapshot.getValue(Likes.class).getUser_id());
                         query.addListenerForSingleValueEvent(new ValueEventListener() {
