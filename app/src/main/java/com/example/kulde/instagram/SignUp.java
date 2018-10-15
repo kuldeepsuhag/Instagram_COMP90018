@@ -140,8 +140,8 @@ public class SignUp extends AppCompatActivity {
                 //add new user to the database
                 fMethods.addNewUser(emailText, tempUsername, "", "", "");
 
-                Toast.makeText(thisActivity, "Signup successful. Sending verification email.", Toast.LENGTH_SHORT).show();
-
+//                Toast.makeText(thisActivity, "Signup successful. Sending verification email.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(thisActivity, "Account created, please login.", Toast.LENGTH_SHORT).show();
                 mAuth.signOut();
             }
 
