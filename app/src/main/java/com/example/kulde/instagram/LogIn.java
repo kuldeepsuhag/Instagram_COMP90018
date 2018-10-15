@@ -3,7 +3,9 @@ package com.example.kulde.instagram;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.AnimationDrawable;
 import android.support.annotation.NonNull;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -42,6 +44,11 @@ public class LogIn extends AppCompatActivity  {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log_in);
+        ConstraintLayout cl = findViewById(R.id.relativeLayout);
+        AnimationDrawable draw = (AnimationDrawable) cl.getBackground();
+        draw.setEnterFadeDuration(5000);
+        draw.setExitFadeDuration(2000);
+        draw.start();
 
         thisActivity = LogIn.this;
 
@@ -56,6 +63,8 @@ public class LogIn extends AppCompatActivity  {
         setupFirebaseAuth();
         init();
     }
+
+
 
     private boolean isStringNull(String string){
         Log.d(TAG, "isStringNull: checking string if null.");
