@@ -145,13 +145,12 @@ public class ViewProfile extends Fragment {
                 Log.d(TAG, "onClick: Now Unfollowing " + mUser.getUsername());
                 FirebaseDatabase.getInstance().getReference().child(getString(R.string.dbname_following))
                         .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                        .child(getString(R.string.user_id))
+                        .child(mUser.getUser_id())
                         .removeValue();
 
                 FirebaseDatabase.getInstance().getReference().child(getString(R.string.dbname_followers))
                         .child(mUser.getUser_id())
                         .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                        .child(getString(R.string.user_id))
                         .removeValue();
 
                 setUnFollowing();
