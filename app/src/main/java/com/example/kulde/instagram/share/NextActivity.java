@@ -88,6 +88,7 @@ public class NextActivity extends AppCompatActivity {
 
 
         TextView share = (TextView) findViewById(R.id.tvShare);
+        TextView wifiShare = (TextView) findViewById(R.id.wfShare);
         share.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -109,6 +110,27 @@ public class NextActivity extends AppCompatActivity {
                 //go back to main
                 Intent intent = new Intent(NextActivity.this, MainPage.class);
                 startActivity(intent);
+            }
+        });
+
+        wifiShare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(TAG, "onClick: navigating to the wifi share .");
+
+                //get photo info
+                Toast.makeText(NextActivity.this, "Attempting to share a new photo via wifi", Toast.LENGTH_SHORT).show();
+                String caption = mCaption.getText().toString();
+
+                // get a photo
+                String phototype = "";
+                if (CommResources.isprofile){
+                    phototype = "profile";
+                    CommResources.isprofile=false;
+                }
+
+                // send photo via wifi
+
             }
         });
 
