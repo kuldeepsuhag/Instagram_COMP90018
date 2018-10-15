@@ -124,12 +124,12 @@ public class UserFeedFragment extends Fragment{
         getLatestFollower();
         getFollowingList();
 
-        for (String following: followingList){
-            getLatestFeeds(following);
-        }
+//        for (String following: followingList){
+//            getLatestFeeds(following);
+//        }
 
 //        setupFirebaseAuth();
-        setupListview();
+//        setupListview();
         return view;
     }
 
@@ -199,7 +199,7 @@ public class UserFeedFragment extends Fragment{
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                int i = 0;
+
                 for (DataSnapshot singlesnapshot : dataSnapshot.getChildren()){
                     for(DataSnapshot dsnapshot: singlesnapshot.child(getString(R.string.field_comments)).getChildren()){
                         Notice notice = new Notice();
@@ -209,7 +209,6 @@ public class UserFeedFragment extends Fragment{
                         notice.setUser_id_from(dsnapshot.getValue(Comment.class).getUser_id());
                         comments.add(dsnapshot.getValue(Comment.class));
                         notices.add(notice);
-                        comments.add(dsnapshot.getValue(Comment.class));
 //
                     }
 
@@ -223,6 +222,8 @@ public class UserFeedFragment extends Fragment{
                         likes.add(dsnapshot.getValue(Likes.class));
                     }
                 }
+
+                Log.d(TAG, "setupListview: display " + notices.size());
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {
@@ -233,23 +234,18 @@ public class UserFeedFragment extends Fragment{
     private void setupListview(){
         Log.d(TAG, "setupListview: Settig up");
 
-        if(notices.size()<1){
-            Log.d(TAG, "setupListview: Seems no update...");
-            Notice notice = new Notice();
-            notice.setUser_id_to("vMaP6cL7zrdGWBo2a99NmVjdkEF2");
-            notice.setAction("Seems no update...");
-            notice.setDate_created("2018-10-11T09:27:37Z");
-            notice.setUser_id_from("vMaP6cL7zrdGWBo2a99NmVjdkEF2");
-            notices.add(notice);
-        }
-//
-//        for (Comment comment: comments){
-//            comment.setUser_id(idList.get(comment.getUser_id()));
+//        if(notices.size()<1){
+//            Log.d(TAG, "setupListview: Seems no update...");
+//            Notice notice = new Notice();
+//            notice.setUser_id_to("vMaP6cL7zrdGWBo2a99NmVjdkEF2");
+//            notice.setAction("Seems no update...");
+//            notice.setDate_created("2018-10-11T09:27:37Z");
+//            notice.setUser_id_from("vMaP6cL7zrdGWBo2a99NmVjdkEF2");
+//            notices.add(notice);
 //        }
+//
 
 
-        adapter = new NotificationFeedListAdapter(getActivity(),R.layout.list_item_layout,notices);
-        mListView.setAdapter(adapter);
 
     }
 
@@ -263,7 +259,49 @@ public class UserFeedFragment extends Fragment{
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for(final DataSnapshot singleSnapshot: dataSnapshot.getChildren()){
                     Log.d(TAG, "onDataChange: found Following" + singleSnapshot.child("user_id").getValue());
-                    followingList.add(singleSnapshot.child("user_id").getValue().toString());
+                    final String userid = singleSnapshot.child("user_id").getValue().toString();
+
+                    final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+                    Query query = databaseReference
+                            .child(getString(R.string.dbname_user_photos))
+                            .child(userid);
+                    query.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+
+                            for (DataSnapshot singlesnapshot : dataSnapshot.getChildren()){
+                                for(DataSnapshot dsnapshot: singlesnapshot.child(getString(R.string.field_comments)).getChildren()){
+                                    Notice notice = new Notice();
+                                    notice.setUser_id_to(userid);
+                                    notice.setAction("commented");
+                                    notice.setDate_created(dsnapshot.getValue(Comment.class).getDate_created());
+                                    notice.setUser_id_from(dsnapshot.getValue(Comment.class).getUser_id());
+                                    comments.add(dsnapshot.getValue(Comment.class));
+                                    notices.add(notice);
+//
+                                }
+
+                                for(DataSnapshot dsnapshot: singlesnapshot.child(getString(R.string.field_likes)).getChildren()){
+                                    Notice notice = new Notice();
+                                    notice.setUser_id_to(FirebaseAuth.getInstance().getCurrentUser().getUid().toString());
+                                    notice.setAction("liked");
+                                    notice.setDate_created(dsnapshot.getValue(Likes.class).getDate_created());
+                                    notice.setUser_id_from(dsnapshot.getValue(Likes.class).getUser_id());
+                                    notices.add(notice);
+                                    likes.add(dsnapshot.getValue(Likes.class));
+                                }
+                            }
+
+
+                            Log.d(TAG, "setupListview: display2 " + notices.size());
+                            adapter = new NotificationFeedListAdapter(getActivity(),R.layout.list_item_layout,notices);
+                            mListView.setAdapter(adapter);
+                        }
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+                            Log.d(TAG, "onCancelled: Query Cancelled");
+                        }
+                    });
                 }
             }
 

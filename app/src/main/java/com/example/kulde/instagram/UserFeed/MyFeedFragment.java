@@ -196,23 +196,27 @@ public class MyFeedFragment extends Fragment{
 
                 for (DataSnapshot singlesnapshot : dataSnapshot.getChildren()){
                     for(DataSnapshot dsnapshot: singlesnapshot.child(getString(R.string.field_comments)).getChildren()){
-                        Notice notice = new Notice();
-                        notice.setUser_id_to(FirebaseAuth.getInstance().getCurrentUser().getUid().toString());
-                        notice.setAction("commented");
-                        notice.setDate_created(dsnapshot.getValue(Comment.class).getDate_created());
-                        notice.setUser_id_from(dsnapshot.getValue(Comment.class).getUser_id());
-                        comments.add(dsnapshot.getValue(Comment.class));
-                        notices.add(notice);
+                        if (!FirebaseAuth.getInstance().getCurrentUser().getUid().equals(dsnapshot.getValue(Comment.class).getUser_id())) {
+                            Notice notice = new Notice();
+                            notice.setUser_id_to(FirebaseAuth.getInstance().getCurrentUser().getUid().toString());
+                            notice.setAction("commented");
+                            notice.setDate_created(dsnapshot.getValue(Comment.class).getDate_created());
+                            notice.setUser_id_from(dsnapshot.getValue(Comment.class).getUser_id());
+                            comments.add(dsnapshot.getValue(Comment.class));
+                            notices.add(notice);
+                        }
                     }
 
                     for(DataSnapshot dsnapshot: singlesnapshot.child(getString(R.string.field_likes)).getChildren()){
-                        Notice notice = new Notice();
-                        notice.setUser_id_to(FirebaseAuth.getInstance().getCurrentUser().getUid().toString());
-                        notice.setAction("liked");
-                        notice.setDate_created(dsnapshot.getValue(Likes.class).getDate_created());
-                        notice.setUser_id_from(dsnapshot.getValue(Likes.class).getUser_id());
-                        likes.add(dsnapshot.getValue(Likes.class));
-                        notices.add(notice);
+                        if (!FirebaseAuth.getInstance().getCurrentUser().getUid().equals(dsnapshot.getValue(Likes.class).getUser_id())) {
+                            Notice notice = new Notice();
+                            notice.setUser_id_to(FirebaseAuth.getInstance().getCurrentUser().getUid().toString());
+                            notice.setAction("liked");
+                            notice.setDate_created(dsnapshot.getValue(Likes.class).getDate_created());
+                            notice.setUser_id_from(dsnapshot.getValue(Likes.class).getUser_id());
+                            likes.add(dsnapshot.getValue(Likes.class));
+                            notices.add(notice);
+                        }
                     }
                 }
 

@@ -59,7 +59,6 @@ public class NotificationFeedListAdapter extends ArrayAdapter<Notice> {
     private int mLayoutresource;
     private Context mContext;
     private String display_name_from;
-    private String action;
     private String display_name_to;
 
     public NotificationFeedListAdapter(@NonNull Context context, int resource, @NonNull List<Notice> objects) {
@@ -112,30 +111,32 @@ public class NotificationFeedListAdapter extends ArrayAdapter<Notice> {
 //                Log.d(TAG,"current user is"+dataSnapshot.child("display_name").getValue().toString());
                 for(DataSnapshot dsnapshot: dataSnapshot.getChildren()) {
                     if(dsnapshot.child("user_id").getValue().toString().equals(getItem(position).getUser_id_from())){
-                        display_name_from = dsnapshot.child("display_name").getValue().toString();
-//                        Log.d(TAG,"display_name_from" + display_name_from);
-//                        holder.display_name_from.setText(
-//                                );
+                        if(FirebaseAuth.getInstance().getCurrentUser().getUid().toString().equals(getItem(position).getUser_id_from())){
+                            display_name_from = "You";
+                        }else{
+                            display_name_from = "Your friend " + dsnapshot.child("display_name").getValue().toString();
+                        }
 
                         ImageLoader imageLoader = ImageLoader.getInstance();
-
                         imageLoader.displayImage(
                                 dsnapshot.getValue(UserAccountSettings.class).getProfile_photo(),
                                 holder.profileImage);
                     }
                     if(dsnapshot.child("user_id").getValue().toString().equals(getItem(position).getUser_id_to())) {
-//                        holder.display_name_to.setText(
-//                                );
-                        display_name_to = dsnapshot.child("display_name").getValue().toString();
-//                        ImageLoader imageLoader = ImageLoader.getInstance();
-//
-//                        imageLoader.displayImage(
-//                                dsnapshot.getValue(UserAccountSettings.class).getProfile_photo(),
-//                                holder.profileImage);
+                        if(FirebaseAuth.getInstance().getCurrentUser().getUid().toString().equals(getItem(position).getUser_id_to())){
+                            display_name_to = "your photo!";
+                        }else{
+                            display_name_to = dsnapshot.child("display_name").getValue().toString()+"'s photo!";
+                        }
                     }
                 }
 
-                holder.notification.setText("Your friend " + display_name_from + " " + getItem(position).getAction() + " on " + display_name_to + "'s photo!");
+                String action= getItem(position).getAction();
+                if(getItem(position).getAction().equals("commented")){
+                    action = "commented on";
+                }
+
+                holder.notification.setText(display_name_from + " " + action + " " + display_name_to);
             }
 
             @Override
