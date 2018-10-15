@@ -7,10 +7,14 @@ import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.AppCompatCheckBox;
 import android.text.TextUtils;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -38,6 +42,7 @@ public class SignUp extends AppCompatActivity {
     private String emailText, usernameText, passwordText;
     private Button bSignup;
     private ProgressDialog progressDialog;
+    private AppCompatCheckBox revealPass;
 
     private static final String TAG = "SignUp";
 
@@ -71,6 +76,7 @@ public class SignUp extends AppCompatActivity {
         password=(EditText)findViewById(R.id.Etpassword);
         bSignup =(Button)findViewById(R.id.btsignup);
         signintext = (TextView)findViewById(R.id.singintv);
+        revealPass = findViewById(R.id.cbRevealpass);
 
         setupFirebaseAuth();
         init();
@@ -96,6 +102,16 @@ public class SignUp extends AppCompatActivity {
 
                 }
 
+            }
+        });
+        revealPass.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+                    password.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                } else {
+                    password.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                }
             }
         });
     }
