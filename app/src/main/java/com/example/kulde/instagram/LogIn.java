@@ -107,15 +107,19 @@ public class LogIn extends AppCompatActivity  {
 //                                Toast.makeText(thisActivity,"Wrong Email ID and Password",Toast.LENGTH_SHORT).show();
                                 try{
                                     /*if(CHECK_IF_VERIFIED){*/
-                                    if(user.isEmailVerified()){
+
+//                                    uncomment to enable email verification STARTED
+//                                    if(user.isEmailVerified()){
                                         Log.d(TAG, "onComplete: success. email is verified.");
                                         Intent intent = new Intent(thisActivity, MainPage.class);
                                         startActivity(intent);
                                         finish();
-                                    }else{
-                                        Toast.makeText(thisActivity, "Email is not verified \n check your email inbox.", Toast.LENGTH_SHORT).show();
-                                        mAuth.signOut();
-                                    }
+
+//                                    }else{
+//                                        Toast.makeText(thisActivity, "Email is not verified \n check your email inbox.", Toast.LENGTH_SHORT).show();
+//                                        mAuth.signOut();
+//                                    }
+//                                    uncomment to enable email verification ENDED
                                 /*}
                                 else{
                                     Log.d(TAG, "onComplete: success. email is verified.");
