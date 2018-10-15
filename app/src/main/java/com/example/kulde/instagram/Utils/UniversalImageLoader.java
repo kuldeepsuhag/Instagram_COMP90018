@@ -19,7 +19,7 @@ import com.example.kulde.instagram.R;
 
 public class UniversalImageLoader {
 
-    private static final int defaultImage = R.drawable.ic_x;
+    private static final int defaultImage = 0;
     private Context mContext;
 
     public UniversalImageLoader(Context context) {
