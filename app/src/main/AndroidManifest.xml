@@ -6,6 +6,8 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
 
     <uses-feature android:name="android.hardware.camera2.full" />
     <uses-feature android:name="android.hardware.camera.flash" />
@@ -30,6 +32,13 @@
             android:windowSoftInputMode="adjustNothing"/>
         <activity android:name=".share.ShareActivity"></activity>
         <activity android:name=".share.NextActivity" />
+        <activity android:name=".share.WifiDirectActivity" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+        </activity>
         <activity android:name=".LogIn">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -41,6 +50,7 @@
         <activity android:name=".Suggestions.FriendSuggestion"/>
         <activity android:name=".camera.CropActivity"/>
         <activity android:name=".Profile.Profile">
+
         </activity>
         <activity
             android:name=".camera.TakePhotoActivity"
