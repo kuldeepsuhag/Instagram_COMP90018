@@ -126,7 +126,7 @@ public class Mainfeedlistadapter extends ArrayAdapter<Photo> {
 
         //set the location
         Log.d(TAG, "getView: Getting the location of the Image" + getItem(position).getCityName());
-        holder.location.setText("Melbourne");//getItem(position).getCityName()
+        holder.location.setText(getItem(position).getCityName());
 
         //Set the comment
         List<Comment> comments = getItem(position).getComments();

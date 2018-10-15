@@ -20,6 +20,7 @@ import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.kulde.instagram.Model.Comment;
 import com.example.kulde.instagram.Model.Likes;
 import com.example.kulde.instagram.Model.Photo;
 import com.example.kulde.instagram.Model.User;
@@ -101,7 +102,6 @@ public class Viewpost extends Fragment {
         mGesture = new GestureDetector(getActivity(),new GestureListener());
         mComment = (ImageView)view.findViewById(R.id.speech_bubble);
         mComments = (TextView)view.findViewById(R.id.image_comments);
-
         mlike = new Like(mHeartred,mHeartwhite);
         mLikes = (TextView)view.findViewById(R.id.image_likes);
 
@@ -388,7 +388,11 @@ public class Viewpost extends Fragment {
         mCaption.setText(mphoto.getCaption());
 
         if(mphoto.getComments().size() > 0){
-            mComments.setText("View all " + mphoto);
+            String comment_context = "";
+            for(Comment comment:mphoto.getComments()){
+                comment_context = comment_context+comment.getComment()+"\n";
+            }
+            mComments.setText(comment_context);
         }else
             {
                 mComments.setText("  ");

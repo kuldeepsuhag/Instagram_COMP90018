@@ -99,6 +99,11 @@ public class FragmentHome extends Fragment {
                            Photo photo = new Photo();
                            Map<String, Object> objectMap = (HashMap<String, Object>) singleSnapshot.getValue();
                            photo.setCaption(objectMap.get(getString(R.string.field_caption)).toString());
+                           if(objectMap.containsKey(getString(R.string.field_city_name))){
+                               photo.setCityName(objectMap.get(getString(R.string.field_city_name)).toString());
+                           }else{
+                               photo.setCityName("");
+                           }
                            photo.setTags(objectMap.get(getString(R.string.field_tags)).toString());
                            photo.setPhoto_id(objectMap.get(getString(R.string.field_photo_id)).toString());
                            photo.setUser_id(objectMap.get(getString(R.string.user_id)).toString());
