@@ -23,6 +23,8 @@ import com.google.firebase.auth.FirebaseUser;
 
 
 public class LogIn extends AppCompatActivity  {
+
+    // Variables
     private Button signin;
     private EditText email;
     private EditText password;
