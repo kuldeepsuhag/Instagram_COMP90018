@@ -8,10 +8,14 @@ import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.AppCompatCheckBox;
 import android.text.TextUtils;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,6 +34,7 @@ public class LogIn extends AppCompatActivity  {
     private Button signin;
     private EditText email;
     private EditText password;
+    private AppCompatCheckBox revealPass;
     private TextView signup;
     private ProgressDialog progressDialog;
 
@@ -55,6 +60,7 @@ public class LogIn extends AppCompatActivity  {
         progressDialog = new ProgressDialog(this);
         email = findViewById(R.id.emailid);
         password = findViewById(R.id.passwordet);
+        revealPass = findViewById(R.id.cbRevealpass);
 //        signup = findViewById(R.id.signuptext);
 //        signin = findViewById(R.id.btsignin);
 //        signup.setOnClickListener(this);
@@ -144,6 +150,17 @@ public class LogIn extends AppCompatActivity  {
                 Log.d(TAG, "onClick: for signup");
                 Intent intent = new Intent(LogIn.this, SignUp.class);
                 startActivity(intent);
+            }
+        });
+
+        revealPass.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+                    password.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                } else {
+                    password.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                }
             }
         });
 
