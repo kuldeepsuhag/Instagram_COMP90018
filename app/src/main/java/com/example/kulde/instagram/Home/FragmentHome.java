@@ -95,27 +95,31 @@ public class FragmentHome extends Fragment {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     for (DataSnapshot singleSnapshot : dataSnapshot.getChildren()) {
-                        Photo photo = new Photo();
-                        Map<String,Object> objectMap = (HashMap<String, Object>) singleSnapshot.getValue();
-                        photo.setCaption(objectMap.get(getString(R.string.field_caption)).toString());
-                        photo.setTags(objectMap.get(getString(R.string.field_tags)).toString());
-                        photo.setPhoto_id(objectMap.get(getString(R.string.field_photo_id)).toString());
-                        photo.setUser_id(objectMap.get(getString(R.string.user_id)).toString());
-                        photo.setDate_created(objectMap.get(getString(R.string.field_date_created)).toString());
-                        photo.setImage_path(objectMap.get(getString(R.string.field_image_path)).toString());
-                        Log.d(TAG, "onDataChange: Getting the location of the image" + objectMap.get(getString(R.string.field_city_name).toString()));
-                       // photo.setCityName(objectMap.get(R.string.field_city_name).toString());
+                       try {
+                           Photo photo = new Photo();
+                           Map<String, Object> objectMap = (HashMap<String, Object>) singleSnapshot.getValue();
+                           photo.setCaption(objectMap.get(getString(R.string.field_caption)).toString());
+                           photo.setTags(objectMap.get(getString(R.string.field_tags)).toString());
+                           photo.setPhoto_id(objectMap.get(getString(R.string.field_photo_id)).toString());
+                           photo.setUser_id(objectMap.get(getString(R.string.user_id)).toString());
+                           photo.setDate_created(objectMap.get(getString(R.string.field_date_created)).toString());
+                           photo.setImage_path(objectMap.get(getString(R.string.field_image_path)).toString());
+                           Log.d(TAG, "onDataChange: Getting the location of the image" + objectMap.get(getString(R.string.field_city_name).toString()));
+                           // photo.setCityName(objectMap.get(R.string.field_city_name).toString());
 
-                        ArrayList<Comment> comments = new ArrayList<Comment>();
-                        for(DataSnapshot dsnapshot: singleSnapshot.child(getString(R.string.field_comments)).getChildren()){
-                            Comment comment = new Comment();
-                            comment.setUser_id(dsnapshot.getValue(Comment.class).getUser_id());
-                            comment.setComment(dsnapshot.getValue(Comment.class).getComment());
-                            comment.setDate_created(dsnapshot.getValue(Comment.class).getDate_created());
-                            comments.add(comment);
-                        }
-                        photo.setComments(comments);
-                        mPhotos.add(photo);
+                           ArrayList<Comment> comments = new ArrayList<Comment>();
+                           for (DataSnapshot dsnapshot : singleSnapshot.child(getString(R.string.field_comments)).getChildren()) {
+                               Comment comment = new Comment();
+                               comment.setUser_id(dsnapshot.getValue(Comment.class).getUser_id());
+                               comment.setComment(dsnapshot.getValue(Comment.class).getComment());
+                               comment.setDate_created(dsnapshot.getValue(Comment.class).getDate_created());
+                               comments.add(comment);
+                           }
+                           photo.setComments(comments);
+                           mPhotos.add(photo);
+                       }catch (Exception e){
+                           Log.e(TAG, "onDataChange: Exception" + e.getMessage() );
+                       }
                     }
                     if(count >= mFollowing.size() -1){
                         // display our photos

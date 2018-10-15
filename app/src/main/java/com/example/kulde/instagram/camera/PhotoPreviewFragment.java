@@ -136,7 +136,7 @@ public class PhotoPreviewFragment extends Fragment {
                         // link to edit activity
                         Intent intent = new Intent(getContext(), FilterActivity.class);
                         passBitmap();
-                        //intent.putExtra("image", passBitmap());
+
                         startActivity(intent);
                         getActivity().finish();
                     }
@@ -152,9 +152,6 @@ public class PhotoPreviewFragment extends Fragment {
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         CommResources.photoFinishBitmap = ((BitmapDrawable)imagePreview.getDrawable()).getBitmap();
         CommResources.edit_template = CommResources.photoFinishBitmap;
-       // byte[] byteArray = byteArrayOutputStream .toByteArray();
-        //String encodedBitmap = Base64.encodeToString(byteArray, Base64.DEFAULT);
-        //return encodedBitmap;
     }
 
 
@@ -169,17 +166,9 @@ public class PhotoPreviewFragment extends Fragment {
 
     private Bitmap setImageView(ImageView imageEdit) throws IOException {
 
-        /*
-        String encodedBitmap = getArguments().getString("image");
-        int rotationDegrees = getArguments().getInt("rotate");
-        byte[] decodedString = Base64.decode(encodedBitmap, Base64.DEFAULT);
-        Bitmap decodedBitmap = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-        */
         bmp = CommResources.photoFinishBitmap;
         imageEdit.setImageBitmap(CommResources.photoFinishBitmap);
         imageEdit.setRotation(-CommResources.rotationdegree);
-        //CommResources.rotationdegree = rotationDegrees;
-        //bmp = decodedBitmap;
         return bmp;
     }
 }

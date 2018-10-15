@@ -25,7 +25,6 @@ public class BnCFilterAsync extends AsyncTask<Integer, Void, Bitmap> {
     private int mode;
 
     public BnCFilterAsync(ImageView imageView,SeekBar seekBar, int mode) {
-        // Use a WeakReference to ensure the ImageView can be garbage collected
         this.seekBar=seekBar;
         this.mode=mode;
         imageViewReference = new WeakReference<ImageView>(imageView);
@@ -38,19 +37,13 @@ public class BnCFilterAsync extends AsyncTask<Integer, Void, Bitmap> {
         if (mode == BRIGHTNESS) {
             int progress = seekBar.getProgress();
             int fb = progress-100;
-            //vi.setColorFilter(brightIt(seekBar.getProgress()));
-            //imageView.setImageBitmap(brightIt(fb,CommResources.edit_template));
-            //setBrightness(fb);
             bmp = brightIt(fb, CommResources.edit_template);
         }
         if (mode == CONTRAST) {
             int progress = seekBar.getProgress();
-            //c = progress;
             progress += 10;
             float c = .10f * progress;
-            //vi.setColorFilter(contrastIt(seekBar.getProgress()));
             bmp = contrastIt(c, CommResources.edit_template);
-            //setContrast(c);
         }
         return bmp;
     }

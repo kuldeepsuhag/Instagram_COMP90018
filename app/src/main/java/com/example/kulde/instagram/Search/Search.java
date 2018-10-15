@@ -69,9 +69,13 @@ public class Search extends AppCompatActivity{
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     for(DataSnapshot singleSnapshot: dataSnapshot.getChildren()){
-                        Log.d(TAG, "onDataChange: found user" + singleSnapshot.getValue(User.class).toString());
-                        mUserList.add(singleSnapshot.getValue(User.class));
-                        updateUserList();
+                       try {
+                           Log.d(TAG, "onDataChange: found user" + singleSnapshot.getValue(User.class).toString());
+                           mUserList.add(singleSnapshot.getValue(User.class));
+                           updateUserList();
+                       }catch (Exception e){
+                           Log.e(TAG, "onDataChange: Searching User Exception " + e.getMessage() );
+                       }
                     }
                 }
 

@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.example.kulde.instagram.Model.User;
 import com.example.kulde.instagram.Profile.Profile;
@@ -25,6 +26,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,7 +44,8 @@ public class FriendSuggestion extends AppCompatActivity {
     private SuggestionlistAdapter mAdapter;
     private User latestSuggestion;
     private ImageView mBackarrow;
-    private GestureDetector mGesture;
+
+
 
 
     @Override
@@ -57,6 +61,8 @@ public class FriendSuggestion extends AppCompatActivity {
         getfriend();
 
     }
+
+
     private void getfriend(){
         mUsers.clear();
         mSuggestions.clear();
@@ -86,18 +92,21 @@ public class FriendSuggestion extends AppCompatActivity {
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
                                 for (DataSnapshot singleSnapshot : dataSnapshot.getChildren()) {
+                                    try{
                                     latestfollower = singleSnapshot.child(getString(R.string.user_id)).getValue().toString();
-                                    if (!mUsers.contains(latestfollower)) {
+                                    latestSuggestion = singleSnapshot.getValue(User.class);
+                                    if (!mUsers.contains(latestfollower) && !mSuggestions.contains(latestSuggestion)) {
                                         Log.d(TAG, "onDataChange: User for Suggestion from are : " + latestfollower);
                                         if (latestfollower != null) {
-                                            latestSuggestion = singleSnapshot.getValue(User.class);
-                                            if (!mSuggestions.contains(latestSuggestion)) {
                                                 Log.d(TAG, "onDataChange: Getting User class" + singleSnapshot.getValue(User.class).toString());
                                                 mSuggestions.add(singleSnapshot.getValue(User.class));
                                                 updateSuggestionList();
-                                            }
                                         }
                                     }
+                                    }catch (Exception e ){
+                                        Log.e(TAG, "onDataChange: Friend Suggestion Exception" + e.getMessage() );
+                                    }
+
 
                                 }
                             }
@@ -130,12 +139,9 @@ public class FriendSuggestion extends AppCompatActivity {
                 intent.putExtra(getString(R.string.calling_activity), getString(R.string.search_activity));
                 intent.putExtra(getString(R.string.intent_user), mSuggestions.get(position));
                 startActivity(intent);
-
             }
         });
     }
-
-
 }
 
 

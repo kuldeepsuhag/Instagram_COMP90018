@@ -27,19 +27,13 @@ public class CropActivity extends AppCompatActivity {
         cropImage = findViewById(R.id.crop_view);
         cropImage.setImageBitmap(CommResources.edit_template);
         cropImage.setRotation(-CommResources.rotationdegree);
-
-        //setApplyListener();
         initialService();
-        //setUndoListener();
         setBacktoFilterListener();
     }
 
     private void initialService() {
         Thread t = new Thread(new Runnable() {
             public void run() {
-                /*
-                 * Do something
-                 */
                 setApplyListener();
             }
         });
@@ -76,9 +70,7 @@ public class CropActivity extends AppCompatActivity {
             public void onCropImageComplete(CropImageView view, CropImageView.CropResult result) {
             }
         });
-        //cropImage.getCroppedImageAsync();
         CommResources.edit_template = cropImage.getCroppedImage();
-        //CommResources.edit_template = CommResources.cache;
 
     }
 }

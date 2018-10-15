@@ -29,7 +29,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
-//import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 
 public class MainPage extends AppCompatActivity implements Mainfeedlistadapter.OnLoadMoreItems {
 
@@ -137,11 +136,6 @@ public class MainPage extends AppCompatActivity implements Mainfeedlistadapter.O
             mAuth.removeAuthStateListener(mAuthListener);
         }
     }
-    //firebase thing end here
-
-    /**
-     * Function Bar Setup
-     */
     public void navigation(){
         BottomNavigationView bottomNavigationView = (BottomNavigationView)findViewById(R.id.bottomNavViewwBar);
         Navigation.enablenavigation(MainPage.this,this, bottomNavigationView);
@@ -153,7 +147,6 @@ public class MainPage extends AppCompatActivity implements Mainfeedlistadapter.O
     private void setupViewpager(){
         SectionPagerAdapter adapter = new SectionPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(new FragmentHome());
-        //mViewPager.setAdapter(adapter);
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager_container);
         viewPager.setAdapter(adapter);
         TabLayout tabLayout = (TabLayout)findViewById(R.id.tabs);

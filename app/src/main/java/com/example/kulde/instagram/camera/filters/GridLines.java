@@ -101,19 +101,4 @@ public class GridLines extends View {
             canvas.drawLine(0, i * cellHeight, width, i * cellHeight, paint);
         }
     }
-
-    /*
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        if (event.getAction() == MotionEvent.ACTION_DOWN) {
-            int column = (int)(event.getX() / cellWidth);
-            int row = (int)(event.getY() / cellHeight);
-
-            cellChecked[column][row] = !cellChecked[column][row];
-            invalidate();
-        }
-
-        return true;
-    }
-    */
 }

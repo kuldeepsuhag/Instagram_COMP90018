@@ -1,11 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--<TextView xmlns:android="http://schemas.android.com/apk/res/android"-->
-<!--android:layout_width="match_parent"-->
-<!--android:layout_height="50dp"-->
-<!--android:textSize="20sp"-->
-<!--android:textColor="@color/colorPrimaryDark"-->
-<!--android:id="@+id/notice_context"-->
-<!--android:gravity="center"/>-->
 
 <RelativeLayout   xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
@@ -38,20 +31,31 @@
                 android:id="@+id/context"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
-                android:layout_marginRight="100dp"
-                android:layout_toRightOf="@+id/profile_photo"
+                android:layout_marginStart="66dp"
+                android:layout_marginEnd="50sp"
+                android:text="Kuldeep Suhag"
                 android:textColor="@color/black"
-                android:textSize="12sp" />
+                android:textSize="12sp"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="66dp"
+                android:layout_marginRight="30sp" />
 
             <TextView
                 android:id="@+id/datediff"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="10dp"
+
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginEnd="2dp"
+                android:layout_marginTop="13dp"
+                android:text="today"
                 android:textColor="@color/grey"
-                android:textSize="12sp" />
+                android:textSize="12sp"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="2dp" />
 
         </RelativeLayout>
 

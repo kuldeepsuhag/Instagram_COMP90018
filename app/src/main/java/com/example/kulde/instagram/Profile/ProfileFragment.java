@@ -97,18 +97,6 @@ public class ProfileFragment extends Fragment {
         bottomNavigationView =(BottomNavigationView)view.findViewById(R.id.bottomNavViewwBar);
         mContext = getActivity();
         mFirebaseMethods = new FirebaseMethods(getActivity());
-        TextView editProfile = (TextView)view.findViewById(R.id.textEditProfile);
-
-        editProfile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d(TAG, "onClick: navigating to " + mContext.getString(R.string.edit_profile));
-                Intent intent = new Intent(getActivity(), AccountSettings.class);
-                intent.putExtra(getString(R.string.calling_activity), getString(R.string.profileactivity));
-                startActivity(intent);
-                getActivity().overridePendingTransition(R.anim.fade_in,R.anim.fade_out);
-            }
-        });
 
         friendSuggestion.setOnClickListener(new View.OnClickListener() {
             @Override

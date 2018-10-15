@@ -263,13 +263,6 @@ public class TakePhotoActivity extends AppCompatActivity {
     private void takePicture() throws ExecutionException, InterruptedException {
         PhotoResult photoResult = fotoapparat.takePicture();
 
-        /*
-        photoResult.saveToFile(new File(
-                this.getExternalFilesDir("photos"),
-                "photo.jpg"
-        ));
-        */
-
 
         Toast.makeText(TakePhotoActivity.this, "Photo Captured", Toast.LENGTH_SHORT).show();
         //passToFilter();
@@ -283,9 +276,6 @@ public class TakePhotoActivity extends AppCompatActivity {
                             Log.e(LOGGING_TAG, "Couldn't capture photo.");
                             return;
                         }
-                        //ImageView imageView = findViewById(R.id.result);
-                        //imageView.setImageBitmap(bitmapPhoto.bitmap);
-                        //imageView.setRotation(-bitmapPhoto.rotationDegrees);
                         passToPreview(bitmapPhoto.bitmap, bitmapPhoto.rotationDegrees);
 
                     }
@@ -301,26 +291,9 @@ public class TakePhotoActivity extends AppCompatActivity {
 
 
         PhotoPreviewFragment nextFrag= new PhotoPreviewFragment();
-        /*
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        bmp.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
-        byte[] byteArray = byteArrayOutputStream .toByteArray();
-        String encodedBitmap = Base64.encodeToString(byteArray, Base64.DEFAULT);
-
-        Bundle b = new Bundle();
-        b.putString("image",encodedBitmap);
-        b.putInt("rotate",rotate);
-
-        // your fragment code
-
-        nextFrag.setArguments(b);
-        */
         Log.d(LOGGING_TAG, "Pass image to cache... Rotation:"+rotate);
         CommResources.photoFinishBitmap = bmp;
         CommResources.rotationdegree = rotate;
-
-
-
         this.getSupportFragmentManager().beginTransaction()
                 .replace(R.id.filter_container, nextFrag,"Start Filter Fragment")
                 .addToBackStack(null)
