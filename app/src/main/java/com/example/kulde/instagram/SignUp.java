@@ -2,7 +2,9 @@ package com.example.kulde.instagram;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.graphics.drawable.AnimationDrawable;
 import android.support.annotation.NonNull;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -52,6 +54,12 @@ public class SignUp extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
+
+        ConstraintLayout cl = findViewById(R.id.relativeLayout);
+        AnimationDrawable draw = (AnimationDrawable) cl.getBackground();
+        draw.setEnterFadeDuration(2000);
+        draw.setExitFadeDuration(2000);
+        draw.start();
 
         thisActivity = SignUp.this;
        // System.out.print("Hello");
