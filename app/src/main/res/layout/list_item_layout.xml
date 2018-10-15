@@ -35,7 +35,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginStart="66dp"
                 android:layout_marginEnd="50sp"
-                android:text="Kuldeep Suhag"
+                android:text=""
                 android:textColor="@color/black"
                 android:textSize="12sp"
                 android:layout_alignParentLeft="true"
