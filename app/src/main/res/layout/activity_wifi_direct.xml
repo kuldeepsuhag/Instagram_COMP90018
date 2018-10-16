@@ -9,36 +9,37 @@
     <RelativeLayout
         android:id="@+id/RelLayout1"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="370dp">
 
         <TextView
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp"
             android:id="@+id/TextStatus"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="connection status"
             android:layout_centerHorizontal="true"
-            android:textSize="20sp"
-            android:textColor="@color/colorPrimary"/>
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="20dp"
+            android:text="connection status"
+            android:textColor="@color/colorPrimary"
+            android:textSize="20sp" />
 
         <Button
             android:id="@+id/ButtonToggleWifi"
-            android:text="ON / OFF"
-            android:layout_below="@id/TextStatus"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@id/TextStatus"
             android:layout_marginLeft="20dp"
-            />
+            android:text="ON / OFF" />
 
         <Button
             android:id="@+id/ButtonDiscover"
-            android:layout_below="@id/TextStatus"
-            android:text="DISCOVER"
-            android:layout_toRightOf="@id/ButtonToggleWifi"
-            android:layout_marginLeft="20dp"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_below="@id/TextStatus"
+            android:layout_marginLeft="20dp"
+            android:layout_toRightOf="@id/ButtonToggleWifi"
+            android:text="DISCOVER" />
 
         <!--ToggleButton
             android:id="@+id/buttonToggleDiscovery"
@@ -56,32 +57,31 @@
             android:layout_marginTop="10dp"></ListView>
 
         <!--<EditText-->
-            <!--android:id="@+id/editChatText"-->
-            <!--android:layout_width="250dp"-->
-            <!--android:layout_height="50dp"-->
-            <!--android:layout_below="@id/listNode"-->
-            <!--android:layout_marginLeft="10dp"-->
-            <!--android:hint="your message here ..."-->
-            <!--/>-->
+        <!--android:id="@+id/editChatText"-->
+        <!--android:layout_width="250dp"-->
+        <!--android:layout_height="50dp"-->
+        <!--android:layout_below="@id/listNode"-->
+        <!--android:layout_marginLeft="10dp"-->
+        <!--android:hint="your message here ..."-->
+        <!--/>-->
 
 
         <ImageView
-            android:layout_width="100dp"
-            android:layout_height="100dp"
             android:id="@+id/imageShare"
-            android:scaleType="centerCrop"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="20dp"
-            android:layout_marginBottom="40dp"/>
+            android:layout_width="178dp"
+            android:layout_height="147dp"
+            android:layout_below="@+id/listNode"
+            android:layout_centerHorizontal="true"
+            android:scaleType="centerCrop" />
 
         <Button
             android:id="@+id/ButtonEnter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Send"
-            android:layout_below="@id/listNode"
-            android:layout_marginLeft="5dp"
-            android:layout_toRightOf="@id/imageShare"/>
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="23dp"
+            android:text="Send" />
 
     </RelativeLayout>
 
