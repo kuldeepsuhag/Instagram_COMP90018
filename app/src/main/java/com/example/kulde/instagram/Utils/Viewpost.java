@@ -404,10 +404,12 @@ public class Viewpost extends Fragment {
         mCaption.setText(mphoto.getCaption());
 
         if(mphoto.getComments().size() > 0){
-            String comment_context = "";
-            for(Comment comment:mphoto.getComments()){
-                comment_context = comment_context+comment.getComment()+"\n";
-            }
+            String comment_context = "View all " + mphoto.getComments().size() + " comments";
+            //for(Comment comment:mphoto.getComments()){
+
+              //  comment_context = comment_context+comment.getComment()+"\n";
+
+            //}
             mComments.setText(comment_context);
         }else
             {

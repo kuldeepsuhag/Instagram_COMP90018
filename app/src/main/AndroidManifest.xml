@@ -32,13 +32,7 @@
             android:windowSoftInputMode="adjustNothing"/>
         <activity android:name=".share.ShareActivity"></activity>
         <activity android:name=".share.NextActivity" />
-        <activity android:name=".share.WifiDirectActivity" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-
-        </activity>
+        <activity android:name=".share.WifiDirectActivity" />
         <activity android:name=".LogIn">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -60,6 +54,9 @@
 
         </activity>
         <activity android:name=".camera.FilterActivity"></activity>
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="a821afbea4466e3f6e1061e1647eca300e00771e" />
     </application>
 
 </manifest>

@@ -1,5 +1,6 @@
 package com.example.kulde.instagram.Profile;
 
+import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.content.Intent;
 import android.media.Image;
@@ -49,6 +50,7 @@ public class EditProfileFragment extends Fragment implements ConfirmPasswordPopu
 //    private CircleImageView mProfilePhoto;
 
     private UserSettings mUserSettings;
+    private Context mContext;
 
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
@@ -88,7 +90,10 @@ public class EditProfileFragment extends Fragment implements ConfirmPasswordPopu
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "onClick() called with: v = [" + v + "]");
+                Toast.makeText(mContext,"Profile Updated",Toast.LENGTH_SHORT).show();
                 saveProfileSettings();
+                getActivity().finish();
+
             }
         });
         return view;

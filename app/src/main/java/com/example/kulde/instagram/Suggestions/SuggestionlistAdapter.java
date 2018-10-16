@@ -1,18 +1,23 @@
 package com.example.kulde.instagram.Suggestions;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.kulde.instagram.Model.User;
 import com.example.kulde.instagram.Model.UserAccountSettings;
+import com.example.kulde.instagram.Profile.Profile;
 import com.example.kulde.instagram.R;
+import com.example.kulde.instagram.Utils.FirebaseMethods;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -28,12 +33,13 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class SuggestionlistAdapter extends ArrayAdapter<User> {
 
     private static final String TAG = "UserlistAdapter";
-
+    AppCompatActivity appCompatActivity;
     private LayoutInflater mInflater;
     private List<User> mUsers = null;
     private int layoutresource;
     private Context mContext;
     private User suggestion;
+    private FirebaseMethods mFirebaseMethods;
 
     public SuggestionlistAdapter(@NonNull Context context, int resource, @NonNull List<User> objects) {
         super(context, resource, objects);
@@ -49,6 +55,7 @@ public class SuggestionlistAdapter extends ArrayAdapter<User> {
     private static class ViewHolder{
         TextView username,displayname;
         CircleImageView profileImage;
+        ImageView backarrow;
 
     }
 
@@ -71,6 +78,16 @@ public class SuggestionlistAdapter extends ArrayAdapter<User> {
             holder = (ViewHolder)convertView.getTag();
 
         }
+
+//        holder.backarrow = (ImageView)convertView.findViewById(R.id.suggestbackarrow);
+//        holder.backarrow.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Log.d(TAG, "onClick: Navigating back to Profile Activity");
+//                Intent intent = new Intent(mContext, Profile.class);
+//                appCompatActivity.startActivity(intent);
+//            }
+//        });
 
 //        holder.username.setText(getItem(position).getUsername());
 //
