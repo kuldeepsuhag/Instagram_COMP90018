@@ -275,6 +275,7 @@ public class Mainfeedlistadapter extends ArrayAdapter<Photo> {
                 for (DataSnapshot singleSnapshot: dataSnapshot.getChildren()){
                     currentUsername = singleSnapshot.getValue(UserAccountSettings.class).getUsername();
                 }
+                Log.d(TAG, "getCurrentUsername: username is "+ currentUsername);
             }
 
             @Override

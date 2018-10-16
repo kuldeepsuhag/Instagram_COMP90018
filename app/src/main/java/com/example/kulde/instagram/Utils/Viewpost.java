@@ -57,7 +57,7 @@ public class Viewpost extends Fragment {
 
     private int mActivityNumber=0;
 
-    private Context mContext;
+//    private Context mContext;
     private SquareImageView mPostImage;
     private BottomNavigationView bottomNavigationView;
     private TextView mBackLabel, mCaption, mUsername, mTimestamp, mLikes, mComments, editProfile;
@@ -76,7 +76,7 @@ public class Viewpost extends Fragment {
     private Boolean mLikedbyCurrentuser;
     private StringBuilder mUsers;
     private String mLikesstring = "";
-    private String currentUsername = "";
+    private String currentUsername = null;
 
     private User mUser;
 
@@ -105,17 +105,19 @@ public class Viewpost extends Fragment {
         mlike = new Like(mHeartred,mHeartwhite);
         mLikes = (TextView)view.findViewById(R.id.image_likes);
 
+        setupFirebaseAuth();
+        getCurrentUsername();
 
-        try{
+//        try{
             mphoto = getphotofrombundle();
             UniversalImageLoader.setImage(mphoto.getImage_path(),mPostImage,null,"");
             mActivityNumber = getActivitynumBundle();
             getPhotodetails();
             getLikesString();
-        }catch (NullPointerException e){
-            Log.e(TAG, "onCreateView: NullPointer Exception " + e.getMessage());
-        }
-        setupFirebaseAuth();
+//        }catch (NullPointerException e){
+//            Log.e(TAG, "onCreateView: NullPointer Exception " + e.getMessage());
+//        }
+
 //        navigation();
         return view;
     }
@@ -145,6 +147,7 @@ public class Viewpost extends Fragment {
                     mUsers = new StringBuilder();
                     for (DataSnapshot singledatasnapshot : dataSnapshot.getChildren()) {
                         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+                        Log.d(TAG,"singledatasnapshot for each like"+singledatasnapshot);
                         Query query = databaseReference
                                 .child(getString(R.string.dbname_users))
                                 .orderByChild(getString(R.string.user_id))
@@ -159,7 +162,6 @@ public class Viewpost extends Fragment {
                                     mUsers.append(",");
                                 }
                                 String[] splitUsers = mUsers.toString().split(",");
-
                                 if (mUsers.toString().contains(currentUsername + ",")) {
                                     mLikedbyCurrentuser = true;
                                 } else {
@@ -213,8 +215,8 @@ public class Viewpost extends Fragment {
         Log.d(TAG, "getCurrentUsername: Retrieving User from the user account setting");
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
         Query query = reference
-                .child(mContext.getString(R.string.dbname_users))
-                .orderByChild(mContext.getString(R.string.user_id))
+                .child(getActivity().getString(R.string.dbname_users))
+                .orderByChild(getActivity().getString(R.string.user_id))
                 .equalTo(FirebaseAuth.getInstance().getCurrentUser().getUid());
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -222,6 +224,7 @@ public class Viewpost extends Fragment {
                 for (DataSnapshot singleSnapshot: dataSnapshot.getChildren()){
                     currentUsername = singleSnapshot.getValue(UserAccountSettings.class).getUsername();
                 }
+                Log.d(TAG, "getCurrentUsername: username is "+ currentUsername);
             }
 
             @Override
@@ -243,12 +246,13 @@ public class Viewpost extends Fragment {
             DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
             Query query = databaseReference
                     .child(getString(R.string.dbname_photos))
-                    .child(mphoto.getPhoto_id())
-                    .child(getString(R.string.field_likes));
+                    .child(mphoto.getPhoto_id());
             query.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
-                    for(DataSnapshot singledatasnapshot : dataSnapshot.getChildren()){
+
+                    DataSnapshot dataSnapshot_likes = dataSnapshot.child(getString(R.string.field_likes));
+                    for(DataSnapshot singledatasnapshot : dataSnapshot_likes.getChildren()){
                         String keyID = singledatasnapshot.getKey();
                         //case1: when user has liked the photos
                         if(mLikedbyCurrentuser && singledatasnapshot.getValue(Likes.class).getUser_id()
@@ -259,14 +263,18 @@ public class Viewpost extends Fragment {
                                     .child(keyID)
                                     .removeValue();
 
+                            String photo_user_id = dataSnapshot.child("user_id").getValue().toString();
+                            Log.d(TAG,"photo_user_id is "+photo_user_id);
+
                             myRef.child(getString(R.string.dbname_user_photos))
-                                    .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                                    .child(photo_user_id)
                                     .child(mphoto.getPhoto_id())
                                     .child(getString(R.string.field_likes))
                                     .child(keyID)
                                     .removeValue();
 
                             mlike.toggleLike();
+
                             getLikesString();
                         }
                         //case2: when the user has not liked the photos
@@ -297,6 +305,7 @@ public class Viewpost extends Fragment {
         String newLikeID = myRef.push().getKey();
         Likes likes = new Likes();
         likes.setUser_id(FirebaseAuth.getInstance().getCurrentUser().getUid());
+        likes.setDate_created(getTimestamp());
 
         myRef.child(getString(R.string.dbname_photos))
                 .child(mphoto.getPhoto_id())
@@ -323,6 +332,13 @@ public class Viewpost extends Fragment {
             return 0;
         }
     }
+
+    private String getTimestamp(){
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.CANADA);
+        sdf.setTimeZone(TimeZone.getTimeZone("Australia/Victoria"));
+        return sdf.format(new Date());
+    }
+
 
     private Photo getphotofrombundle(){
         Log.d(TAG, "getphotofrombundle: arguments "+ getArguments());
@@ -419,7 +435,7 @@ public class Viewpost extends Fragment {
             mHeartred.setOnTouchListener(new View.OnTouchListener() {
                 @Override
                 public boolean onTouch(View v, MotionEvent event) {
-                    Log.d(TAG, "onTouch: white heart touch detected");
+                    Log.d(TAG, "onTouch: red heart touch detected");
                     return mGesture.onTouchEvent(event);
                 }
             });
@@ -437,7 +453,7 @@ public class Viewpost extends Fragment {
         }
     }
     public void navigation(){
-        Navigation.enablenavigation(mContext,getActivity(), bottomNavigationView);
+        Navigation.enablenavigation(getActivity(),getActivity(), bottomNavigationView);
         Menu menu = bottomNavigationView.getMenu();
         MenuItem menuItem = menu.getItem(mActivityNumber);
         menuItem.setChecked(true);
