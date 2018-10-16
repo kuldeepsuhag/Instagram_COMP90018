@@ -68,14 +68,14 @@
                     android:id="@+id/display_name"
                     android:textColor="@color/black"
                     android:textStyle="bold"
-                    android:text="Kuldeep Suhag"
+                    android:text="Loading..."
                     android:textSize="16sp"/>
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/description"
                     android:textColor="@color/black"
-                    android:text="All the best"
+                    android:text="bio"
                     android:textSize="16sp"
                     android:layout_marginTop="5dp"/>
                 <TextView
@@ -83,7 +83,7 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/website"
                     android:textColor="@color/blue"
-                    android:text="facebook.com/ksuhag0"
+                    android:text="unimelb.edu.au"
                     android:textSize="16sp"
                     android:layout_marginTop="5dp"/>
             </LinearLayout>
