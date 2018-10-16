@@ -203,9 +203,7 @@ public class NextActivity extends AppCompatActivity {
         @Override
         public void onLocationChanged(Location loc) {
             geoText.setText("hide location");
-            Toast.makeText(getBaseContext(),"Location changed : Lat: " +
-                            loc.getLatitude()+ " Lng: " + loc.getLongitude(),
-                    Toast.LENGTH_SHORT).show();
+
             String longitude = "Longitude: " +loc.getLongitude();
             Log.v(TAG, longitude);
             String latitude = "Latitude: " +loc.getLatitude();
