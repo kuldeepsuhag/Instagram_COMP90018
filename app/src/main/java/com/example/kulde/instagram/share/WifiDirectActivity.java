@@ -3,14 +3,17 @@ package com.example.kulde.instagram.share;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.net.wifi.WifiManager;
 import android.net.wifi.p2p.WifiP2pConfig;
 import android.net.wifi.p2p.WifiP2pDevice;
 import android.net.wifi.p2p.WifiP2pDeviceList;
 import android.net.wifi.p2p.WifiP2pInfo;
 import android.net.wifi.p2p.WifiP2pManager;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Environment;
 import android.os.Handler;
@@ -26,13 +29,16 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.kulde.instagram.R;
-import com.example.kulde.instagram.Utils.DownloadTask;
+//import com.example.kulde.instagram.Utils.DownloadTask;
+import com.example.kulde.instagram.Utils.CommResources;
 import com.example.kulde.instagram.Utils.WDBroadcastReciever;
+import com.example.kulde.instagram.camera.FilterActivity;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -55,14 +61,14 @@ import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 
 public class WifiDirectActivity extends AppCompatActivity {
 
-    private static final String TAG = "WifiActivity";
+    public static final String TAG = "WifiActivity";
     private static final int PERMISSION_REQUEST_CODE = 200;
     private static final int MESSAGE_READ = 1;
 
     private TextView connectionStatus, displayMessage;
-    private Button buttonToggleWifi, buttonDiscover, enterMessage;
+    private Button buttonToggleWifi, buttonDiscover;
     private ListView listDevices;
-    private EditText messageText;
+    private ImageView imgview;
 
     WifiManager wifimanager;
     WifiP2pManager p2pManager;
@@ -90,6 +96,19 @@ public class WifiDirectActivity extends AppCompatActivity {
 
         initWidgets();
         initButtonListener();
+        updateImage();
+    }
+
+    private void updateImage() {
+        Bitmap bmp;
+        if(CommResources.edit_template != null){
+            bmp = CommResources.edit_template;
+        }else{
+            bmp = CommResources.photoFinishBitmap;
+        }
+        imgview.setImageBitmap(bmp);
+        imgview.setRotation(- CommResources.rotationdegree);
+
     }
 
     Handler handler = new Handler(new Handler.Callback() {
@@ -192,16 +211,16 @@ public class WifiDirectActivity extends AppCompatActivity {
                 });
             }
         });
-
-        enterMessage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //try to get image file for temporary
-                DownloadTask task = (DownloadTask) new DownloadTask().execute("https://upload.wikimedia.org/wikipedia/commons/thumb/9/9f/Flag_of_Indonesia.svg/450px-Flag_of_Indonesia.svg.png", "newfile.png");
-                String msg = messageText.getText().toString();
-                sendReceive.write(msg.getBytes());
-            }
-        });
+//
+//        enterMessage.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                //try to get image file for temporary
+////                DownloadTask task = (DownloadTask) new DownloadTask().execute("https://upload.wikimedia.org/wikipedia/commons/thumb/9/9f/Flag_of_Indonesia.svg/450px-Flag_of_Indonesia.svg.png", "newfile.png");
+////                String msg = messageText.getText().toString();
+////                sendReceive.write(msg.getBytes());
+//            }
+//        });
 
     }
 
@@ -277,9 +296,9 @@ public class WifiDirectActivity extends AppCompatActivity {
         }
         this.buttonDiscover = findViewById(R.id.ButtonDiscover);
         this.listDevices = findViewById(R.id.listNode);
-        this.enterMessage = findViewById(R.id.ButtonEnter);
-        this.displayMessage = findViewById(R.id.DisplayMessage);
-        this.messageText = findViewById(R.id.editChatText);
+//        this.enterMessage = findViewById(R.id.ButtonEnter);
+//        this.displayMessage = findViewById(R.id.DisplayMessage);
+        this.imgview = findViewById(R.id.imageShare);
 
         intentFilter = new IntentFilter();
         intentFilter.addAction(p2pManager.WIFI_P2P_STATE_CHANGED_ACTION);
@@ -399,5 +418,3 @@ public class WifiDirectActivity extends AppCompatActivity {
         }
     }
 }
-
-

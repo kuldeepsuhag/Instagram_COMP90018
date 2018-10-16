@@ -130,7 +130,8 @@ public class NextActivity extends AppCompatActivity {
                 }
 
                 // send photo via wifi
-
+                Intent intent = new Intent(NextActivity.this, WifiDirectActivity.class);
+                startActivity(intent);
             }
         });
 

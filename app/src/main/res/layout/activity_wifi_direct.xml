@@ -55,32 +55,33 @@
             android:layout_below="@id/ButtonDiscover"
             android:layout_marginTop="10dp"></ListView>
 
-        <EditText
-            android:id="@+id/editChatText"
-            android:layout_width="250dp"
-            android:layout_height="50dp"
-            android:layout_below="@id/listNode"
-            android:layout_marginLeft="10dp"
-            android:hint="your message here ..."
-            />
+        <!--<EditText-->
+            <!--android:id="@+id/editChatText"-->
+            <!--android:layout_width="250dp"-->
+            <!--android:layout_height="50dp"-->
+            <!--android:layout_below="@id/listNode"-->
+            <!--android:layout_marginLeft="10dp"-->
+            <!--android:hint="your message here ..."-->
+            <!--/>-->
+
+
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:id="@+id/imageShare"
+            android:scaleType="centerCrop"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dp"
+            android:layout_marginBottom="40dp"/>
+
         <Button
             android:id="@+id/ButtonEnter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text=">"
+            android:text="Send"
             android:layout_below="@id/listNode"
             android:layout_marginLeft="5dp"
-            android:layout_toRightOf="@id/editChatText"/>
-
-        <TextView
-            android:id="@+id/DisplayMessage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/editChatText"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="10dp"
-            android:textSize="30sp"
-            />
+            android:layout_toRightOf="@id/imageShare"/>
 
     </RelativeLayout>
 
