@@ -90,9 +90,9 @@ public class EditProfileFragment extends Fragment implements ConfirmPasswordPopu
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "onClick() called with: v = [" + v + "]");
-                Toast.makeText(mContext,"Profile Updated",Toast.LENGTH_SHORT).show();
+              //  Toast.makeText(mContext,"Profile Updated",Toast.LENGTH_SHORT).show();
                 saveProfileSettings();
-                getActivity().finish();
+
 
             }
         });
