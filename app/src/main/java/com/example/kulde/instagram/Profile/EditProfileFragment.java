@@ -222,8 +222,9 @@ public class EditProfileFragment extends Fragment implements ConfirmPasswordPopu
                 Log.d(TAG, "onClick: Changing Profile Photo");
                 CommResources.isprofile = true;
                 Intent intent = new Intent(getActivity(), ShareActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);//268435456
+                //intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);//268435456
                 getActivity().startActivity(intent);
+                getActivity().finish();
 
             }
         });
