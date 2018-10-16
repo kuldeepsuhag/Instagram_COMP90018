@@ -53,12 +53,13 @@
                 <CheckBox
                     android:id="@+id/geoShare"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="19dp"
                     android:layout_alignParentBottom="true"
                     android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="12dp"
                     android:onClick="onCheckboxClicked"
-                    android:text="Share my location"
-                    android:layout_alignParentRight="true" />
+                    android:text="Share my location" />
 
             </RelativeLayout>
 

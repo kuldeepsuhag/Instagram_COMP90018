@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.location.Address;
+import android.location.Criteria;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
@@ -33,6 +34,7 @@ import com.example.kulde.instagram.Utils.CommResources;
 import com.example.kulde.instagram.Utils.FirebaseInteraction;
 import com.example.kulde.instagram.Utils.FirebaseMethods;
 import com.example.kulde.instagram.camera.FilterActivity;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -172,15 +174,20 @@ public class NextActivity extends AppCompatActivity {
                     getSystemService(Context.LOCATION_SERVICE);
             LocationListener locationListener = new MyLocationListener();
             if (checkLocationPermission()) {
+                Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                if (location != null) {
+                   // double old_latitude=location.getLatitude();
+                   // double old_longitude=location.getLongitude();
+                   // Log.d("old","lat :  "+old_latitude);
+                   // Log.d("old","long :  "+old_longitude);
+                    locationListener.onLocationChanged(location);
+                }
+
+                this.geo = CommResources.location;
                 locationManager.requestLocationUpdates(
-                        LocationManager.GPS_PROVIDER, 5000, 10, locationListener);
+                        LocationManager.GPS_PROVIDER, 0, 100, locationListener);
                 Log.d(TAG, "Get share info");
                 this.geo = CommResources.location;
-
-                Log.d("location",CommResources.location);
-
-
-
             }
         }else{
             // uncheck the checkbox
