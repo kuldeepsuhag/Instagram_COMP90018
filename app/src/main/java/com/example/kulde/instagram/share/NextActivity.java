@@ -21,6 +21,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -89,7 +90,7 @@ public class NextActivity extends AppCompatActivity {
 //        });
 
 
-        TextView share = (TextView) findViewById(R.id.tvShare);
+        Button share = (Button) findViewById(R.id.tvShare);
         TextView wifiShare = (TextView) findViewById(R.id.wfShare);
         share.setOnClickListener(new View.OnClickListener() {
             @Override
