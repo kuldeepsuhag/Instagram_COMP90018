@@ -101,25 +101,6 @@ public class Userfeed extends AppCompatActivity{
     }
 
 
-//    private void getUsername(){
-//
-//        DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
-//        Query query = reference.child(getString(R.string.dbname_users));
-//
-//        query.addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//                for(DataSnapshot singleSnapshot: dataSnapshot.getChildren()){
-//                    nameList.put(singleSnapshot.child("user_id").getValue().toString(),singleSnapshot.child("username").getValue().toString());
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//
-//            }
-//        });
-//    }
 
     protected HashMap<String,String> getNameList(){
         return nameList;

@@ -105,8 +105,6 @@ public class UserFeedFragment extends Fragment{
     public void onLoad() {
         Log.d(TAG, "ElasticListView: loading...");
 
-        // Notify load is done
-//        mListView.notifyLoaded();
     }
 
 
@@ -114,8 +112,6 @@ public class UserFeedFragment extends Fragment{
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-//        Userfeed activity = (Userfeed) getActivity();
-//        nameList = activity.getNameList();
         View view = inflater.inflate(R.layout.fragment_userfeed, container, false);
         mListView = (ListView) view.findViewById(R.id.listview);
         mFollowerImage = (CircleImageView) view.findViewById(R.id.latest_follower_photo);
@@ -124,12 +120,6 @@ public class UserFeedFragment extends Fragment{
         getLatestFollower();
         getFollowingList();
 
-//        for (String following: followingList){
-//            getLatestFeeds(following);
-//        }
-
-//        setupFirebaseAuth();
-//        setupListview();
         return view;
     }
 
@@ -234,16 +224,6 @@ public class UserFeedFragment extends Fragment{
     private void setupListview(){
         Log.d(TAG, "setupListview: Settig up");
 
-//        if(notices.size()<1){
-//            Log.d(TAG, "setupListview: Seems no update...");
-//            Notice notice = new Notice();
-//            notice.setUser_id_to("vMaP6cL7zrdGWBo2a99NmVjdkEF2");
-//            notice.setAction("Seems no update...");
-//            notice.setDate_created("2018-10-11T09:27:37Z");
-//            notice.setUser_id_from("vMaP6cL7zrdGWBo2a99NmVjdkEF2");
-//            notices.add(notice);
-//        }
-//
 
 
 
@@ -313,36 +293,5 @@ public class UserFeedFragment extends Fragment{
 
     }
 
-//    private void checkCurrentUser(FirebaseUser user){
-//        Log.d(TAG, "checkCurrentUser: checking if user is logged in.");
-//
-//        if(user == null){
-//            Intent intent = new Intent(mContext, LogIn.class);
-//            startActivity(intent);
-//        }
-//    }
-//
-//    private void setupFirebaseAuth() {
-//        Log.d(TAG, "setupFirebaseAuth: setting up firebase auth.");
-//        mAuth = FirebaseAuth.getInstance();
-//        mFirebaseDatabase = FirebaseDatabase.getInstance();
-//        myRef = mFirebaseDatabase.getReference();
-//
-//        mAuthListener = new FirebaseAuth.AuthStateListener() {
-//            @Override
-//            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-//                FirebaseUser user = firebaseAuth.getCurrentUser();
-//
-//
-//                if (user != null) {
-//                    // User is signed in
-//                    Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
-//                } else {
-//                    // User is signed out
-//                    Log.d(TAG, "onAuthStateChanged:signed_out");
-//                }
-//                // ...
-//            }
-//        };
-//    }
+
 }

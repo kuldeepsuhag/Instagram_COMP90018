@@ -116,7 +116,6 @@ public class GalleryFragment extends Fragment {
             directories = FileSearch.getDirectoryPaths(filePaths.PICTURES);
         }
         directories.add(filePaths.CAMERA);
-        //directories.add(filePaths.APPFOLDER); // need to add at least one photo in app folder to avoid crash?
 
         ArrayList<String> directoryNames = new ArrayList<>();
         for (int i = 0; i < directories.size(); i++) {
@@ -215,27 +214,6 @@ public class GalleryFragment extends Fragment {
         });
 
 
-//          , new ImageLoadingListener() {
-//            @Override
-//            public void onLoadingStarted(String imageUri, View view) {
-//                mProgressBar.setVisibility(View.VISIBLE);
-//            }
-//
-//            @Override
-//            public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
-//                mProgressBar.setVisibility(View.INVISIBLE);
-//            }
-//
-//            @Override
-//            public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-//                mProgressBar.setVisibility(View.INVISIBLE);
-//            }
-//
-//            @Override
-//            public void onLoadingCancelled(String imageUri, View view) {
-//                mProgressBar.setVisibility(View.INVISIBLE);
-//            }
-//        });
     }
 
 

@@ -18,16 +18,7 @@
 
         </RelativeLayout>
 
-        <!--<RelativeLayout-->
-        <!--<RelativeLayout-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:id="@+id/relLayout2">-->
 
-            <!--<include layout="@layout/layout_bottom_tabs"/>-->
-
-
-        <!--</RelativeLayout>-->
     </RelativeLayout>
 
 </android.support.design.widget.CoordinatorLayout>

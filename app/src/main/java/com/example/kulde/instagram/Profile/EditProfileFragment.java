@@ -74,7 +74,7 @@ public class EditProfileFragment extends Fragment implements ConfirmPasswordPopu
         mFirebaseMethods = new FirebaseMethods(getActivity());
 
 
-//        setProfileImage();
+
         setupFirebaseAuth();
         ImageView backarrow = (ImageView)view.findViewById(R.id.backIcon);
         backarrow.setOnClickListener(new View.OnClickListener() {
@@ -90,7 +90,7 @@ public class EditProfileFragment extends Fragment implements ConfirmPasswordPopu
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "onClick() called with: v = [" + v + "]");
-              //  Toast.makeText(mContext,"Profile Updated",Toast.LENGTH_SHORT).show();
+
                 saveProfileSettings();
 
 
@@ -165,9 +165,6 @@ public class EditProfileFragment extends Fragment implements ConfirmPasswordPopu
             //          -submit the new email to the database and authentication
         }
 
-        /**
-         * change the rest of the settings that do not require uniqueness
-         */
         if(!mUserSettings.getSettings().getDisplay_name().equals(displayName)){
             //update displayname
             mFirebaseMethods.updateUserAccountSettings(displayName, null, null, 0);
@@ -188,26 +185,16 @@ public class EditProfileFragment extends Fragment implements ConfirmPasswordPopu
 
 
 
-//    private void setProfileImage(){
-//        Log.d(TAG, "setProfileImage: Setting Profile Image");
-//        String imgURL = "https://wallpaperbrowse.com/media/images/3848765-wallpaper-images-download.jpg";
-//        UniversalImageLoader.setImage(imgURL, mProfilePhoto, null,"");
-//    }
 
     private void setProfileWidgets(UserSettings userSettings) {
-        //Log.d(TAG, "setProfileWidgets: setting widgets with data retrieving from firebase database: " + userSettings.toString());
         Log.d(TAG, "setProfileWidgets: setting widgets with data retrieving from firebase database: " + userSettings.getSettings().getUsername());
 
         mUserSettings = userSettings;
-//        User user = userSettings.getUser();
         UserAccountSettings settings = userSettings.getSettings();
         Log.d(TAG, "setProfileWidgets: setting widgets with data retrieving from firebase database: " + settings.getProfile_photo());
 
         UniversalImageLoader.setImage(settings.getProfile_photo(), mProfilePhoto, null, ""); //error happened java.lang.IllegalArgumentException: view must not be null
 
-//        Glide.with(getActivity())
-//                .load(settings.getProfile_photo())
-//                .into(mProfilePhoto);
 
         mDisplayName.setText(settings.getDisplay_name());
         mUsername.setText(settings.getUsername());
@@ -236,7 +223,6 @@ public class EditProfileFragment extends Fragment implements ConfirmPasswordPopu
         mAuth = FirebaseAuth.getInstance();
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         myRef = mFirebaseDatabase.getReference();
-//        userID = mAuth.getCurrentUser().getUid();
 
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -251,7 +237,6 @@ public class EditProfileFragment extends Fragment implements ConfirmPasswordPopu
                     // User is signed out
                     Log.d(TAG, "onAuthStateChanged:signed_out");
                 }
-                // ...
             }
         };
 

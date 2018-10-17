@@ -63,10 +63,6 @@ public class LogIn extends AppCompatActivity  {
         email = findViewById(R.id.emailid);
         password = findViewById(R.id.passwordet);
         revealPass = findViewById(R.id.cbRevealpass);
-//        signup = findViewById(R.id.signuptext);
-//        signin = findViewById(R.id.btsignin);
-//        signup.setOnClickListener(this);
-//        signin.setOnClickListener(this);
 
         setupFirebaseAuth();
         init();
@@ -105,35 +101,18 @@ public class LogIn extends AppCompatActivity  {
                             progressDialog.dismiss();
                             FirebaseUser user = mAuth.getCurrentUser();
                             if (!task.isSuccessful()) {
-//                                Toast.makeText(thisActivity,"LOGIN SUCCESSFUL",Toast.LENGTH_SHORT).show();
                                 Log.d(TAG, "sign in with email failed");
                                 Toast.makeText(thisActivity,"Aunthentication Failed",Toast.LENGTH_SHORT).show();
-//                            finish();
-//                                startActivity(new Intent(getApplicationContext(), MainPage.class));
                             }
                             else{
-//                                Toast.makeText(thisActivity,"Wrong Email ID and Password",Toast.LENGTH_SHORT).show();
                                 try{
                                     /*if(CHECK_IF_VERIFIED){*/
 
-//                                    uncomment to enable email verification STARTED
-//                                    if(user.isEmailVerified()){
                                         Log.d(TAG, "onComplete: success. email is verified.");
                                         Intent intent = new Intent(thisActivity, MainPage.class);
                                         startActivity(intent);
                                         finish();
 
-//                                    }else{
-//                                        Toast.makeText(thisActivity, "Email is not verified \n check your email inbox.", Toast.LENGTH_SHORT).show();
-//                                        mAuth.signOut();
-//                                    }
-//                                    uncomment to enable email verification ENDED
-                                /*}
-                                else{
-                                    Log.d(TAG, "onComplete: success. email is verified.");
-                                    Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
-                                    startActivity(intent);
-                                }*/
 
                                 }catch (NullPointerException e){
                                     Log.e(TAG, "onComplete: NullPointerException: " + e.getMessage() );
@@ -206,72 +185,5 @@ public class LogIn extends AppCompatActivity  {
         if(mAuthListener != null){
             mAuth.removeAuthStateListener(mAuthListener);
         }
-    }
-    //firebase thing end here
-
-    //TextView signuptext = (TextView)this.findViewById(R.id.signuptext);
-    /*public void onClick(View v) {
-        if (v == signup) {
-            Intent intent = new Intent(thisActivity, SignUp.class);
-            startActivity(intent);
-        }
-        if(v == signin){
-            userLogin();
-        }
-    }*/
-
-    private void userLogin(){
-        String Email = email.getText().toString().trim();
-        String Password = password.getText().toString().trim();
-
-        if(TextUtils.isEmpty(Email)){
-            Toast.makeText(this,"Please Enter a valid Mail ID",Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        if (TextUtils.isEmpty(Password)){
-            Toast.makeText(this,"Please Enter a password",Toast.LENGTH_SHORT).show();
-        }
-        progressDialog.setMessage("Login.....");
-        progressDialog.show();
-        mAuth.signInWithEmailAndPassword(Email,Password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        progressDialog.dismiss();
-                        FirebaseUser user = mAuth.getCurrentUser();
-                        if (!task.isSuccessful()) {
-                            Log.d(TAG, "sign in with email failed");
-                            Toast.makeText(thisActivity,"Aunthentication Failed",Toast.LENGTH_SHORT).show();
-//                            finish();
-//                            startActivity(new Intent(getApplicationContext(), MainPage.class));
-                        }
-                        else{
-                            try{
-                                /*if(CHECK_IF_VERIFIED){*/
-                                    if(user.isEmailVerified()){
-                                        Log.d(TAG, "onComplete: success. email is verified.");
-                                        Intent intent = new Intent(thisActivity, MainPage.class);
-                                        startActivity(intent);
-                                        finish();
-                                    }else{
-                                        Toast.makeText(thisActivity, "Email is not verified \n check your email inbox.", Toast.LENGTH_SHORT).show();
-
-                                        mAuth.signOut();
-                                    }
-                                /*}
-                                else{
-                                    Log.d(TAG, "onComplete: success. email is verified.");
-                                    Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
-                                    startActivity(intent);
-                                }*/
-
-                            }catch (NullPointerException e){
-                                Log.e(TAG, "onComplete: NullPointerException: " + e.getMessage() );
-                            }
-//                            Toast.makeText(thisActivity,"Wrong Email ID and Password",Toast.LENGTH_SHORT).show();
-                        }
-
-                    } });
     }
 }

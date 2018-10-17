@@ -158,10 +158,6 @@ public class FirebaseMethods {
                     //insert into 'user_account_settings' node
                     setProfilePhoto(firebaseUrl.toString());
 
-          //          ((AccountSettingsActivity)mContext).setViewPager(
-            //                ((AccountSettingsActivity)mContext).pagerAdapter
-              //                      .getFragmentNumber(mContext.getString(R.string.edit_profile_fragment))
-                //    );
 
                 }
             }).addOnFailureListener(new OnFailureListener() {
@@ -186,119 +182,6 @@ public class FirebaseMethods {
         }
 
     }
-//
-//    public void uploadNewStory(Intent intent, final HomeFragment fragment){
-//        Log.d(TAG, "uploadNewStory: attempting to upload new story to storage.");
-//
-//        final String uri = intent.getDataString();
-//        final boolean deleteCompressedVideo = intent.getBooleanExtra(MaterialCamera.DELETE_UPLOAD_FILE_EXTRA, false);
-//         /*
-//            upload a new photo to firebase storage
-//         */
-//        if(!isMediaVideo(uri)){
-//            Log.d(TAG, "uploadNewStory: uploading new story (IMAGE) to firebase storage.");
-//            fragment.mStoriesAdapter.startProgressBar();
-//            FilePaths filePaths = new FilePaths();
-//
-//            //specify where the photo will be stored
-//            final StorageReference storageReference = mStorageReference
-//                    .child(filePaths.FIREBASE_STORY_STORAGE + "/" + userID + "/" + uri.substring(uri.indexOf("Stories/") + 8, uri.indexOf(".")));
-//
-//            BackgroundGetBytesFromBitmap getBytes = new BackgroundGetBytesFromBitmap();
-//            byte[] bytes = getBytes.doInBackground(uri);
-//
-//            UploadTask uploadTask = null;
-//            uploadTask = storageReference.putBytes(bytes);
-//            uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-//                @Override
-//                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-//                    Uri firebaseURL = taskSnapshot.getDownloadUrl();
-//                    fragment.mStoriesAdapter.stopProgressBar();
-//                    Toast.makeText(mContext, "Upload Success", Toast.LENGTH_SHORT).show();
-//                    addNewStoryImageToDatabase(firebaseURL.toString());
-//                }
-//            }).addOnFailureListener(new OnFailureListener() {
-//                @Override
-//                public void onFailure(@NonNull Exception exception) {
-//                    fragment.mStoriesAdapter.stopProgressBar();
-//                    Toast.makeText(mContext, "Upload Failed", Toast.LENGTH_SHORT).show();
-//                }
-//            });
-//
-//        }
-//        else{
-//            Log.d(TAG, "uploadNewStory: uploading new story (VIDEO) to firebase storage.");
-//            fragment.mStoriesAdapter.startProgressBar();
-//            FilePaths filePaths = new FilePaths();
-//
-//            //specify where the photo will be stored
-//            final StorageReference storageReference = mStorageReference
-//                    .child(filePaths.FIREBASE_STORY_STORAGE + "/" + userID + "/" + uri.substring(uri.indexOf("Stories/") + 8, uri.indexOf(".")));
-//
-//
-//            FileInputStream fis = null;
-//            File file = new File(uri);
-//            try {
-//                fis = new FileInputStream(file);
-//            } catch (FileNotFoundException e) {
-//                e.printStackTrace();
-//            }
-//            byte[] bytes = new byte[0];
-//            try {
-//                bytes = readBytes(fis);
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//
-//            Log.d(TAG, "uploadNewStory: video upload bytes: " + bytes.length);
-//            final byte[] uploadBytes = bytes;
-//
-//            UploadTask uploadTask = null;
-//            uploadTask = storageReference.putBytes(bytes);
-//            uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-//                @Override
-//                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-//                    Uri firebaseURL = taskSnapshot.getDownloadUrl();
-//                    fragment.mStoriesAdapter.stopProgressBar();
-//                    Toast.makeText(mContext, "Upload Success", Toast.LENGTH_SHORT).show();
-//                    addNewStoryVideoToDatabase(firebaseURL.toString(), uploadBytes);
-//
-//                    if(deleteCompressedVideo){
-//                        deleteOutputFile(uri);
-//                    }
-//                }
-//            }).addOnFailureListener(new OnFailureListener() {
-//                @Override
-//                public void onFailure(@NonNull Exception exception) {
-//                    fragment.mStoriesAdapter.stopProgressBar();
-//                    Toast.makeText(mContext, "Upload Failed", Toast.LENGTH_SHORT).show();
-//                    if(deleteCompressedVideo){
-//                        deleteOutputFile(uri);
-//                    }
-//                }
-//            });
-//        }
-//    }
-
-//    private class BackgroundGetBytesFromBitmap extends AsyncTask<String, Integer, byte[]> {
-//
-//        @Override
-//        protected byte[] doInBackground(String... params) {
-//            byte[] bytes = null;
-//
-////            Bitmap bm = ImageManager.getBitmap(Uri.parse(params[0]).getPath());
-//            Bitmap bm = null;
-//            try{
-//                RotateBitmap rotateBitmap = new RotateBitmap();
-//                bm = rotateBitmap.HandleSamplingAndRotationBitmap(mContext, Uri.parse("file://" + params[0]));
-//            }catch (IOException e){
-//                Log.e(TAG, "BackgroundGetBytesFromBitmap: IOException: " + e.getMessage());
-//            }
-//
-//            bytes = ImageManager.getBytesFromBitmap(bm, ImageManager.IMAGE_SAVE_QUALITY);
-//            return bytes;
-//        }
-//    }
 
 
     private void deleteOutputFile(@Nullable String uri) {
@@ -326,50 +209,6 @@ public class FirebaseMethods {
         return byteBuffer.toByteArray();
     }
 
-//
-//    private void addNewStoryImageToDatabase(String url){
-//        Log.d(TAG, "addNewStoryToDatabase: adding new story to database.");
-//
-//        Story story =  new Story();
-//        story.setImage_url(url);
-//        String newKey = myRef.push().getKey();
-//        story.setStory_id(newKey);
-//        story.setTimestamp(getTimestamp());
-//        story.setUser_id(userID);
-//        story.setViews("0");
-//
-//        myRef.child(mContext.getString(R.string.dbname_stories))
-//                .child(userID)
-//                .child(newKey)
-//                .setValue(story);
-//
-//    }
-//
-//    private void addNewStoryVideoToDatabase(String url, byte[] bytes){
-//        Log.d(TAG, "addNewStoryToDatabase: adding new story to database.");
-//
-//        Story story =  new Story();
-//        story.setVideo_url(url);
-//        String newKey = myRef.push().getKey();
-//        story.setStory_id(newKey);
-//        story.setTimestamp(getTimestamp());
-//        story.setUser_id(userID);
-//        story.setViews("0");
-//
-//        // calculate the estimated duration.
-//        // need to do this for the progress bars in the block. We can't get the video duration of MP4 files
-//        double megabytes = bytes.length / 1000000.000;
-//        Log.d(TAG, "addNewStoryVideoToDatabase: estimated MB: " + megabytes);
-//        String duration = String.valueOf(Math.round(15 * (megabytes / 6.3)));
-//        Log.d(TAG, "addNewStoryVideoToDatabase: estimated video duration: " + duration);
-//        story.setDuration(duration);
-//
-//        myRef.child(mContext.getString(R.string.dbname_stories))
-//                .child(userID)
-//                .child(newKey)
-//                .setValue(story);
-//
-//    }
 
     private boolean isMediaVideo(String uri){
         if(uri.contains(".mp4") || uri.contains(".wmv") || uri.contains(".flv") || uri.contains(".avi")){
@@ -377,7 +216,7 @@ public class FirebaseMethods {
         }
         return false;
     }
-//
+
     private void setProfilePhoto(String url){
         Log.d(TAG, "setProfilePhoto: setting new profile image: " + url);
 
@@ -396,32 +235,8 @@ public class FirebaseMethods {
     private void addPhotoToDatabase(String caption, String url){
         Log.d(TAG, "addPhotoToDatabase: adding photo to database.");
 
-//        String tags = StringManipulation.getTags(caption);
-//        String newPhotoKey = myRef.child(mContext.getString(R.string.dbname_photos)).push().getKey();
-//        Photo photo = new Photo();
-//        photo.setCaption(caption);
-//        photo.setDate_created(getTimestamp());
-//        photo.setImage_path(url);
-//        photo.setTags(tags);
-//        photo.setUser_id(FirebaseAuth.getInstance().getCurrentUser().getUid());
-//        photo.setPhoto_id(newPhotoKey);
-
-        //insert into database
-
 
     }
-//
-//    public int getImageCount(DataSnapshot dataSnapshot){
-//        int count = 0;
-//        for(DataSnapshot ds: dataSnapshot
-//                .child(mContext.getString(R.string.dbname_user_photos))
-//                .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-//                .getChildren()){
-//            count++;
-//        }
-//        return count;
-//    }
-
     /**
      * Update 'user_account_settings' node for the current user
      * @param displayName
@@ -491,25 +306,6 @@ public class FirebaseMethods {
                 .setValue(email);
 
     }
-
-    /*public boolean checkIfUsernameExists(String username, DataSnapshot datasnapshot){
-        Log.d(TAG, "checkIfUsernameExists: checking if " + username + " already exists.");
-
-        User user = new User();
-
-        for (DataSnapshot ds: datasnapshot.child(userID).getChildren()){
-            Log.d(TAG, "checkIfUsernameExists: datasnapshot: " + ds);
-
-            user.setUsername(ds.getValue(User.class).getUsername());
-            Log.d(TAG, "checkIfUsernameExists: username: " + user.getUsername());
-
-            if(expandUsername(user.getUsername()).equals(username)){
-                Log.d(TAG, "checkIfUsernameExists: FOUND A MATCH: " + user.getUsername());
-                return true;
-            }
-        }
-        return false;
-    }*/
 
     private String expandUsername(String username){
         return username.replace(".", " ");

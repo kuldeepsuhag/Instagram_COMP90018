@@ -53,9 +53,7 @@ public class FirebaseInteraction extends AsyncTask{
 
         //
         this.bitmap=bitmap;
-        //storage = FirebaseStorage.getInstance();
 
-        //imagesRef = storageRef.child("images/name_of_your_image.jpg");
         fbaseDB = FirebaseDatabase.getInstance();
         myRef = fbaseDB.getReference();
         mAuth = FirebaseAuth.getInstance();

@@ -81,13 +81,6 @@ public class NextActivity extends AppCompatActivity {
         setupFirebaseAuth();
 
         ImageView backArrow = (ImageView) findViewById(R.id.back);
-//        backArrow.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Log.d(TAG, "onClick: closing the activity");
-//                finish();
-//            }
-//        });
 
 
         Button share = (Button) findViewById(R.id.tvShare);
@@ -178,10 +171,7 @@ public class NextActivity extends AppCompatActivity {
             if (checkLocationPermission()) {
                 Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
                 if (location != null) {
-                   // double old_latitude=location.getLatitude();
-                   // double old_longitude=location.getLongitude();
-                   // Log.d("old","lat :  "+old_latitude);
-                   // Log.d("old","long :  "+old_longitude);
+
                     locationListener.onLocationChanged(location);
                     this.geo = CommResources.location;
                 }
@@ -348,7 +338,6 @@ public class NextActivity extends AppCompatActivity {
                     // User is signed out
                     Log.d(TAG, "onAuthStateChanged:signed_out");
                 }
-                // ...
             }
         };
     }

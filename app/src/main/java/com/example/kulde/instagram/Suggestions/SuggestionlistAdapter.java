@@ -79,19 +79,6 @@ public class SuggestionlistAdapter extends ArrayAdapter<User> {
 
         }
 
-//        holder.backarrow = (ImageView)convertView.findViewById(R.id.suggestbackarrow);
-//        holder.backarrow.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Log.d(TAG, "onClick: Navigating back to Profile Activity");
-//                Intent intent = new Intent(mContext, Profile.class);
-//                appCompatActivity.startActivity(intent);
-//            }
-//        });
-
-//        holder.username.setText(getItem(position).getUsername());
-//
-//        holder.displayname.setText("abc");
 
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
         Query query = reference.child(mContext.getString(R.string.dbname_user_account_settings))
@@ -99,7 +86,6 @@ public class SuggestionlistAdapter extends ArrayAdapter<User> {
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-//                for(DataSnapshot singleDatasnapshot : dataSnapshot.getChildren()){
                     Log.d(TAG, "onDataChange: found User" + dataSnapshot.toString());
                     Log.d(TAG, "getView: Getting User name " + dataSnapshot.child("username").getValue().toString());
                     holder.username.setText(dataSnapshot.child("username").getValue().toString());
@@ -108,7 +94,6 @@ public class SuggestionlistAdapter extends ArrayAdapter<User> {
 
                     ImageLoader imageLoader = ImageLoader.getInstance();
                     imageLoader.displayImage(dataSnapshot.child("profile_photo").getValue().toString(),holder.profileImage);
-//                }
             }
 
             @Override

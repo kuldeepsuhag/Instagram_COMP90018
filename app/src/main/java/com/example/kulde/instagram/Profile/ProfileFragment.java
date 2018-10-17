@@ -198,9 +198,7 @@ public class ProfileFragment extends Fragment {
         mUsername.setText(settings.getUsername());
         mWebsite.setText(settings.getWebsite());
         mDescription.setText(settings.getDescription());
-//        mPosts.setText(String.valueOf(settings.getPosts()));
-//        mFollowing.setText(String.valueOf(settings.getFollowing()));
-//        mFollowers.setText(String.valueOf(settings.getFollowers()));
+
         mProgressbar.setVisibility(View.GONE);
 
 
@@ -327,7 +325,6 @@ public class ProfileFragment extends Fragment {
                 //retrieve User Information from database
                 setProfileWidgets(mFirebaseMethods.getUserSettings(dataSnapshot));
 
-                //retrieve Images for the users
             }
 
             @Override

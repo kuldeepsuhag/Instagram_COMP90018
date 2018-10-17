@@ -22,24 +22,6 @@ public class User implements Parcelable {
     }
 
 
-//    protected User(Parcel in) {
-//        user_id = in.readString();
-//        phone_number = in.readLong();
-//        email = in.readString();
-//        username = in.readString();
-//    }
-//
-//    public static final Creator<User> CREATOR = new Creator<User>() {
-//        @Override
-//        public User createFromParcel(Parcel in) {
-//            return new User(in);
-//        }
-//
-//        @Override
-//        public User[] newArray(int size) {
-//            return new User[size];
-//        }
-//    };
 
     protected User(Parcel in) {
         user_id = in.readString();

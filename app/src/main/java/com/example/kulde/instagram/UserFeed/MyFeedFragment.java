@@ -92,15 +92,11 @@ public class MyFeedFragment extends Fragment{
     public void onUpdate() {
         Log.d(TAG, "ElasticListView: updating list view...");
 
-//        getFollowing();
     }
 
 
     public void onLoad() {
         Log.d(TAG, "ElasticListView: loading...");
-
-        // Notify load is done
-//        mListView.notifyLoaded();
     }
 
 
@@ -108,8 +104,6 @@ public class MyFeedFragment extends Fragment{
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-//        Userfeed activity = (Userfeed) getActivity();
-//        nameList = activity.getNameList();
         View view = inflater.inflate(R.layout.fragment_userfeed, container, false);
         listView = (ListView) view.findViewById(R.id.listview);
         mFollowerImage = (CircleImageView) view.findViewById(R.id.latest_follower_photo);
@@ -220,10 +214,6 @@ public class MyFeedFragment extends Fragment{
                     }
                 }
 
-//                for (Map.Entry<Integer,String> userid: idList.entrySet()){
-//                    Log.d(TAG, "setupListview: display " + dateList);
-//                    comments.add(nameList.get(userid.getValue()) +" just commented on your photo. ");
-//                }
 
                 Log.d(TAG, "setupListview: display " + notices.size());
                 adapter = new NotificationFeedListAdapter(getActivity(),R.layout.list_item_layout,notices);
@@ -244,42 +234,4 @@ public class MyFeedFragment extends Fragment{
             startActivity(intent);
         }
     }
-//
-//    private void setupFirebaseAuth() {
-//        Log.d(TAG, "setupFirebaseAuth: setting up firebase auth.");
-//        mAuth = FirebaseAuth.getInstance();
-//        mFirebaseDatabase = FirebaseDatabase.getInstance();
-//        myRef = mFirebaseDatabase.getReference();
-//
-//        mAuthListener = new FirebaseAuth.AuthStateListener() {
-//            @Override
-//            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-//                FirebaseUser user = firebaseAuth.getCurrentUser();
-//
-//
-//                if (user != null) {
-//                    // User is signed in
-//                    Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
-//                } else {
-//                    // User is signed out
-//                    Log.d(TAG, "onAuthStateChanged:signed_out");
-//                }
-//                // ...
-//            }
-//        };
-//    }
-//
-//    @Override
-//    public void onStart() {
-//        super.onStart();
-//        mAuth.addAuthStateListener(mAuthListener);
-//    }
-//
-//    @Override
-//    public void onStop() {
-//        super.onStop();
-//        if(mAuthListener != null){
-//            mAuth.removeAuthStateListener(mAuthListener);
-//        }
-//    }
 }

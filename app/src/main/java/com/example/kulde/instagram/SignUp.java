@@ -81,9 +81,7 @@ public class SignUp extends AppCompatActivity {
         setupFirebaseAuth();
         init();
 
-//        signintext.setOnClickListener(this);
-//        bSignup.setOnClickListener(this);
-    }
+ }
 
     private void init(){
         bSignup.setOnClickListener(new View.OnClickListener() {
@@ -116,17 +114,6 @@ public class SignUp extends AppCompatActivity {
         });
     }
 
-
-//    public void onClick(View v) {
-//        if (v == signintext) {
-//            Intent intent = new Intent(SignUp.this, LogIn.class);
-//            startActivity(intent);
-//            finish();
-//        }
-//        if(v == bSignup){
-//            userRegister();
-//        }
-//    }
 
 
 
@@ -217,60 +204,5 @@ public class SignUp extends AppCompatActivity {
             mAuth.removeAuthStateListener(mAuthListener);
         }
     }
-    //firebase thing end here
-
-    /*private void userRegister() {
-        String Email = email.getText().toString().trim();
-        String Username = username.getText().toString().trim();
-        String Password = password.getText().toString().trim();
-
-        if (TextUtils.isEmpty(Email)) {
-            Toast.makeText(this, "Please Enter Email ID", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        if (TextUtils.isEmpty(Username)) {
-            Toast.makeText(this, "Please Enter  Username", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        if (TextUtils.isEmpty(Password)) {
-            Toast.makeText(this, "Please Enter Password", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        progressDialog.setMessage("Registering User....");
-        progressDialog.show();
-
-        mAuth.createUserWithEmailAndPassword(Email, Password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            Toast.makeText(SignUp.this, "Registered Successfully", Toast.LENGTH_SHORT).show();
-//                            startActivity(new Intent(getApplicationContext(),LogIn.class));
-//                            finish();
-                        } else {
-                            return;
-                        }
-                    }
-                });
-
-        User user = new User(mAuth.getCurrentUser().getUid(), 1, Email, Username);
-        dbRef.child("users")
-                .child(mAuth.getCurrentUser().getUid())
-                .setValue(user);
-
-        UserAccountSetting settings = new UserAccountSetting(
-                "",
-                "",
-                0,
-                0,
-                0,
-                "",
-                Username);
-        dbRef.child("user_account_setting").child(mAuth.getCurrentUser().getUid()).setValue(settings);
-
-
-
-    }*/
 
 }

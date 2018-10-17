@@ -108,17 +108,12 @@ public class Viewpost extends Fragment {
         setupFirebaseAuth();
         getCurrentUsername();
 
-//        try{
             mphoto = getphotofrombundle();
             UniversalImageLoader.setImage(mphoto.getImage_path(),mPostImage,null,"");
             mActivityNumber = getActivitynumBundle();
             getPhotodetails();
             getLikesString();
-//        }catch (NullPointerException e){
-//            Log.e(TAG, "onCreateView: NullPointer Exception " + e.getMessage());
-//        }
 
-//        navigation();
         return view;
     }
 

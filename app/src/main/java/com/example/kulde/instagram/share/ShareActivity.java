@@ -71,9 +71,6 @@ public class ShareActivity extends AppCompatActivity{
      * 1 = PhotoFragment
      * @return
      */
-//    public int getCurrentTabNumber(){
-//        return mViewPager.getCurrentItem();
-//    }
 
     /**
      * setup viewpager for manager the tabs
@@ -81,16 +78,10 @@ public class ShareActivity extends AppCompatActivity{
     private void setupViewPager(){
         SectionPagerAdapter adapter =  new SectionPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(new GalleryFragment());
-//        adapter.addFragment(new PhotoFragment());
 
         mViewPager = (ViewPager) findViewById(R.id.viewpager_container);
         mViewPager.setAdapter(adapter);
 
-//        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabsBottom);
-//        tabLayout.setupWithViewPager(mViewPager);
-//
-//        tabLayout.getTabAt(0).setText("Gallery");
-//        tabLayout.getTabAt(1).setText("Photo");
     }
 
    public int getTask(){

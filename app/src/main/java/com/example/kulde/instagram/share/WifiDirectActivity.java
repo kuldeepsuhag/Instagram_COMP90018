@@ -211,16 +211,7 @@ public class WifiDirectActivity extends AppCompatActivity {
                 });
             }
         });
-//
-//        enterMessage.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                //try to get image file for temporary
-////                DownloadTask task = (DownloadTask) new DownloadTask().execute("https://upload.wikimedia.org/wikipedia/commons/thumb/9/9f/Flag_of_Indonesia.svg/450px-Flag_of_Indonesia.svg.png", "newfile.png");
-////                String msg = messageText.getText().toString();
-////                sendReceive.write(msg.getBytes());
-//            }
-//        });
+
 
     }
 
@@ -296,8 +287,6 @@ public class WifiDirectActivity extends AppCompatActivity {
         }
         this.buttonDiscover = findViewById(R.id.ButtonDiscover);
         this.listDevices = findViewById(R.id.listNode);
-//        this.enterMessage = findViewById(R.id.ButtonEnter);
-//        this.displayMessage = findViewById(R.id.DisplayMessage);
         this.imgview = findViewById(R.id.imageShare);
 
         intentFilter = new IntentFilter();
