@@ -182,9 +182,10 @@ public class NextActivity extends AppCompatActivity {
                    // Log.d("old","lat :  "+old_latitude);
                    // Log.d("old","long :  "+old_longitude);
                     locationListener.onLocationChanged(location);
+                    this.geo = CommResources.location;
                 }
 
-                this.geo = CommResources.location;
+
                 locationManager.requestLocationUpdates(
                         LocationManager.GPS_PROVIDER, 0, 100, locationListener);
                 Log.d(TAG, "Get share info");
@@ -230,6 +231,7 @@ public class NextActivity extends AppCompatActivity {
             String s = longitude+"\n"+latitude +
                     "\n\nMy Currrent City is: "+cityName;
             geo = cityName;
+            CommResources.location = geo;
             geoText.setText(geo);
 
         }
